@@ -107,6 +107,11 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.1.9
+- 🔧 Downgrade de l'extension
+- 🗑️ Plus de lien avec les paramètres
+- 🧹 Commandes consoles supprimées
+
 ### 0.1.8
 - ⚒️ Refonte de l'onglet Format avec nouveaux blocs thématiques :
   - Ajout d'une section "Sectionnement et espacement" pour une meilleure organisation
