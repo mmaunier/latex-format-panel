@@ -1,0 +1,157 @@
+{
+	"name": "latex-format-panel",
+	"displayName": "LaTeX Format Panel",
+	"description": "Panel de formatage LaTeX avec support mathématique",
+	"icon": "media/icon.png",
+	"version": "0.1.8",
+	"publisher": "mmaunier",
+	"author": {
+		"name": "Mikaël Maunier",
+		"email": "mmaunier2009@gmail.com"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mmaunier/latex-format-panel.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mmaunier/latex-format-panel/issues"
+	},
+	"homepage": "https://github.com/mmaunier/latex-format-panel#readme",
+	"engines": {
+		"vscode": "^1.80.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:latex"
+	],
+	"main": "./src/extension.js",
+	"scripts": {
+		"vscode:prepublish": "echo 'No compilation needed'",
+		"package": "vsce package --out build/",
+		"build": "vsce package --out build/",
+		"release": "npm version patch && ./scripts/build-release.sh",
+		"release:minor": "npm version minor && ./scripts/build-release.sh",
+		"release:major": "npm version major && ./scripts/build-release.sh"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.60.0",
+		"@vscode/vsce": "^2.19.0"
+	},
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "latex-format-container",
+					"title": "LaTeX Format",
+					"icon": "media/icon.svg",
+					"when": "latex-format-panel:enabled"
+				}
+			]
+		},
+		"views": {
+			"latex-format-container": [
+				{
+					"icon": "media/icon.svg",
+					"id": "latexFormatPanel",
+					"name": "LaTeX Format",
+					"type": "webview",
+					"when": "latex-format-panel:enabled"
+				}
+			]
+		},
+		"configuration": {
+			"title": "LaTeX Format Panel",
+			"properties": {
+				"latex-format-panel.formats.bold.textMode": {
+					"type": "string",
+					"default": "\\textbf{$1}$0",
+					"description": "Template pour le bouton Gras en mode texte",
+					"order": 1
+				},
+				"latex-format-panel.formats.bold.mathMode": {
+					"type": "string",
+					"default": "\\symbf{$1}$0",
+					"description": "Template pour le bouton Gras en mode mathématique",
+					"order": 2
+				},
+				"latex-format-panel.formats.bold.variants": {
+					"type": "string",
+					"default": "\\textbf{...}§\\textbf{$1}$0§Commande standard\n\\symbf{...}f§\\textbf{$1}$0§Gras mathématique\n{\\bfseries ...}§{\\bfseries $1}$0§Commande de déclaration\n\\begin{bfseries}...\\end{bfseries}§\\begin{bfseries}\n$1\n\\end{bfseries}\n$0§Environnement en Gras",
+					"editPresentation": "multilineText",
+					"description": "Variantes du bouton Gras (format: nom§commande§description)",
+					"order": 3
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "latex-format-panel.openSettings",
+				"title": "Ouvrir les paramètres",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.resetConfig",
+				"title": "Réinitialiser la configuration",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.showConfig",
+				"title": "Afficher le fichier de configuration",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.cleanVSCodeSettings",
+				"title": "Nettoyer les paramètres VSCode",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.addGrasVariant",
+				"title": "Ajouter une variante au bouton Gras",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.removeGrasVariant",
+				"title": "Supprimer une variante du bouton Gras",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.validateGrasVariants",
+				"title": "Valider les variantes du bouton Gras",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.selectGrasVariant",
+				"title": "Gras - Sélectionner une variante",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.addItaliqueVariant",
+				"title": "Ajouter une variante au bouton Italique",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.removeItaliqueVariant",
+				"title": "Supprimer une variante du bouton Italique",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.validateItaliqueVariants",
+				"title": "Valider les variantes du bouton Italique",
+				"category": "LaTeX Format Panel"
+			},
+			{
+				"command": "latex-format-panel.selectItaliqueVariant",
+				"title": "Italique - Sélectionner une variante",
+				"category": "LaTeX Format Panel"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1752934197999,
+		"targetPlatform": "undefined",
+		"size": 304051
+	}
+}

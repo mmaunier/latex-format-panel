@@ -1,0 +1,252 @@
+<div id="math-tab" class="tab-content">
+   <h3>Commandes</h3>
+
+   <!-- Bloc 1 : Opérateurs mathématiques (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" onclick="sendCommand('sum')">∑</button>
+      <button class="math-button secondary" onclick="sendCommand('prod')">∏</button>
+      <button class="math-button secondary" onclick="sendCommand('int')">∫</button>
+      <button class="math-button secondary" onclick="sendCommand('lim')">lim</button>
+   </div>
+
+   <div class="button-group">
+      <button class="math-button secondary" onclick="sendCommand('sup')">sup</button>
+      <button class="math-button secondary" onclick="sendCommand('inf')">inf</button>
+      <button class="math-button secondary" onclick="sendCommand('max')">max</button>
+      <button class="math-button secondary" onclick="sendCommand('min')">min</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 2 : Fractions, exposant, indice (bleu) -->
+   <div class="button-group">
+      <button class="math-button" 
+              onclick="sendCommand('frac')" 
+              oncontextmenu="showContextMenu(event, 'frac'); return false;">
+         <em>a</em>/<em>b</em>
+      </button>
+      <button class="math-button" onclick="sendCommand('superscript')">
+         <em>x</em>²
+      </button>
+      <button class="math-button" onclick="sendCommand('subscript')">
+         <em>x</em>₂
+      </button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 3 : Symboles mathématiques (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" onclick="sendCommand('leq')">≤</button>
+      <button class="math-button secondary" onclick="sendCommand('geq')">≥</button>
+      <button class="math-button secondary" onclick="sendCommand('neq')">≠</button>
+      <button class="math-button secondary" onclick="sendCommand('approx')">≈</button>
+      <button class="math-button secondary" onclick="sendCommand('sim')">∼</button>
+      <button class="math-button secondary" onclick="sendCommand('equiv')">≡</button>
+   </div>
+
+   <div class="button-group">
+      <button class="math-button secondary" 
+              onclick="sendCommand('rightarrow')" 
+              oncontextmenu="showContextMenu(event, 'rightarrow'); return false;">→</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('leftarrow')" 
+              oncontextmenu="showContextMenu(event, 'leftarrow'); return false;">←</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('Rightarrow')" 
+              oncontextmenu="showContextMenu(event, 'Rightarrow'); return false;">⇒</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('Leftarrow')" 
+              oncontextmenu="showContextMenu(event, 'Leftarrow'); return false;">⇐</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('Leftrightarrow')" 
+              oncontextmenu="showContextMenu(event, 'Leftrightarrow'); return false;">⇔</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('mapsto')" 
+              oncontextmenu="showContextMenu(event, 'mapsto'); return false;">↦</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 4 : Fonctions mathématiques (bleu) -->
+   <div class="button-group">
+      <button class="math-button" 
+              onclick="sendCommand('sqrt')" 
+              oncontextmenu="showContextMenu(event, 'sqrt'); return false;">
+         √<em>x</em>
+      </button>
+      <button class="math-button" onclick="sendCommand('sin')">sin</button>
+      <button class="math-button" onclick="sendCommand('cos')">cos</button>
+      <button class="math-button" onclick="sendCommand('tan')">tan</button>
+      <button class="math-button" onclick="sendCommand('ln')">ln</button>
+      <button class="math-button" onclick="sendCommand('exp')">exp</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 5 : Parenthèses et matrice (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" onclick="sendCommand('left_paren')">( )</button>
+      <button class="math-button secondary" onclick="sendCommand('left_bracket')">[&nbsp;]</button>
+      <button class="math-button secondary" onclick="sendCommand('left_brace')">{&nbsp;}</button>
+      <button class="math-button secondary" onclick="sendCommand('left_abs')">| |</button>
+      <button class="math-button secondary" onclick="sendCommand('left_norm')">|| ||</button>
+      <button class="math-button secondary" 
+              onclick="sendCommand('matrix')" 
+              oncontextmenu="showMatrixModal(event); return false;">
+         <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+            <!-- Parenthèses plus larges -->
+            <path d="M2 2 Q1 2 1 8 Q1 14 2 14" stroke="currentColor" fill="none" stroke-width="1.2" />
+            <path d="M18 2 Q19 2 19 8 Q19 14 18 14" stroke="currentColor" fill="none" stroke-width="1.2" />
+            <!-- Éléments matrice avec espacement vertical amélioré -->
+            <text x="7" y="6" font-size="7" text-anchor="middle" fill="currentColor" font-style="italic">a</text>
+            <text x="13" y="6" font-size="7" text-anchor="middle" fill="currentColor" font-style="italic">b</text>
+            <text x="7" y="13" font-size="7" text-anchor="middle" fill="currentColor" font-style="italic">c</text>
+            <text x="13" y="13" font-size="7" text-anchor="middle" fill="currentColor" font-style="italic">d</text>
+         </svg>
+      </button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 6 : Ensembles de nombres (bleu) -->
+   <div class="button-group">
+      <button class="math-button" onclick="sendCommand('mathbb_N')">ℕ</button>
+      <button class="math-button" onclick="sendCommand('mathbb_Z')">ℤ</button>
+      <button class="math-button" onclick="sendCommand('mathbb_D')">𝔻</button>
+      <button class="math-button" onclick="sendCommand('mathbb_Q')">ℚ</button>
+      <button class="math-button" onclick="sendCommand('mathbb_R')">ℝ</button>
+      <button class="math-button" onclick="sendCommand('mathbb_C')">ℂ</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 7 : Symboles logiques et ensemblistes (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" 
+              onclick="sendCommand('in')" 
+              oncontextmenu="showContextMenu(event, 'in'); return false;">∈</button>
+      <button class="math-button secondary" onclick="sendCommand('subset')">⊂</button>
+      <button class="math-button secondary" onclick="sendCommand('cup')">∪</button>
+      <button class="math-button secondary" onclick="sendCommand('cap')">∩</button>
+      <button class="math-button secondary" onclick="sendCommand('forall')">∀</button>
+      <button class="math-button secondary" onclick="sendCommand('exists')">∃</button>
+   </div>
+
+   <div class="button-group">
+      <button class="math-button secondary" onclick="sendCommand('cdot')">·</button>
+      <button class="math-button secondary" onclick="sendCommand('dots')">…</button>
+      <button class="math-button secondary" onclick="sendCommand('cdots')">⋯</button>
+      <button class="math-button secondary" onclick="sendCommand('times')">×</button>
+      <button class="math-button secondary" onclick="sendCommand('div')">÷</button>
+      <button class="math-button secondary" onclick="sendCommand('pm')">±</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 8 : Vecteurs et texte positionné (bleu) -->
+   <div class="button-group">
+      <button class="math-button" 
+              onclick="sendCommand('vec')" 
+              oncontextmenu="showContextMenu(event, 'vec'); return false;">
+         <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+            <!-- Flèche au-dessus de la lettre -->
+            <path d="M3 4 L13 4 M11 2 L13 4 L11 6" stroke="currentColor" fill="none" stroke-width="1.2" />
+            <!-- Lettre en dessous -->
+            <text x="8" y="14" font-size="9" text-anchor="middle" fill="currentColor" font-style="italic">u</text>
+         </svg>
+      </button>
+      <button class="math-button" onclick="sendCommand('widehat')">
+         <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+            <!-- Chapeau au-dessus -->
+            <path d="M4 5 Q8 2 12 5" stroke="currentColor" fill="none" stroke-width="1.2" />
+            <!-- Lettre en dessous -->
+            <text x="8" y="14" font-size="9" text-anchor="middle" fill="currentColor" font-style="italic">A</text>
+         </svg>
+      </button>
+      <button class="math-button" onclick="sendCommand('underset')">
+         <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+            <!-- Texte principal -->
+            <text x="10" y="7" font-size="9" text-anchor="middle" fill="currentColor" font-style="italic">T</text>
+            <!-- Texte en dessous -->
+            <text x="10" y="13" font-size="6" text-anchor="middle" fill="currentColor">sous</text>
+         </svg>
+      </button>
+      <button class="math-button" onclick="sendCommand('overset')">
+         <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor">
+            <!-- Texte en dessus -->
+            <text x="10" y="5" font-size="6" text-anchor="middle" fill="currentColor">sur</text>
+            <!-- Texte principal -->
+            <text x="10" y="13" font-size="9" text-anchor="middle" fill="currentColor" font-style="italic">T</text>
+         </svg>
+      </button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Section Environnements -->
+   <h3>Environnements</h3>
+
+   <!-- Bloc 9 : Environnements math (bleu) -->
+   <div class="button-group">
+      <button class="math-button" onclick="sendCommand('inline')">$...$</button>
+      <button class="math-button" onclick="sendCommand('display')">\[...\]</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 10 : Environnements équation (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" 
+              onclick="sendCommand('equation')" 
+              oncontextmenu="showContextMenu(event, 'equation'); return false;">
+         equation
+      </button>
+      <button class="math-button secondary" onclick="sendCommand('subequations')">
+         subequation
+      </button>
+      <button class="math-button secondary" onclick="sendCommand('displaystyle')">
+         \displaystyle
+      </button>
+   </div>
+
+   <div class="separator"></div>
+   
+   <!-- Bloc 11 : Environnements d'alignement (bleu) -->
+   <div class="button-group">
+      <button class="math-button" onclick="sendCommand('align')"
+         oncontextmenu="showContextMenu(event, 'align'); return false;">
+         align
+      </button>
+      <button class="math-button" onclick="sendCommand('alignat')"
+         oncontextmenu="showContextMenu(event, 'alignat'); return false;">
+         alignat
+      </button>
+      <button class="math-button" onclick="sendCommand('gather')"
+         oncontextmenu="showContextMenu(event, 'gather'); return false;">
+         gather
+      </button>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Bloc 12 : Environnements d'équations spécifiques (gris) -->
+   <div class="button-group">
+      <button class="math-button secondary" 
+              onclick="sendCommand('cases')"
+              oncontextmenu="showContextMenu(event, 'cases'); return false;">
+         cases
+      </button>
+      <button class="math-button secondary" onclick="sendCommand('systeme')">
+         systeme
+      </button>
+      <button class="math-button secondary"
+              onclick="sendCommand('multline')"
+              oncontextmenu="showContextMenu(event, 'multline'); return false;">
+         multline
+      </button>
+      <button class="math-button secondary" onclick="sendCommand('split')">
+         split
+      </button>
+   </div>
+</div>

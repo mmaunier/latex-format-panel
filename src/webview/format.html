@@ -1,0 +1,286 @@
+<div id="format-tab" class="tab-content active">
+   <h3>Format</h3>
+
+   <div class="button-group">
+      <button class="format-button bold" 
+              onclick="sendCommand('bold')" 
+              oncontextmenu="showContextMenu(event, 'bold'); return false;">Gras</button>
+      <button class="format-button italic" 
+              onclick="sendCommand('italic')" 
+              oncontextmenu="showContextMenu(event, 'italic'); return false;">Italique</button>
+      <button class="format-button emphasis" onclick="sendCommand('emphasis')">Emphase</button>
+      <button class="format-button slanted" 
+              onclick="sendCommand('slanted')" 
+              oncontextmenu="showContextMenu(event, 'slanted'); return false;">Oblique</button>
+   </div>
+
+   <div class="button-group">
+      <button class="format-button tt" 
+              onclick="sendCommand('tt')" 
+              oncontextmenu="showContextMenu(event, 'tt'); return false;">Fixe</button>
+      <button class="format-button underline" 
+              onclick="sendCommand('underline')" 
+              oncontextmenu="showContextMenu(event, 'underline'); return false;">Souligné</button>
+      <button class="format-button smallcaps" 
+              onclick="sendCommand('smallcaps')" 
+              oncontextmenu="showContextMenu(event, 'smallcaps'); return false;">SmallCaps</button>
+      <button class="format-button highlight" onclick="sendCommand('highlight')">Surligné</button>
+   </div>
+
+   <div class="button-group partial">
+      <button class="format-button mathbb" onclick="sendCommand('mathbb')">𝔸𝔻ℂ</button>
+      <button class="format-button mathcal" onclick="sendCommand('mathcal')">𝒜ℬ𝒞</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <div class="button-group">
+      <button class="size-button" 
+              onclick="sendCommand('tiny')" 
+              oncontextmenu="showContextMenu(event, 'tiny'); return false;">tiny</button>
+      <button class="size-button" 
+              onclick="sendCommand('scriptsize')" 
+              oncontextmenu="showContextMenu(event, 'scriptsize'); return false;">scriptsize</button>
+      <button class="size-button" 
+              onclick="sendCommand('footnotesize')" 
+              oncontextmenu="showContextMenu(event, 'footnotesize'); return false;">footnotesize</button>
+      <button class="size-button" 
+              onclick="sendCommand('small')" 
+              oncontextmenu="showContextMenu(event, 'small'); return false;">small</button>
+   </div>
+
+   <div class="button-group">
+      <button class="size-button" 
+              onclick="sendCommand('normalsize')" 
+              oncontextmenu="showContextMenu(event, 'normalsize'); return false;">normalsize</button>
+      <button class="size-button" 
+              onclick="sendCommand('large')" 
+              oncontextmenu="showContextMenu(event, 'large'); return false;">large</button>
+      <button class="size-button" 
+              onclick="sendCommand('Large')" 
+              oncontextmenu="showContextMenu(event, 'Large'); return false;">Large</button>
+      <button class="size-button" 
+              onclick="sendCommand('LARGE')" 
+              oncontextmenu="showContextMenu(event, 'LARGE'); return false;">LARGE</button>
+   </div>
+
+   <div class="button-group partial">
+      <button class="size-button" 
+              onclick="sendCommand('huge')" 
+              oncontextmenu="showContextMenu(event, 'huge'); return false;">huge</button>
+      <button class="size-button" 
+              onclick="sendCommand('Huge')" 
+              oncontextmenu="showContextMenu(event, 'Huge'); return false;">Huge</button>
+   </div>
+
+   <div class="separator"></div>
+
+   <div class="button-group partial">
+      <button class="transform-button uppercase" onclick="sendCommand('uppercase')">ABC</button>
+      <button class="transform-button lowercase" onclick="sendCommand('lowercase')">abc</button>
+      <button class="transform-button capitalize" onclick="sendCommand('capitalize')">Abc</button>
+   </div>
+
+   <div class="button-group partial">
+      <button class="transform-button" onclick="sendCommand('superscript')">x²</button>
+      <button class="transform-button" onclick="sendCommand('subscript')">x₂</button>
+   </div>
+
+   <div class="separator"></div>
+
+<!-- Section Sectionnement et espacement -->
+<h3>Sectionnement et espacement</h3>
+
+<!-- Bloc d'alignement -->
+<div class="button-group">
+        <button class="align-button" onclick="sendCommand('flushleft')"
+                oncontextmenu="showContextMenu(event, 'flushleft'); return false;">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                        <!-- Lignes alignées à gauche -->
+                        <rect x="1" y="1" width="10" height="1" fill="currentColor" />
+                        <rect x="1" y="3.5" width="12" height="1" fill="currentColor" />
+                        <rect x="1" y="6" width="8" height="1" fill="currentColor" />
+                        <rect x="1" y="8.5" width="11" height="1" fill="currentColor" />
+                </svg>
+        </button>
+        <button class="align-button" onclick="sendCommand('center')"
+                oncontextmenu="showContextMenu(event, 'center'); return false;">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                        <!-- Lignes centrées -->
+                        <rect x="3" y="1" width="10" height="1" fill="currentColor" />
+                        <rect x="2" y="3.5" width="12" height="1" fill="currentColor" />
+                        <rect x="4" y="6" width="8" height="1" fill="currentColor" />
+                        <rect x="2.5" y="8.5" width="11" height="1" fill="currentColor" />
+                </svg>
+        </button>
+        <button class="align-button" onclick="sendCommand('flushright')"
+                oncontextmenu="showContextMenu(event, 'flushright'); return false;">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                        <!-- Lignes alignées à droite -->
+                        <rect x="5" y="1" width="10" height="1" fill="currentColor" />
+                        <rect x="3" y="3.5" width="12" height="1" fill="currentColor" />
+                        <rect x="7" y="6" width="8" height="1" fill="currentColor" />
+                        <rect x="4" y="8.5" width="11" height="1" fill="currentColor" />
+                </svg>
+        </button>
+</div>
+
+<div class="separator"></div>
+
+<!-- Bloc d'espacement -->
+<div class="button-group">
+        <button class="format-button" onclick="sendCommand('quad')" data-tooltip="\quad">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                        <!-- Flèche simple pour \quad -->
+                        <rect x="3" y="5.5" width="7" height="1" fill="currentColor" />
+                        <polygon points="10,3 10,8 13,5.5" fill="currentColor" />
+                </svg>
+        </button>
+        <button class="format-button" onclick="sendCommand('qquad')" data-tooltip="\qquad">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                        <!-- Double flèche pour \qquad -->
+                        <rect x="2" y="5.5" width="8" height="1" fill="currentColor" />
+                        <polygon points="10,3 10,8 13,5.5" fill="currentColor" />
+                        <rect x="1" y="3.5" width="1" height="5" fill="currentColor" />
+                        <rect x="3" y="3.5" width="1" height="5" fill="currentColor" />
+                </svg>
+        </button>
+        <button class="format-button" onclick="sendCommand('noindent')">
+                noindent
+        </button>
+</div>
+
+<div class="button-group">
+        <button class="format-button" onclick="sendCommand('hspace')">
+                hspace
+        </button>
+        <button class="format-button" onclick="sendCommand('hfill')"
+                oncontextmenu="showContextMenu(event, 'hfill'); return false;">
+                hfill
+        </button>
+        <button class="format-button" onclick="sendCommand('hbox')">
+                hbox
+        </button>
+</div>
+
+<div class="separator"></div>
+
+<!-- Bloc d'espacement vertical (gris) -->
+<div class="button-group">
+        <button class="format-button secondary" onclick="sendCommand('smallskip')">
+                smallskip
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('medskip')">
+                medskip
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('bigskip')">
+                bigskip
+        </button>
+</div>
+
+<div class="button-group">
+        <button class="format-button secondary" onclick="sendCommand('itemsep')">
+                itemsep
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('baselineskip')">
+                baselineskip
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('parskip')">
+                parskip
+        </button>
+</div>
+
+<div class="button-group">
+        <button class="format-button secondary" onclick="sendCommand('vspace')">
+                vspace
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('vfill')">
+                vfill
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('newpage')">
+                newpage
+        </button>
+</div>
+
+<div class="separator"></div>
+
+<!-- Bloc de sections et chapitres (bleu) -->
+<div class="button-group">
+        <button class="format-button" onclick="sendCommand('chapitres')"
+                oncontextmenu="showContextMenu(event, 'chapitres'); return false;">
+                Chapitres
+        </button>
+        <button class="format-button" onclick="sendCommand('sections')"
+                oncontextmenu="showContextMenu(event, 'sections'); return false;">
+                Sections
+        </button>
+        <button class="format-button" onclick="sendCommand('paragraphe')"
+                oncontextmenu="showContextMenu(event, 'paragraphe'); return false;">
+                Paragraphe
+        </button>
+</div>
+
+<div class="separator"></div>
+
+<!-- Bloc de compteurs et étiquettes (gris) -->
+<div class="button-group">
+        <button class="format-button secondary" onclick="sendCommand('setlength')">
+                setlength
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('setcounter')"
+                oncontextmenu="showContextMenu(event, 'setcounter'); return false;">
+                setcounter
+        </button>
+        <button class="format-button secondary" onclick="sendCommand('label')"
+                oncontextmenu="showContextMenu(event, 'label'); return false;">
+                label
+        </button>
+</div>
+
+<div class="separator"></div>
+
+<!-- Section Environnements -->
+<h3>Environnements</h3>
+
+<!-- Bloc : Listes -->
+<div class="button-group">
+        <button class="format-button environment-secondary" onclick="sendCommand('enumerate')"
+                oncontextmenu="showContextMenu(event, 'enumerate'); return false;">enumerate</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('itemize')"
+                oncontextmenu="showContextMenu(event, 'itemize'); return false;">itemize</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('item')"
+                oncontextmenu="showContextMenu(event, 'item'); return false;">\item</button>
+</div>
+
+<!-- Bloc 1 : Mise en page -->
+<div class="button-group">
+        <button class="format-button environment" onclick="sendCommand('minipage')">minipage</button>
+        <button class="format-button environment" onclick="sendCommand('multicols')">multicols</button>
+        <button class="format-button environment" onclick="sendCommand('tabbing')">tabbing</button>
+</div>
+
+<!-- Bloc 2 : Figures -->
+<div class="button-group">
+        <button class="format-button environment-secondary" onclick="sendCommand('figure')">figure</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('wrapfig')">wrapfig</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('includegraphics')"
+                data-tooltip="\includegraphics">includegraph</button>
+</div>
+
+<!-- Bloc 3 : Dessin et code -->
+<div class="button-group">
+        <button class="format-button environment" onclick="sendCommand('tikzpicture')">tikzpicture</button>
+        <button class="format-button environment" onclick="sendCommand('tcolorbox')">tcolorbox</button>
+        <button class="format-button environment" onclick="sendCommand('listing')">listing</button>
+</div>
+
+<!-- Bloc 4 : Tableaux -->
+<div class="button-group">
+        <button class="format-button environment-secondary" onclick="sendCommand('table')">table</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('tabular')">tabular</button>
+        <button class="format-button environment-secondary" onclick="sendCommand('tabularray')"
+                oncontextmenu="showTblrModal(event); return false;">tabularray</button>
+</div>
+
+
+</div>
