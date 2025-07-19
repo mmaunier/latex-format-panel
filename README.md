@@ -107,7 +107,7 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
-### 0.1.9
+### 0.1.10
 - 🔧 Downgrade de l'extension
 - 🗑️ Plus de lien avec les paramètres
 - 🧹 Commandes consoles supprimées

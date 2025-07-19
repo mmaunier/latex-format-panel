@@ -54,7 +54,6 @@ git add build/
 git add package.json
 git add README.md
 git add build/README.md
-git add src/config/configManager.js
 
 # Commit et push
 git commit -m "Release v$VERSION - Add build artifact and update README" || echo "Rien à commiter"
