@@ -26,7 +26,7 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 
 ### Depuis le fichier .vsix
 
-1. Téléchargez le fichier `latex-format-panel-0.1.8.vsix`
+1. Téléchargez le fichier `build/latex-format-panel-0.1.8.vsix`
 2. Ouvrez VSCode
 3. Utilisez `Ctrl+Shift+P` → "Extensions: Install from VSIX"
 4. Sélectionnez le fichier téléchargé
