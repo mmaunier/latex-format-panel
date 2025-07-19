@@ -3,8 +3,6 @@ const path = require('path');
 const fs = require('fs');
 
 // Imports des modules de configuration
-const { ConfigManager } = require('./config/configManager');
-const { SettingsSync } = require('./config/settingsSync');
 const { getFormatCommandVariants, getDefaultFormatVariant, wrapWithTabularray } = require('./config/commandFormatVariants');
 const { getMathCommandVariants, getDefaultMathVariant, wrapWithMatrix } = require('./config/commandMathVariants');
 
@@ -13,10 +11,6 @@ const { isInMathMode } = require('../utils/utils');
 const { getFormatCommands, handleFormatCommand } = require('./actions/formatActions');
 const { getMathCommands, handleMathCommand } = require('./actions/mathActions');
 const { LatexSidebarProvider } = require('./webview/webviewProvider');
-
-// Variables globales
-let configManager = null;
-let settingsSync = null;
 
 // Extensions LaTeX supportées
 const LATEX_EXTENSIONS = ['.tex', '.latex', '.sty', '.cls'];
@@ -115,20 +109,6 @@ function processTemplate(template, text, selection) {
  */
 function activate(context) {
   console.log('LaTeX Format Panel: Activating extension...');
-  
-  // Initialiser le gestionnaire de configuration
-  configManager = new ConfigManager(context);
-  settingsSync = new SettingsSync(configManager);
-  
-  // Charger la configuration au démarrage
-  const config = configManager.loadConfig();
-  console.log('Configuration active:', config);
-  
-  // Initialiser la synchronisation des paramètres (utilise la méthode du ConfigManager)
-  configManager.initializeSync();
-  
-  // Enregistrer les commandes de paramètres
-  settingsSync.registerCommands(context);
   
   // 1. Créer le provider pour le webview
   const provider = new LatexSidebarProvider(context.extensionUri);
