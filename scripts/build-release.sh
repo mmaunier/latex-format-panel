@@ -30,10 +30,6 @@ else
     cp README.md build/README.md
 fi
 
-# Mise à jour de configManager.js
-echo "📝 Mise à jour de configManager.js..."
-sed -i "s/version: \"[0-9]\+\.[0-9]\+\.[0-9]\+\"/version: \"$VERSION\"/g" src/config/configManager.js
-
 # Nettoyage
 echo "🧹 Nettoyage des builds précédents..."
 rm -rf build/*.vsix

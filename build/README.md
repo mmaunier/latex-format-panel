@@ -7,12 +7,12 @@ Ce dossier contient les fichiers de build de l'extension LaTeX Format Panel.
 Pour installer la dernière version :
 
 ```bash
-code --install-extension build/latex-format-panel-0.1.8.vsix
+code --install-extension build/mmaunier.latex-format-panel-0.1.9.vsix
 ```
 
 ## Versions
 
-- `latex-format-panel-0.1.8.vsix` - Version actuelle
+- `mmaunier.latex-format-panel-0.1.9.vsix` - Version actuelle
 - Support mathématique complet
 - Interface améliorée
 
