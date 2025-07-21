@@ -1,10 +1,16 @@
 const vscode = require('vscode');
 
 function isInMathMode(document, position) {
+   console.log('🔍 isInMathMode called at position:', position.line, position.character);
    const textBeforeCursor = document.getText(new vscode.Range(new vscode.Position(0, 0), position));
    
    // Supprimer les commentaires pour éviter les faux positifs
-   const textWithoutComments = textBeforeCursor.replace(/([^\\]|^)%.*$/gm, '$1');
+   let textWithoutComments = textBeforeCursor.replace(/([^\\]|^)%.*$/gm, '$1');
+
+   // Supprimer uniquement les variables shell connues (HOME, PATH, USER, SHELL, PWD, LOGNAME, LANG, TERM, DISPLAY, MAIL, EDITOR, HOSTNAME, etc.)
+   // Supprimer les variables shell (version plus permissive)
+   textWithoutComments = textWithoutComments.replace(/\$(HOME|PATH|USER|SHELL|PWD|LOGNAME|LANG|TERM|DISPLAY|MAIL|EDITOR|HOSTNAME)(?!\w)/g, '');
+   console.log('Text contains $HOME:', textWithoutComments.includes('$HOME'));
 
    // Compter les délimiteurs math
    const dollarCount = (textWithoutComments.match(/(?<!\\)\$/g) || []).length;

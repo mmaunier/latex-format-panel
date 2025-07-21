@@ -42,6 +42,8 @@ function updateLatexContext() {
  * Fonction principale pour entourer le texte sélectionné
  */
 function wrapWith(cmd, variantId = null) {
+  console.log('🚀 wrapWith called with cmd:', cmd, 'variantId:', variantId);
+
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;
 
@@ -108,7 +110,8 @@ function processTemplate(template, text, selection) {
  * Fonction d'activation de l'extension
  */
 function activate(context) {
-  console.log('LaTeX Format Panel: Activating extension...');
+  console.log('🚀 LaTeX Format Panel: Activating extension...');
+
   
   // 1. Créer le provider pour le webview
   const provider = new LatexSidebarProvider(context.extensionUri);

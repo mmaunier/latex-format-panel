@@ -38,7 +38,7 @@ function getHtmlTemplate(extensionUri) {
     }
   });
   
-  console.log('Variants being injected:', JSON.stringify(variants, null, 2));
+  //console.log('Variants being injected:', JSON.stringify(variants, null, 2));
   
   // Remplacer les placeholders
   return templateContent
@@ -69,14 +69,19 @@ class LatexSidebarProvider {
       if (allCommands.includes(message.command)) {
         if (message.variant === 'custom' && message.params) {
           // Commande avec paramètres personnalisés (pour modal)
+          console.log('Executing custom command with params:', message.command, message.params);
           vscode.commands.executeCommand('latexFormat.wrapWithCustomParams', message.command, message.params);
         } else if (message.variant) {
           // Commande avec variante spécifique
+          console.log('Executing command with variant:', message.command, message.variant);
           vscode.commands.executeCommand('latexFormat.wrapWithVariant', message.command, message.variant);
         } else {
           // Commande par défaut
+          console.log('Executing default command:', message.command);
           vscode.commands.executeCommand('latexFormat.wrapWith', message.command);
         }
+      } else {
+        console.log('Unknown command received:', message.command);
       }
     });
   }
