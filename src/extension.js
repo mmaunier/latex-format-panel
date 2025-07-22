@@ -8,7 +8,7 @@ const { getMathCommandVariants, getDefaultMathVariant, wrapWithMatrix } = requir
 
 // Imports existants
 const { isInMathMode } = require('../utils/utils');
-const { getFormatCommands, handleFormatCommand } = require('./actions/formatActions');
+const { getFormatCommands, handleFormatCommand, commentLatex, uncommentLatex } = require('./actions/formatActions');
 const { getMathCommands, handleMathCommand } = require('./actions/mathActions');
 const { LatexSidebarProvider } = require('./webview/webviewProvider');
 
@@ -226,6 +226,20 @@ function activate(context) {
         });
       }
       // Ajouter d'autres commandes personnalisées si nécessaire
+    })
+  );
+  
+  context.subscriptions.push(
+    vscode.commands.registerCommand('latexFormat.commentLatex', () => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor) commentLatex(editor, editor.selections);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('latexFormat.uncommentLatex', () => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor) uncommentLatex(editor, editor.selections);
     })
   );
   

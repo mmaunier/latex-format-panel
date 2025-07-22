@@ -20,7 +20,7 @@ function getFormatCommands() {
     'minipage', 'multicols', 'tabbing',
     'figure', 'wrapfig', 'includegraphics',
     'tikzpicture', 'tcolorbox', 'listing',
-    'table', 'tabular', 'tabularray'
+    'table', 'tabular', 'tabularray',
   ];
 }
 
@@ -806,4 +806,55 @@ function handleLegacyFormatCommand(cmd, editor, selection, text, isMathMode) {
   return { replaced, newSelection };
 }
 
-module.exports = { handleFormatCommand, getFormatCommands };
+function commentLatex(editor, selections) {
+  editor.edit(editBuilder => {
+    selections.forEach(selection => {
+      const startLine = selection.start.line;
+      const endLine = selection.end.line;
+      for (let line = startLine; line <= endLine; line++) {
+        const lineText = editor.document.lineAt(line).text;
+        const lineRange = editor.document.lineAt(line).range;
+        const match = lineText.match(/^%+/);
+        const percentCount = match ? match[0].length : 0;
+        let newText;
+        if (percentCount === 0) {
+          newText = `% ${lineText}`;
+        } else {
+          newText = `%${lineText}`;
+        }
+        editBuilder.replace(lineRange, newText);
+      }
+    });
+  });
+}
+
+function uncommentLatex(editor, selections) {
+  editor.edit(editBuilder => {
+    selections.forEach(selection => {
+      const startLine = selection.start.line;
+      const endLine = selection.end.line;
+      for (let line = startLine; line <= endLine; line++) {
+        const lineText = editor.document.lineAt(line).text;
+        const lineRange = editor.document.lineAt(line).range;
+        if (lineText.startsWith('%')) {
+          let newText = lineText.replace(/^%+/, match => {
+            if (match.length === 1) {
+              return '';
+            } else {
+              return match.slice(1);
+            }
+          });
+          newText = newText.replace(/^ /, '');
+          editBuilder.replace(lineRange, newText);
+        }
+      }
+    });
+  });
+}
+
+module.exports = {
+  handleFormatCommand,
+  getFormatCommands,
+  commentLatex,
+  uncommentLatex
+};

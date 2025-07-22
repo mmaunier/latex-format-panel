@@ -47,6 +47,7 @@ code --install-extension mmaunier.latex-format-panel-0.1.10.vsix
 2. Le panneau "LaTeX Format" apparaît dans la barre latérale
 3. Sélectionnez du texte et cliquez sur les boutons
 4. Utilisez le clic droit pour les variantes (fractions, racines, matrices)
+5. Utilisez les boutons "Commenter" et "Décommenter" dans la section Spécial pour commenter/décommenter rapidement le code LaTeX, même de façon répétée. Les commandes sont aussi accessibles via la palette (Ctrl+Shift+P) et par raccourcis clavier personnalisables.
 
 ## 📋 Blocs disponibles
 
@@ -65,6 +66,7 @@ code --install-extension mmaunier.latex-format-panel-0.1.10.vsix
   - **Figures** : figure, wrapfig, includegraphics
   - **Dessin et code** : tikzpicture, tcolorbox, listing
   - **Tableaux** : table, tabular, tabularray
+- **🛠️ Spécial** : Deux boutons "Commenter" et "Décommenter", enchaînables à volonté.
 
 ### 🔢 Mathématiques (12 blocs)
 1. **⚡ Opérateurs** : ∑, ∏, ∫, lim, sup, inf, max, min
@@ -106,6 +108,11 @@ MIT © Mikaël Maunier
 Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull request.
 
 ## 📈 Changelog
+
+### 0.1.11
+- 🛠️ Ajout de la section "Spécial" dans l’onglet Format avec deux boutons : "Commenter" et "Décommenter"
+- 🔄 Les boutons permettent d’enchaîner plusieurs `%` ou de les retirer, ligne par ligne
+- 🚀 Export des fonctions pour utilisation via la palette de commandes et les raccourcis clavier
 
 ### 0.1.10
 - 🔧 Downgrade de l'extension

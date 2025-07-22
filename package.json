@@ -62,7 +62,16 @@
 				}
 			]
 		},
-		"commands": []
+		"commands": [
+			{
+				"command": "latexFormat.commentLatex",
+				"title": "LaTeX : Commenter la sélection"
+			},
+			{
+				"command": "latexFormat.uncommentLatex",
+				"title": "LaTeX : Décommenter la sélection"
+			}
+		]
 	},
 	"__metadata": {
 		"installedTimestamp": 1752934197999,

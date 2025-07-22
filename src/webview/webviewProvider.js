@@ -80,6 +80,10 @@ class LatexSidebarProvider {
           console.log('Executing default command:', message.command);
           vscode.commands.executeCommand('latexFormat.wrapWith', message.command);
         }
+      } else if (message.command === 'comment') {
+        vscode.commands.executeCommand('latexFormat.commentLatex');
+      } else if (message.command === 'uncomment') {
+        vscode.commands.executeCommand('latexFormat.uncommentLatex');
       } else {
         console.log('Unknown command received:', message.command);
       }

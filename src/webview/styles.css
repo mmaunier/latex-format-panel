@@ -172,6 +172,11 @@ h3 {
     max-width: calc(33.33% - 2px);
 }
 
+.button-group .format-button:nth-child(1):nth-last-child(2),
+.button-group .format-button:nth-child(2):nth-last-child(1) {
+    max-width: calc(50% - 2px);
+}
+
 /* Style spécifique pour les boutons d'environnement */
 .format-button.environment {
     font-weight: 500;
