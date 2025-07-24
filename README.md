@@ -109,6 +109,9 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.1.12
+- 🚀 Publication de l'extension sur le MarketPlace
+
 ### 0.1.11
 - 🛠️ Ajout de la section "Spécial" dans l’onglet Format avec deux boutons : "Commenter" et "Décommenter"
 - 🔄 Les boutons permettent d’enchaîner plusieurs `%` ou de les retirer, ligne par ligne

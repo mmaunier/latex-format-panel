@@ -38,7 +38,8 @@
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.60.0",
-		"@vscode/vsce": "^2.19.0"
+		"@vscode/vsce": "^2.32.0",
+		"vsce": "^2.15.0"
 	},
 	"contributes": {
 		"viewsContainers": {
