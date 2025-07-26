@@ -34,7 +34,7 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 
 ### Depuis le fichier .vsix
 
-1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.1.14.vsix`
+1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.1.15.vsix`
 2. Ouvrez VSCode
 3. Utilisez `Ctrl+Shift+P` → "Extensions: Install from VSIX"
 4. Sélectionnez le fichier téléchargé
@@ -46,7 +46,7 @@ git clone https://github.com/mmaunier/latex-format-panel.git
 cd latex-format-panel
 npm install
 npx vsce package
-code --install-extension mmaunier.latex-format-panel-0.1.14.vsix
+code --install-extension mmaunier.latex-format-panel-0.1.15.vsix
 ```
 
 ## 🚀 Utilisation
