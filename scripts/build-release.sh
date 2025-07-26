@@ -4,86 +4,57 @@ set -e
 echo "🚀 LaTeX Format Panel - Build & Release"
 echo "======================================"
 
-# Récupération des informations depuis package.json
+# 1. Vérifier qu'il n'y a pas de commits en attente
+echo "🔍 Vérification de l'état Git..."
+if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "❌ Des modifications sont en attente. Commitez ou annulez les changements avant de continuer."
+    git status
+    exit 1
+fi
+
+# 2. Incrémenter la version et récupérer les informations
+echo "📝 Incrémentation de la version..."
+npm version patch --no-git-tag-version
+
 VERSION=$(node -p "require('./package.json').version")
 PUBLISHER=$(node -p "require('./package.json').publisher")
 NAME=$(node -p "require('./package.json').name")
 FULL_NAME="$PUBLISHER.$NAME"
 
-echo "🏷️  Version : $VERSION"
-echo "📦  Extension : $FULL_NAME"
+echo "🏷️  Nouvelle version : $VERSION"
 
-# Mise à jour du README.md principal
-echo "📝 Mise à jour du README.md principal..."
-sed -i "s/\(mmaunier\.\)\?latex-format-panel-[0-9]\+\.[0-9]\+\.[0-9]\+\.vsix/$FULL_NAME-$VERSION.vsix/g" README.md
+# 3. Mettre à jour les README.md
+echo "📝 Mise à jour des README.md..."
+sed -i "s/latex-format-panel-[0-9]\+\.[0-9]\+\.[0-9]\+\.vsix/$NAME-$VERSION.vsix/g" README.md
 
-# Création du dossier build si nécessaire
 mkdir -p build
+cp README.md build/README.md
 
-# Mise à jour du README.md dans le dossier build
-echo "📝 Mise à jour du README.md dans le dossier build..."
-if [ -f "build/README.md" ]; then
-    # Si le fichier existe, mettre à jour la version
-    sed -i "s/\(mmaunier\.\)\?latex-format-panel-[0-9]\+\.[0-9]\+\.[0-9]\+\.vsix/$FULL_NAME-$VERSION.vsix/g" build/README.md
-else
-    # Si le fichier n'existe pas, copier le README.md principal
-    cp README.md build/README.md
-fi
-
-# Nettoyage
-echo "🧹 Nettoyage des builds précédents..."
-rm -rf build/*.vsix
-
-# Build de l'extension
+# 4. Créer le .vsix
 echo "📦 Construction de l'extension..."
+rm -f build/*.vsix
 npx vsce package --out build/
 
-# Vérification du fichier créé
-VSIX_FILE=$(ls build/*.vsix 2>/dev/null || echo "")
-if [ -n "$VSIX_FILE" ]; then
-    echo "✅ Extension créée : $VSIX_FILE"
-    echo "📊 Taille : $(ls -lh "$VSIX_FILE" | awk '{print $5}')"
-else
-    echo "❌ Erreur : Fichier .vsix non créé"
-    exit 1
-fi
+VSIX_FILE=$(ls build/*.vsix)
+echo "✅ Extension créée : $VSIX_FILE"
 
-# Git add du fichier build et README
-echo "📤 Ajout au repository Git..."
-git add build/
-git add package.json
-git add README.md
-git add build/README.md
-
-# Commit et push
-git commit -m "Release v$VERSION - Add build artifact and update README" || echo "Rien à commiter"
-git push
-
-# Tag (vérifier s'il n'existe pas déjà)
-if git tag | grep -q "v$VERSION"; then
-    echo "⚠️  Tag v$VERSION existe déjà, suppression..."
-    git tag -d "v$VERSION"
-    git push --delete origin "v$VERSION" 2>/dev/null || echo "Tag distant n'existait pas"
-fi
-
-# Créer le nouveau tag et push
-echo "🏷️  Création du tag v$VERSION..."
+# 5. Commit tout
+echo "📤 Commit et push..."
+git add .
+git commit -m "Release v$VERSION"
 git tag "v$VERSION"
 git push --follow-tags
 
-# Publication sur le Marketplace
-echo "🌐 Publication sur le Marketplace VSCode..."
+# 6. Publier sur le Marketplace
+echo "🌐 Publication sur le Marketplace..."
 if npx vsce publish; then
-    echo "✅ Extension publiée avec succès sur le Marketplace !"
-    echo "🔗 Lien : https://marketplace.visualstudio.com/items?itemName=$FULL_NAME"
+    echo "✅ Extension publiée avec succès !"
+    echo "🔗 https://marketplace.visualstudio.com/items?itemName=$FULL_NAME"
 else
-    echo "❌ Erreur lors de la publication sur le Marketplace"
-    echo "📦 Le fichier .vsix est disponible dans : $VSIX_FILE"
-    echo "🔧 Vous pouvez publier manuellement avec : npx vsce publish"
+    echo "❌ Erreur lors de la publication"
+    echo "📦 Fichier disponible : $VSIX_FILE"
     exit 1
 fi
 
 echo "✅ Release terminée !"
 echo "📥 Installation locale : code --install-extension $VSIX_FILE"
-echo "🌐 Marketplace : https://marketplace.visualstudio.com/items?itemName=$FULL_NAME"
-echo "🌐 GitHub : https://github.com/mmaunier/latex-format-panel"
