@@ -3,7 +3,7 @@
 	"displayName": "LaTeX Format Panel",
 	"description": "Panel de formatage LaTeX avec support mathématique",
 	"icon": "media/icon.png",
-	"version": "0.1.16",
+	"version": "0.1.17",
 	"publisher": "mmaunier",
 	"author": {
 		"name": "Mikaël Maunier",

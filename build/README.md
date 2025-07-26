@@ -34,7 +34,7 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 
 ### Depuis le fichier .vsix
 
-1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.1.16.vsix`
+1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.1.17.vsix`
 2. Ouvrez VSCode
 3. Utilisez `Ctrl+Shift+P` → "Extensions: Install from VSIX"
 4. Sélectionnez le fichier téléchargé
@@ -46,7 +46,7 @@ git clone https://github.com/mmaunier/latex-format-panel.git
 cd latex-format-panel
 npm install
 npx vsce package
-code --install-extension mmaunier.latex-format-panel-0.1.16.vsix
+code --install-extension mmaunier.latex-format-panel-0.1.17.vsix
 ```
 
 ## 🚀 Utilisation
@@ -94,8 +94,21 @@ code --install-extension mmaunier.latex-format-panel-0.1.16.vsix
 ### ✨ Personnalisé
 - **🎯 Vos propres boutons** : Configurez entièrement l'onglet Perso via les paramètres
 - **📝 Titres et sections** : Organisez vos boutons par groupes thématiques
-- **⚙️ Commandes personnalisées** : Définissez vos propres commandes LaTeX avec syntaxe `{}` pour le texte sélectionné
+- **⚙️ Commandes avec marqueurs** : Utilisez `$1` pour le texte sélectionné et `$0` pour la position du curseur
+- **🏗️ Support des environnements** : Créez facilement des environnements LaTeX complets
 - **🔄 Configuration dynamique** : Modification à chaud sans redémarrage, regroupement automatique par 3 boutons par ligne
+
+#### 📋 Configuration personnalisée
+
+**Marqueurs :** `$1` = texte sélectionné, `$0` = position du curseur, `\n` = nouvelle ligne
+
+**Exemples :**
+```json
+{"type": "button", "label": "Section", "command": "\\section{$1}$0"}
+{"type": "button", "label": "Environnement", "command": "\\begin{$1}\n$0\n\\end{$1}"}
+```
+
+→ Configuration complète dans les paramètres VSCode (`Ctrl+,` → "LaTeX Format Panel")
 
 ## 🛠️ Développement
 
@@ -124,7 +137,13 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
-### 0.1.15
+### 0.1.17
+- 🎯 **Nouveau système de marqueurs** pour l'onglet Perso :
+  - Support de `$1` pour le texte sélectionné (peut apparaître plusieurs fois)
+  - Support de `$0` pour la position finale du curseur
+  - Support de `\n` pour les retours à la ligne
+
+### 0.1.15 à 0.1.16
 - Correction d'un bug sur l'affichage du menu contextuel.
 
 ### 0.1.14
@@ -149,7 +168,7 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 - 🗑️ Plus de lien avec les paramètres
 - 🧹 Commandes consoles supprimées
 
-### 0.1.8
+### 0.1.8 à 0.1.9
 - ⚒️ Refonte de l'onglet Format avec nouveaux blocs thématiques :
   - Ajout d'une section "Sectionnement et espacement" pour une meilleure organisation
   - Nouveaux blocs d'espacement horizontal et vertical (12 commandes)
@@ -210,7 +229,7 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 - 🔧 Amélioration du script de build et de déploiement
 - 🧹 Refactoring du code pour une meilleure maintenance
 
-### 0.1.3
+### 0.1.3 à 0.1.4
 - ✅ Correction du support du souligné en mode mathématique (`\underline` vs `\uline`)
 - 🆕 Ajout de nouveaux environnements : tikzpicture, tcolorbox, listing, tabularray
 - 🔧 Amélioration de la détection du mode mathématique
