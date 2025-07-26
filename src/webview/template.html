@@ -157,6 +157,7 @@
 
   <script>
     const vscode = acquireVsCodeApi();
+    const commandVariants = {{COMMAND_VARIANTS}};
 
     function sendCommand(command, variantId = null) {
       vscode.postMessage({
