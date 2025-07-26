@@ -59,6 +59,19 @@ git add build/README.md
 git commit -m "Release v$VERSION - Add build artifact and update README" || echo "Rien à commiter"
 git push
 
+# Publication sur le Marketplace
+echo "🌐 Publication sur le Marketplace VSCode..."
+if npx vsce publish; then
+    echo "✅ Extension publiée avec succès sur le Marketplace !"
+    echo "🔗 Lien : https://marketplace.visualstudio.com/items?itemName=$FULL_NAME"
+else
+    echo "❌ Erreur lors de la publication sur le Marketplace"
+    echo "📦 Le fichier .vsix est disponible dans : $VSIX_FILE"
+    echo "🔧 Vous pouvez publier manuellement avec : npx vsce publish"
+    exit 1
+fi
+
 echo "✅ Release terminée !"
-echo "📥 Installation : code --install-extension $VSIX_FILE"
+echo "📥 Installation locale : code --install-extension $VSIX_FILE"
+echo "🌐 Marketplace : https://marketplace.visualstudio.com/items?itemName=$FULL_NAME"
 echo "🌐 GitHub : https://github.com/mmaunier/latex-format-panel"
