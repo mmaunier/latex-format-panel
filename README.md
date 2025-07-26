@@ -30,7 +30,7 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 1. Ouvrez Visual Studio Code
 2. Cliquez sur l'icône Extensions dans la barre latérale (ou `Ctrl+Shift+X`)
 3. Recherchez "LaTeX Format Panel" ou "mmaunier"
-4. Cliquez sur "Installer" sur l'extension de Mikaël Maunier
+4. Cliquez sur "Installer"
 
 ### Depuis le fichier .vsix
 
