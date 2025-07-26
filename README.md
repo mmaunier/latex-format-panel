@@ -124,7 +124,7 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
-### 0.1.14
+### 0.1.15
 - Correction d'un bug sur l'affichage du menu contextuel.
 
 ### 0.1.14
