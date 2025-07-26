@@ -2,441 +2,435 @@
 <html lang="fr">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>LaTeX Format Panel</title>
-   <style>
-   {{CSS_CONTENT}}
-   </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaTeX Format Panel</title>
+  <style>{{CSS_CONTENT}}</style>
+  </style>
 </head>
 
 <body>
-   <div class="tabs">
-      <button class="tab active" onclick="switchTab('format')">🎨 Formats</button>
-      <button class="tab" onclick="switchTab('math')">📐 Math</button>
-   </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('format')">🎨 Formats</button>
+    <button class="tab" onclick="switchTab('math')">📐 Math</button>
+    <button class="tab" onclick="switchTab('perso')">✨ Perso</button>
+  </div>
 
-   {{FORMAT_HTML}}
-   {{MATH_HTML}}
+  {{FORMAT_HTML}}
+  {{MATH_HTML}}
+  {{PERSO_HTML}}
 
-   <!-- Menu contextuel - Placé à la fin pour être au-dessus de tout -->
-   <div id="contextMenu" class="context-menu">
-      <div class="context-menu-overlay" onclick="hideContextMenu()"></div>
-      <div class="context-menu-content">
-         <div class="context-menu-header">
-            <span id="contextMenuTitle">Variantes</span>
-            <button class="context-menu-close" onclick="hideContextMenu()">×</button>
-         </div>
-         <div id="contextMenuItems" class="context-menu-items">
-            <!-- Les items seront ajoutés dynamiquement -->
-         </div>
+  <!-- Menu contextuel - Placé à la fin pour être au-dessus de tout -->
+  <div id="contextMenu" class="context-menu">
+    <div class="context-menu-overlay" onclick="hideContextMenu()"></div>
+    <div class="context-menu-content">
+      <div class="context-menu-header">
+        <span id="contextMenuTitle">Variantes</span>
+        <button class="context-menu-close" onclick="hideContextMenu()">×</button>
       </div>
-   </div>
+      <div id="contextMenuItems" class="context-menu-items">
+        <!-- Les items seront ajoutés dynamiquement -->
+      </div>
+    </div>
+  </div>
 
-   <!-- Modal pour tabularray -->
-   <div id="tblrModal" class="modal">
-     <div class="modal-overlay" onclick="hideModal('tblrModal')"></div>
-     <div class="modal-content">
-       <div class="modal-header">
-         <span id="modalTitle">Configuration du tableau</span>
-         <button class="modal-close" onclick="hideModal('tblrModal')">×</button>
-       </div>
-       <div class="modal-body">
-         <form id="tblrForm">
-           <div class="form-group">
-             <label for="tableWidth">Largeur du tableau:</label>
-             <input type="text" id="tableWidth" name="tableWidth" value="\textwidth">
-           </div>
-           <div class="form-group">
-             <label for="rowHeight">Hauteur des lignes:</label>
-             <input type="text" id="rowHeight" name="rowHeight" value="1.2\baselineskip">
-           </div>
-           <div class="form-group">
-             <label for="rows">Nombre de lignes:</label>
-             <input type="number" id="rows" name="rows" min="1" max="20" value="3" onchange="updateColspec()">
-           </div>
-           <div class="form-group">
-             <label for="cols">Nombre de colonnes:</label>
-             <input type="number" id="cols" name="cols" min="1" max="10" value="3" onchange="updateColspec()">
-           </div>
-           <div class="form-group">
-             <label for="header">Première ligne en en-tête:</label>
-             <input type="checkbox" id="header" name="header" checked>
-           </div>
-           <div class="form-group">
-             <label for="firstColHeader">Première colonne en en-tête:</label>
-             <input type="checkbox" id="firstColHeader" name="firstColHeader">
-           </div>
-           <div class="form-group">
-             <label for="removeFirstCell">Enlever la première case:</label>
-             <input type="checkbox" id="removeFirstCell" name="removeFirstCell">
-           </div>
-           <div class="form-group">
-             <label for="style">Style:</label>
-             <select id="style" name="style">
-               <option value="grid" selected>Grille complète</option>
-               <option value="hlines">Lignes horizontales</option>
-               <option value="vlines">Lignes verticales</option>
-               <option value="simple">Simple</option>
-             </select>
-           </div>
-           <div class="form-group">
-             <label for="alternateColors">Colorer une ligne sur 2:</label>
-             <input type="checkbox" id="alternateColors" name="alternateColors">
-           </div>
-           <div class="form-group">
-             <label for="colspec">Paramètres des colonnes:</label>
-             <input type="text" id="colspec" name="colspec" value="">
-           </div>
-           <div class="form-group buttons">
-             <button type="button" onclick="hideModal('tblrModal')">Annuler</button>
-             <button type="button" onclick="submitTblrForm()">Créer</button>
-           </div>
-         </form>
-       </div>
-     </div>
-   </div>
+  <!-- Modal pour tabularray -->
+  <div id="tblrModal" class="modal">
+    <div class="modal-overlay" onclick="hideModal('tblrModal')"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="modalTitle">Configuration du tableau</span>
+        <button class="modal-close" onclick="hideModal('tblrModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="tblrForm">
+          <div class="form-group">
+            <label for="tableWidth">Largeur du tableau:</label>
+            <input type="text" id="tableWidth" name="tableWidth" value="\textwidth">
+          </div>
+          <div class="form-group">
+            <label for="rowHeight">Hauteur des lignes:</label>
+            <input type="text" id="rowHeight" name="rowHeight" value="1.2\baselineskip">
+          </div>
+          <div class="form-group">
+            <label for="rows">Nombre de lignes:</label>
+            <input type="number" id="rows" name="rows" min="1" max="20" value="3" onchange="updateColspec()">
+          </div>
+          <div class="form-group">
+            <label for="cols">Nombre de colonnes:</label>
+            <input type="number" id="cols" name="cols" min="1" max="10" value="3" onchange="updateColspec()">
+          </div>
+          <div class="form-group">
+            <label for="header">Première ligne en en-tête:</label>
+            <input type="checkbox" id="header" name="header" checked>
+          </div>
+          <div class="form-group">
+            <label for="firstColHeader">Première colonne en en-tête:</label>
+            <input type="checkbox" id="firstColHeader" name="firstColHeader">
+          </div>
+          <div class="form-group">
+            <label for="removeFirstCell">Enlever la première case:</label>
+            <input type="checkbox" id="removeFirstCell" name="removeFirstCell">
+          </div>
+          <div class="form-group">
+            <label for="style">Style:</label>
+            <select id="style" name="style">
+              <option value="grid" selected>Grille complète</option>
+              <option value="hlines">Lignes horizontales</option>
+              <option value="vlines">Lignes verticales</option>
+              <option value="simple">Simple</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="alternateColors">Colorer une ligne sur 2:</label>
+            <input type="checkbox" id="alternateColors" name="alternateColors">
+          </div>
+          <div class="form-group">
+            <label for="colspec">Paramètres des colonnes:</label>
+            <input type="text" id="colspec" name="colspec" value="">
+          </div>
+          <div class="form-group buttons">
+            <button type="button" onclick="hideModal('tblrModal')">Annuler</button>
+            <button type="button" onclick="submitTblrForm()">Créer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-   <!-- Modal pour matrix -->
-   <div id="matrixModal" class="modal">
-     <div class="modal-overlay" onclick="hideModal('matrixModal')"></div>
-     <div class="modal-content">
-       <div class="modal-header">
-         <span id="modalTitle">Configuration de la matrice</span>
-         <button class="modal-close" onclick="hideModal('matrixModal')">×</button>
-       </div>
-       <div class="modal-body">
-         <form id="matrixForm">
-           <div class="form-group">
-             <label>Dimensions:</label>
-             <div class="radio-group">
-               <label>
-                 <input type="radio" name="matrixSize" value="2x2" checked onclick="toggleCustomSizeFields()"> 2×2
-               </label>
-               <label>
-                 <input type="radio" name="matrixSize" value="3x3" onclick="toggleCustomSizeFields()"> 3×3
-               </label>
-               <label>
-                 <input type="radio" name="matrixSize" value="custom" onclick="toggleCustomSizeFields()"> Personnalisé
-               </label>
-             </div>
-           </div>
-           
-           <div id="customSizeFields" style="display: none;">
-             <div class="form-group">
-               <label for="matrixRows">Nombre de lignes (n):</label>
-               <input type="number" id="matrixRows" name="matrixRows" min="1" max="10" value="2">
-             </div>
-             <div class="form-group">
-               <label for="matrixCols">Nombre de colonnes (p):</label>
-               <input type="number" id="matrixCols" name="matrixCols" min="1" max="10" value="2">
-             </div>
-           </div>
-           
-           <div class="form-group">
-             <label for="matrixType">Type de matrice:</label>
-             <select id="matrixType" name="matrixType">
-               <option value="pmatrix" selected>Parenthèses (pmatrix)</option>
-               <option value="bmatrix">Crochets (bmatrix)</option>
-               <option value="vmatrix">Barres simples (vmatrix)</option>
-               <option value="Vmatrix">Barres doubles (Vmatrix)</option>
-               <option value="Bmatrix">Accolades (Bmatrix)</option>
-               <option value="matrix">Sans délimiteurs (matrix)</option>
-             </select>
-           </div>
-           
-           <div class="form-group buttons">
-             <button type="button" onclick="hideModal('matrixModal')">Annuler</button>
-             <button type="button" onclick="submitMatrixForm()">Créer</button>
-           </div>
-         </form>
-       </div>
-     </div>
-   </div>
+  <!-- Modal pour matrix -->
+  <div id="matrixModal" class="modal">
+    <div class="modal-overlay" onclick="hideModal('matrixModal')"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="modalTitle">Configuration de la matrice</span>
+        <button class="modal-close" onclick="hideModal('matrixModal')">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="matrixForm">
+          <div class="form-group">
+            <label>Dimensions:</label>
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="matrixSize" value="2x2" checked onclick="toggleCustomSizeFields()"> 2×2
+              </label>
+              <label>
+                <input type="radio" name="matrixSize" value="3x3" onclick="toggleCustomSizeFields()"> 3×3
+              </label>
+              <label>
+                <input type="radio" name="matrixSize" value="custom" onclick="toggleCustomSizeFields()"> Personnalisé
+              </label>
+            </div>
+          </div>
 
-   <script>
-      const vscode = acquireVsCodeApi();
-      
-      // Variants data (sera injecté depuis le backend)
-      const commandVariants = {{COMMAND_VARIANTS}};
+          <div id="customSizeFields" style="display: none;">
+            <div class="form-group">
+              <label for="matrixRows">Nombre de lignes (n):</label>
+              <input type="number" id="matrixRows" name="matrixRows" min="1" max="10" value="2">
+            </div>
+            <div class="form-group">
+              <label for="matrixCols">Nombre de colonnes (p):</label>
+              <input type="number" id="matrixCols" name="matrixCols" min="1" max="10" value="2">
+            </div>
+          </div>
 
-      function sendCommand(command, variantId = null) {
-         vscode.postMessage({
-            command: command,
-            variant: variantId
-         });
+          <div class="form-group">
+            <label for="matrixType">Type de matrice:</label>
+            <select id="matrixType" name="matrixType">
+              <option value="pmatrix" selected>Parenthèses (pmatrix)</option>
+              <option value="bmatrix">Crochets (bmatrix)</option>
+              <option value="vmatrix">Barres simples (vmatrix)</option>
+              <option value="Vmatrix">Barres doubles (Vmatrix)</option>
+              <option value="Bmatrix">Accolades (Bmatrix)</option>
+              <option value="matrix">Sans délimiteurs (matrix)</option>
+            </select>
+          </div>
+
+          <div class="form-group buttons">
+            <button type="button" onclick="hideModal('matrixModal')">Annuler</button>
+            <button type="button" onclick="submitMatrixForm()">Créer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const vscode = acquireVsCodeApi();
+
+    function sendCommand(command, variantId = null) {
+      vscode.postMessage({
+        command: command,
+        variant: variantId
+      });
+    }
+
+    function showContextMenu(event, command) {
+      console.log('showContextMenu called for:', command);
+      console.log('Available variants:', commandVariants);
+
+      const variants = commandVariants[command];
+      if (!variants || !variants.variants) {
+        console.log('No variants found for command:', command);
+        return;
       }
 
-      function showContextMenu(event, command) {
-         console.log('showContextMenu called for:', command);
-         console.log('Available variants:', commandVariants);
-         
-         const variants = commandVariants[command];
-         if (!variants || !variants.variants) {
-            console.log('No variants found for command:', command);
-            return;
-         }
+      const menu = document.getElementById('contextMenu');
+      const menuItems = document.getElementById('contextMenuItems');
+      const menuTitle = document.getElementById('contextMenuTitle');
 
-         const menu = document.getElementById('contextMenu');
-         const menuItems = document.getElementById('contextMenuItems');
-         const menuTitle = document.getElementById('contextMenuTitle');
-         
-         if (!menu || !menuItems || !menuTitle) {
-            console.error('Menu elements not found');
-            return;
-         }
+      if (!menu || !menuItems || !menuTitle) {
+        console.error('Menu elements not found');
+        return;
+      }
 
-         // D'abord cacher le menu s'il est déjà ouvert
-         hideContextMenu();
-         
-         // Position du menu près du curseur mais dans les limites de la fenêtre
-         const content = menu.querySelector('.context-menu-content');
-         const rect = document.body.getBoundingClientRect();
-         
-         let x = event.clientX;
-         let y = event.clientY;
-         
-         // Ajuster si le menu dépasse les bords
-         if (x + 250 > rect.width) {
-            x = rect.width - 250;
-         }
-         if (y + 200 > rect.height) {
-            y = rect.height - 200;
-         }
-         
-         content.style.left = x + 'px';
-         content.style.top = y + 'px';
-         
-         // Titre du menu
-         menuTitle.textContent = `${command.toUpperCase()} - Variantes`;
-         
-         // Vider les items existants
-         menuItems.innerHTML = '';
-         
-         // Ajouter les variantes
-         variants.variants.forEach(variant => {
-            const item = document.createElement('button');
-            item.className = 'context-menu-item';
-            
-            item.innerHTML = `
+      // D'abord cacher le menu s'il est déjà ouvert
+      hideContextMenu();
+
+      // Position du menu près du curseur mais dans les limites de la fenêtre
+      const content = menu.querySelector('.context-menu-content');
+      const rect = document.body.getBoundingClientRect();
+
+      let x = event.clientX;
+      let y = event.clientY;
+
+      // Ajuster si le menu dépasse les bords
+      if (x + 250 > rect.width) {
+        x = rect.width - 250;
+      }
+      if (y + 200 > rect.height) {
+        y = rect.height - 200;
+      }
+
+      content.style.left = x + 'px';
+      content.style.top = y + 'px';
+
+      // Titre du menu
+      menuTitle.textContent = `${command.toUpperCase()} - Variantes`;
+
+      // Vider les items existants
+      menuItems.innerHTML = '';
+
+      // Ajouter les variantes
+      variants.variants.forEach(variant => {
+        const item = document.createElement('button');
+        item.className = 'context-menu-item';
+
+        item.innerHTML = `
                <div class="context-menu-item-label">${variant.label}</div>
                <div class="context-menu-item-description">${variant.description}</div>
                ${variant.package ? `<div class="context-menu-item-package">Package: ${variant.package}</div>` : ''}
             `;
-            
-            item.onclick = (e) => {
-               e.stopPropagation();
-               sendCommand(command, variant.id);
-               hideContextMenu();
-            };
-            
-            menuItems.appendChild(item);
-         });
-         
-         // Afficher le menu
-         menu.classList.add('show');
-         
-         // Empêcher la propagation
-         event.stopPropagation();
-         event.preventDefault();
+
+        item.onclick = (e) => {
+          e.stopPropagation();
+          sendCommand(command, variant.id);
+          hideContextMenu();
+        };
+
+        menuItems.appendChild(item);
+      });
+
+      // Afficher le menu
+      menu.classList.add('show');
+
+      // Empêcher la propagation
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+    function hideContextMenu() {
+      const menu = document.getElementById('contextMenu');
+      if (menu) {
+        menu.classList.remove('show');
       }
+    }
 
-      function hideContextMenu() {
-         const menu = document.getElementById('contextMenu');
-         if (menu) {
-            menu.classList.remove('show');
-         }
+    function switchTab(tabName) {
+      hideContextMenu();
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabName + '-tab').classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Fonctions pour gérer la modale
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('show');
       }
+    }
 
-      function switchTab(tabName) {
-         // Fermer le menu contextuel lors du changement d'onglet
-         hideContextMenu();
-         
-         const tabContents = document.querySelectorAll('.tab-content');
-         tabContents.forEach(content => {
-            content.classList.remove('active');
-         });
-
-         const tabs = document.querySelectorAll('.tab');
-         tabs.forEach(tab => {
-            tab.classList.remove('active');
-         });
-
-         document.getElementById(tabName + '-tab').classList.add('active');
-         event.target.classList.add('active');
+    function hideModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('show');
       }
+    }
 
-      // Fonctions pour gérer la modale
-      function showModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-          modal.classList.add('show');
+    function updateColspec() {
+      // Générer le pattern mais ne pas l'afficher dans le champ
+      // Le champ reste vide par défaut
+      const cols = parseInt(document.getElementById('cols').value, 10) || 3;
+      // Ne pas mettre à jour le champ, garder sa valeur actuelle
+    }
+
+    function showTblrModal(event) {
+      // Empêcher le menu contextuel de s'afficher
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Masquer le menu contextuel s'il est ouvert
+      hideContextMenu();
+
+      // Initialiser les valeurs par défaut
+      document.getElementById('tableWidth').value = '\\textwidth';
+      document.getElementById('rowHeight').value = '1.2\\baselineskip';
+      document.getElementById('rows').value = '3';
+      document.getElementById('cols').value = '3';
+      document.getElementById('header').checked = true;
+      document.getElementById('firstColHeader').checked = false;
+      document.getElementById('removeFirstCell').checked = false;
+      document.getElementById('style').value = 'grid'; // Changé de 'hlines' à 'grid'
+      document.getElementById('alternateColors').checked = false;
+      document.getElementById('colspec').value = ''; // Champ vide par défaut
+
+      // Afficher la modale tabularray
+      showModal('tblrModal');
+    }
+
+    function submitTblrForm() {
+      // Récupérer les valeurs du formulaire
+      const tableWidth = document.getElementById('tableWidth').value || '\\textwidth';
+      const rowHeight = document.getElementById('rowHeight').value || '1.2\\baselineskip';
+      const rows = parseInt(document.getElementById('rows').value, 10) || 3;
+      const cols = parseInt(document.getElementById('cols').value, 10) || 3;
+      const header = document.getElementById('header').checked;
+      const firstColHeader = document.getElementById('firstColHeader').checked;
+      const removeFirstCell = document.getElementById('removeFirstCell').checked;
+      const style = document.getElementById('style').value;
+      const alternateColors = document.getElementById('alternateColors').checked;
+      const colspec = document.getElementById('colspec').value || '';
+
+      // Envoyer les données au backend
+      vscode.postMessage({
+        command: 'tabularray',
+        variant: 'custom',
+        params: {
+          tableWidth,
+          rowHeight,
+          rows,
+          cols,
+          header,
+          firstColHeader,
+          removeFirstCell,
+          style,
+          alternateColors,
+          colspec
         }
+      });
+
+      // Fermer la modale
+      hideModal('tblrModal');
+    }
+
+    function toggleCustomSizeFields() {
+      const customRadio = document.querySelector('input[name="matrixSize"][value="custom"]');
+      const customFields = document.getElementById('customSizeFields');
+
+      if (customRadio && customRadio.checked) {
+        customFields.style.display = 'block';
+      } else {
+        customFields.style.display = 'none';
+      }
+    }
+
+    function showMatrixModal(event) {
+      // Empêcher le menu contextuel de s'afficher
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Masquer le menu contextuel s'il est ouvert
+      hideContextMenu();
+
+      // Réinitialiser les valeurs par défaut
+      document.querySelector('input[name="matrixSize"][value="2x2"]').checked = true;
+      document.getElementById('matrixRows').value = '2';
+      document.getElementById('matrixCols').value = '2';
+      document.getElementById('matrixType').value = 'pmatrix';
+      document.getElementById('customSizeFields').style.display = 'none';
+
+      // Afficher la modale matrix
+      showModal('matrixModal');
+    }
+
+    function submitMatrixForm() {
+      // Récupérer les valeurs du formulaire
+      const sizeOption = document.querySelector('input[name="matrixSize"]:checked').value;
+      let rows = 2;
+      let cols = 2;
+
+      if (sizeOption === '2x2') {
+        rows = 2;
+        cols = 2;
+      } else if (sizeOption === '3x3') {
+        rows = 3;
+        cols = 3;
+      } else if (sizeOption === 'custom') {
+        rows = parseInt(document.getElementById('matrixRows').value, 10) || 2;
+        cols = parseInt(document.getElementById('matrixCols').value, 10) || 2;
       }
 
-      function hideModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-          modal.classList.remove('show');
+      const matrixType = document.getElementById('matrixType').value;
+
+      // Envoyer les données au backend
+      vscode.postMessage({
+        command: 'matrix',
+        variant: 'custom',
+        params: {
+          rows,
+          cols,
+          matrixType
         }
-      }
+      });
 
-      function updateColspec() {
-        // Générer le pattern mais ne pas l'afficher dans le champ
-        // Le champ reste vide par défaut
-        const cols = parseInt(document.getElementById('cols').value, 10) || 3;
-        // Ne pas mettre à jour le champ, garder sa valeur actuelle
-      }
+      // Fermer la modale
+      hideModal('matrixModal');
+    }
 
-      function showTblrModal(event) {
-        // Empêcher le menu contextuel de s'afficher
-        event.preventDefault();
-        event.stopPropagation();
-        
-        // Masquer le menu contextuel s'il est ouvert
+    // Désactiver le menu contextuel par défaut du navigateur
+    document.addEventListener('contextmenu', function (e) {
+      if (!e.target.hasAttribute('oncontextmenu')) {
+        e.preventDefault();
+      }
+    });
+
+    // Cacher le menu contextuel quand on clique ailleurs
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.context-menu-content')) {
         hideContextMenu();
-        
-        // Initialiser les valeurs par défaut
-        document.getElementById('tableWidth').value = '\\textwidth';
-        document.getElementById('rowHeight').value = '1.2\\baselineskip';
-        document.getElementById('rows').value = '3';
-        document.getElementById('cols').value = '3';
-        document.getElementById('header').checked = true;
-        document.getElementById('firstColHeader').checked = false;
-        document.getElementById('removeFirstCell').checked = false;
-        document.getElementById('style').value = 'grid'; // Changé de 'hlines' à 'grid'
-        document.getElementById('alternateColors').checked = false;
-        document.getElementById('colspec').value = ''; // Champ vide par défaut
-        
-        // Afficher la modale tabularray
-        showModal('tblrModal');
       }
+    });
 
-      function submitTblrForm() {
-        // Récupérer les valeurs du formulaire
-        const tableWidth = document.getElementById('tableWidth').value || '\\textwidth';
-        const rowHeight = document.getElementById('rowHeight').value || '1.2\\baselineskip';
-        const rows = parseInt(document.getElementById('rows').value, 10) || 3;
-        const cols = parseInt(document.getElementById('cols').value, 10) || 3;
-        const header = document.getElementById('header').checked;
-        const firstColHeader = document.getElementById('firstColHeader').checked;
-        const removeFirstCell = document.getElementById('removeFirstCell').checked;
-        const style = document.getElementById('style').value;
-        const alternateColors = document.getElementById('alternateColors').checked;
-        const colspec = document.getElementById('colspec').value || '';
-        
-        // Envoyer les données au backend
-        vscode.postMessage({
-          command: 'tabularray',
-          variant: 'custom',
-          params: {
-            tableWidth,
-            rowHeight,
-            rows,
-            cols,
-            header,
-            firstColHeader,
-            removeFirstCell,
-            style,
-            alternateColors,
-            colspec
-          }
-        });
-        
-        // Fermer la modale
-        hideModal('tblrModal');
-      }
-
-      function toggleCustomSizeFields() {
-        const customRadio = document.querySelector('input[name="matrixSize"][value="custom"]');
-        const customFields = document.getElementById('customSizeFields');
-        
-        if (customRadio && customRadio.checked) {
-          customFields.style.display = 'block';
-        } else {
-          customFields.style.display = 'none';
-        }
-      }
-
-      function showMatrixModal(event) {
-        // Empêcher le menu contextuel de s'afficher
-        event.preventDefault();
-        event.stopPropagation();
-        
-        // Masquer le menu contextuel s'il est ouvert
+    // Cacher le menu contextuel à l'échap
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
         hideContextMenu();
-        
-        // Réinitialiser les valeurs par défaut
-        document.querySelector('input[name="matrixSize"][value="2x2"]').checked = true;
-        document.getElementById('matrixRows').value = '2';
-        document.getElementById('matrixCols').value = '2';
-        document.getElementById('matrixType').value = 'pmatrix';
-        document.getElementById('customSizeFields').style.display = 'none';
-        
-        // Afficher la modale matrix
-        showModal('matrixModal');
       }
+    });
 
-      function submitMatrixForm() {
-        // Récupérer les valeurs du formulaire
-        const sizeOption = document.querySelector('input[name="matrixSize"]:checked').value;
-        let rows = 2;
-        let cols = 2;
-        
-        if (sizeOption === '2x2') {
-          rows = 2;
-          cols = 2;
-        } else if (sizeOption === '3x3') {
-          rows = 3;
-          cols = 3;
-        } else if (sizeOption === 'custom') {
-          rows = parseInt(document.getElementById('matrixRows').value, 10) || 2;
-          cols = parseInt(document.getElementById('matrixCols').value, 10) || 2;
-        }
-        
-        const matrixType = document.getElementById('matrixType').value;
-        
-        // Envoyer les données au backend
-        vscode.postMessage({
-          command: 'matrix',
-          variant: 'custom',
-          params: {
-            rows,
-            cols,
-            matrixType
-          }
-        });
-        
-        // Fermer la modale
-        hideModal('matrixModal');
-      }
-
-      // Désactiver le menu contextuel par défaut du navigateur
-      document.addEventListener('contextmenu', function(e) {
-         if (!e.target.hasAttribute('oncontextmenu')) {
-            e.preventDefault();
-         }
-      });
-
-      // Cacher le menu contextuel quand on clique ailleurs
-      document.addEventListener('click', function(e) {
-         if (!e.target.closest('.context-menu-content')) {
-            hideContextMenu();
-         }
-      });
-
-      // Cacher le menu contextuel à l'échap
-      document.addEventListener('keydown', function(e) {
-         if (e.key === 'Escape') {
-            hideContextMenu();
-         }
-      });
-
-      // Initialisation : s'assurer que le menu est caché
-      document.addEventListener('DOMContentLoaded', function() {
-         hideContextMenu();
-      });
-   </script>
+    // Initialisation : s'assurer que le menu est caché
+    document.addEventListener('DOMContentLoaded', function () {
+      hideContextMenu();
+    });
+  </script>
 </body>
 
 </html>

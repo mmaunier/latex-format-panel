@@ -42,6 +42,52 @@
 		"vsce": "^2.15.0"
 	},
 	"contributes": {
+		"configuration": {
+			"title": "LaTeX Format Panel",
+			"properties": {
+				"latexFormatPanel.persoButtons": {
+					"type": "array",
+					"default": [
+						{
+							"type": "title",
+							"label": "Mes commandes"
+						},
+						{
+							"type": "button",
+							"label": "Exemple",
+							"command": "\\exemple{}"
+						}
+					],
+					"description": "Configuration des boutons personnalisés pour l'onglet Perso. Format JSON :\n- Type 'title' : Crée un titre de section (h3)\n  {\"type\": \"title\", \"label\": \"Mon titre\"}\n- Type 'button' : Crée un bouton LaTeX\n  {\"type\": \"button\", \"label\": \"Nom affiché\", \"command\": \"\\\\macommande{}\"}\n\nLes boutons sont regroupés par 3 par ligne. Utilisez {} dans la commande pour entourer le texte sélectionné.",
+					"markdownDescription": "Configuration des boutons personnalisés pour l'onglet Perso.\n\n**Format JSON :**\n- **Type 'title'** : Crée un titre de section\n  ```json\n  {\"type\": \"title\", \"label\": \"Mon titre\"}\n  ```\n- **Type 'button'** : Crée un bouton LaTeX\n  ```json\n  {\"type\": \"button\", \"label\": \"Nom affiché\", \"command\": \"\\\\macommande{}\"}\n  ```\n\n**Notes :**\n- Les boutons sont regroupés par 3 par ligne\n- Utilisez `{}` dans la commande pour entourer le texte sélectionné\n- Échappez les backslashes avec `\\\\`",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string",
+								"enum": [
+									"title",
+									"button"
+								],
+								"description": "Type d'élément : 'title' pour un titre de section, 'button' pour un bouton"
+							},
+							"label": {
+								"type": "string",
+								"description": "Texte affiché (titre ou nom du bouton)"
+							},
+							"command": {
+								"type": "string",
+								"description": "Commande LaTeX (uniquement pour type 'button'). Utilisez {} pour entourer le texte sélectionné."
+							}
+						},
+						"required": [
+							"type",
+							"label"
+						]
+					}
+				}
+			}
+		},
 		"viewsContainers": {
 			"activitybar": [
 				{
@@ -71,6 +117,11 @@
 			{
 				"command": "latexFormat.uncommentLatex",
 				"title": "LaTeX : Décommenter la sélection"
+			},
+			{
+				"command": "latexFormat.editPersoButtons",
+				"title": "Éditer les boutons personnalisés",
+				"category": "LaTeX Format"
 			}
 		]
 	},

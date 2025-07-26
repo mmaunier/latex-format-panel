@@ -21,8 +21,16 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 - **🔄 Support complet** : Fonctionne en mode math et texte
 - **⚙️ Configuration avancée** : Variantes personnalisables pour chaque commande
 - **📍 Positionnement intelligent** : Placement optimal du curseur après insertion
+- **✨ Onglet personnalisé** : Créez vos propres boutons via les paramètres de l'extension
 
 ## 📦 Installation
+
+### Depuis le Marketplace de Visual Studio Code
+
+1. Ouvrez Visual Studio Code
+2. Cliquez sur l'icône Extensions dans la barre latérale (ou `Ctrl+Shift+X`)
+3. Recherchez "LaTeX Format Panel" ou "mmaunier"
+4. Cliquez sur "Installer" sur l'extension de Mikaël Maunier
 
 ### Depuis le fichier .vsix
 
@@ -48,6 +56,7 @@ code --install-extension mmaunier.latex-format-panel-0.1.12.vsix
 3. Sélectionnez du texte et cliquez sur les boutons
 4. Utilisez le clic droit pour les variantes (fractions, racines, matrices)
 5. Utilisez les boutons "Commenter" et "Décommenter" dans la section Spécial pour commenter/décommenter rapidement le code LaTeX, même de façon répétée. Les commandes sont aussi accessibles via la palette (Ctrl+Shift+P) et par raccourcis clavier personnalisables.
+6. Configurez vos propres boutons via les paramètres (`Ctrl+,` → "LaTeX Format Panel" → "Perso Buttons")
 
 ## 📋 Blocs disponibles
 
@@ -69,18 +78,24 @@ code --install-extension mmaunier.latex-format-panel-0.1.12.vsix
 - **🛠️ Spécial** : Deux boutons "Commenter" et "Décommenter", enchaînables à volonté.
 
 ### 🔢 Mathématiques (12 blocs)
-1. **⚡ Opérateurs** : ∑, ∏, ∫, lim, sup, inf, max, min
-2. **🔝 Exposants/Indices** : Fractions, x², x₂
-3. **⚖️ Comparaisons** : ≤, ≥, ≠, ≈, →, ⇒, etc.
-4. **📊 Fonctions** : √, sin, cos, tan, ln, exp
-5. **🔗 Parenthèses** : ( ), [ ], { }, | |, || ||, matrices (pmatrix, bmatrix, vmatrix, etc.)
-6. **🔢 Ensembles** : ℕ, ℤ, 𝔻, ℚ, ℝ, ℂ
-7. **🎯 Logique** : ∈, ⊂, ∪, ∩, ∀, ∃, ×, ÷, ±, ⋯
-8. **📍 Vecteurs** : Flèches (vec, overrightarrow), angles, texte positionné (underset, overset)
-9. **📐 Environnements de base** : `$...$`, `\[...\]`
-10. **📝 Environnements équation** : equation, equation*, subequations, \displaystyle
-11. **📊 Environnements d'alignement** : align, alignat, gather avec leurs variantes
-12. **🧮 Environnements spéciaux** : cases, systeme, multline, split
+- **⚡ Opérateurs** : ∑, ∏, ∫, lim, sup, inf, max, min
+- **🔝 Exposants/Indices** : Fractions, x², x₂
+- **⚖️ Comparaisons** : ≤, ≥, ≠, ≈, →, ⇒, etc.
+- **📊 Fonctions** : √, sin, cos, tan, ln, exp
+- **🔗 Parenthèses** : ( ), [ ], { }, | |, || ||, matrices (pmatrix, bmatrix, vmatrix, etc.)
+- **🔢 Ensembles** : ℕ, ℤ, 𝔻, ℚ, ℝ, ℂ
+- **🎯 Logique** : ∈, ⊂, ∪, ∩, ∀, ∃, ×, ÷, ±, ⋯
+- **📍 Vecteurs** : Flèches (vec, overrightarrow), angles, texte positionné (underset, overset)
+- **📐 Environnements de base** : `$...$`, `\[...\]`
+- **📝 Environnements équation** : equation, equation*, subequations, \displaystyle
+- **📊 Environnements d'alignement** : align, alignat, gather avec leurs variantes
+- **🧮 Environnements spéciaux** : cases, systeme, multline, split
+
+### ✨ Personnalisé
+- **🎯 Vos propres boutons** : Configurez entièrement l'onglet Perso via les paramètres
+- **📝 Titres et sections** : Organisez vos boutons par groupes thématiques
+- **⚙️ Commandes personnalisées** : Définissez vos propres commandes LaTeX avec syntaxe `{}` pour le texte sélectionné
+- **🔄 Configuration dynamique** : Modification à chaud sans redémarrage, regroupement automatique par 3 boutons par ligne
 
 ## 🛠️ Développement
 
@@ -109,12 +124,17 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.1.13
+- ✨ Nouvel onglet "Perso" pour vos propres boutons
+- ⚙️ Configuration entièrement personnalisable via les paramètres de l'extension
+- 🐛 Correction de bugs
+
 ### 0.1.12
 - 🚀 Publication de l'extension sur le MarketPlace
 
 ### 0.1.11
-- 🛠️ Ajout de la section "Spécial" dans l’onglet Format avec deux boutons : "Commenter" et "Décommenter"
-- 🔄 Les boutons permettent d’enchaîner plusieurs `%` ou de les retirer, ligne par ligne
+- 🛠️ Ajout de la section "Spécial" dans l'onglet Format avec deux boutons : "Commenter" et "Décommenter"
+- 🔄 Les boutons permettent d'enchaîner plusieurs `%` ou de les retirer, ligne par ligne
 - 🚀 Export des fonctions pour utilisation via la palette de commandes et les raccourcis clavier
 
 ### 0.1.10
@@ -198,4 +218,4 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ### 0.1.0
 - 🎉 Version initiale
-- 📝 Support de base du formatage LaTeX
+- 📝 Support de base du formatage

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { getFormatCommands } = require('../actions/formatActions');
 const { getMathCommands } = require('../actions/mathActions');
+const { getPersoCommands } = require('../actions/persoActions');
 const { getFormatCommandVariants } = require('../config/commandFormatVariants');
 const { getMathCommandVariants } = require('../config/commandMathVariants');
 
@@ -16,6 +17,7 @@ function getHtmlTemplate(extensionUri) {
   const cssContent = fs.readFileSync(cssPath, 'utf8');
   const formatHtml = fs.readFileSync(formatHtmlPath, 'utf8');
   const mathHtml = fs.readFileSync(mathHtmlPath, 'utf8');
+  const persoHtml = generatePersoHtml();
   
   // Construire les variants pour le JavaScript
   const variants = {};
@@ -38,13 +40,12 @@ function getHtmlTemplate(extensionUri) {
     }
   });
   
-  //console.log('Variants being injected:', JSON.stringify(variants, null, 2));
-  
   // Remplacer les placeholders
   return templateContent
     .replace('{{CSS_CONTENT}}', cssContent)
     .replace('{{FORMAT_HTML}}', formatHtml)
     .replace('{{MATH_HTML}}', mathHtml)
+    .replace('{{PERSO_HTML}}', persoHtml)
     .replace('{{COMMAND_VARIANTS}}', JSON.stringify(variants));
 }
 
@@ -64,7 +65,11 @@ class LatexSidebarProvider {
     webviewView.webview.onDidReceiveMessage(message => {
       console.log('Received message:', message);
       
-      const allCommands = [...getFormatCommands(), ...getMathCommands()];
+      const allCommands = [
+        ...getFormatCommands(),
+        ...getMathCommands(),
+        ...getPersoCommands()
+      ];
       
       if (allCommands.includes(message.command)) {
         if (message.variant === 'custom' && message.params) {
@@ -89,6 +94,48 @@ class LatexSidebarProvider {
       }
     });
   }
+}
+
+function generatePersoHtml() {
+  const vscode = require('vscode');
+  const config = vscode.workspace.getConfiguration('latexFormatPanel');
+  const buttons = config.get('persoButtons', []);
+  
+  let html = '<div id="perso-tab" class="tab-content">\n\n';
+  let currentGroup = '';
+  let buttonCount = 0;
+  
+  buttons.forEach(item => {
+    if (item.type === 'title') {
+      // Fermer le groupe précédent s'il existe
+      if (currentGroup) {
+        html += '</div>\n\n';
+      }
+      // Ajouter le titre et ouvrir un nouveau groupe - CHANGER h4 en h3
+      html += `<h3>${item.label}</h3>\n`;
+      html += '<div class="button-group">\n';
+      currentGroup = item.label;
+      buttonCount = 0;
+    } else if (item.type === 'button') {
+      const cmdId = item.label.toLowerCase().replace(/\s+/g, '_');
+      html += `   <button class="format-button" onclick="sendCommand('${cmdId}')">${item.label}</button>\n`;
+      buttonCount++;
+      
+      // Créer un nouveau groupe tous les 3 boutons
+      if (buttonCount === 3) {
+        html += '</div>\n\n<div class="button-group">\n';
+        buttonCount = 0;
+      }
+    }
+  });
+  
+  // Fermer le dernier groupe
+  if (currentGroup) {
+    html += '</div>\n';
+  }
+  
+  html += '\n</div>';
+  return html;
 }
 
 module.exports = { LatexSidebarProvider };

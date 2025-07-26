@@ -10,6 +10,7 @@ const { getMathCommandVariants, getDefaultMathVariant, wrapWithMatrix } = requir
 const { isInMathMode } = require('../utils/utils');
 const { getFormatCommands, handleFormatCommand, commentLatex, uncommentLatex } = require('./actions/formatActions');
 const { getMathCommands, handleMathCommand } = require('./actions/mathActions');
+const { getPersoCommands, handlePersoCommand } = require('./actions/persoActions');
 const { LatexSidebarProvider } = require('./webview/webviewProvider');
 
 // Extensions LaTeX supportées
@@ -59,11 +60,14 @@ function wrapWith(cmd, variantId = null) {
       let result;
       const formatCommands = getFormatCommands();
       const mathCommands = getMathCommands();
-      
+      const persoCommands = getPersoCommands();
+
       if (formatCommands.includes(cmd)) {
         result = handleFormatCommand(cmd, editor, selection, text, isMath, variantId);
       } else if (mathCommands.includes(cmd)) {
         result = handleMathCommand(cmd, editor, selection, text, isMath, variantId);
+      } else if (persoCommands.includes(cmd)) {
+        result = handlePersoCommand(cmd, editor, selection, text, isMath, variantId);
       }
       
       if (result && result.replaced) {
@@ -169,6 +173,14 @@ function activate(context) {
     );
   });
   
+  // 9. Enregistrer toutes les commandes personnalisées
+  const persoCommands = getPersoCommands();
+  persoCommands.forEach(cmd => {
+    context.subscriptions.push(
+      vscode.commands.registerCommand(`latexPerso.${cmd}`, () => wrapWith(cmd))
+    );
+  });
+  
   context.subscriptions.push(
     vscode.commands.registerCommand('latexFormat.wrapWithCustomParams', (cmd, params) => {
       if (cmd === 'tabularray') {
@@ -240,6 +252,16 @@ function activate(context) {
     vscode.commands.registerCommand('latexFormat.uncommentLatex', () => {
       const editor = vscode.window.activeTextEditor;
       if (editor) uncommentLatex(editor, editor.selections);
+    })
+  );
+  
+  // Listener pour les changements de configuration
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(event => {
+      if (event.affectsConfiguration('latexFormatPanel.persoButtons')) {
+        // Recharger le webview si la configuration change
+        vscode.commands.executeCommand('workbench.action.reloadWindow');
+      }
     })
   );
   
