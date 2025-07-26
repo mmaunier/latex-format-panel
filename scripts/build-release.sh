@@ -59,6 +59,18 @@ git add build/README.md
 git commit -m "Release v$VERSION - Add build artifact and update README" || echo "Rien à commiter"
 git push
 
+# Tag (vérifier s'il n'existe pas déjà)
+if git tag | grep -q "v$VERSION"; then
+    echo "⚠️  Tag v$VERSION existe déjà, suppression..."
+    git tag -d "v$VERSION"
+    git push --delete origin "v$VERSION" 2>/dev/null || echo "Tag distant n'existait pas"
+fi
+
+# Créer le nouveau tag et push
+echo "🏷️  Création du tag v$VERSION..."
+git tag "v$VERSION"
+git push --follow-tags
+
 # Publication sur le Marketplace
 echo "🌐 Publication sur le Marketplace VSCode..."
 if npx vsce publish; then

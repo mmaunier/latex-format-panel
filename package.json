@@ -32,9 +32,9 @@
 		"vscode:prepublish": "echo 'No compilation needed'",
 		"package": "vsce package --out build/",
 		"build": "vsce package --out build/",
-		"release": "npm version patch && ./scripts/build-release.sh",
-		"release:minor": "npm version minor && ./scripts/build-release.sh",
-		"release:major": "npm version major && ./scripts/build-release.sh"
+		"release": "npm version patch --no-git-tag-version && ./scripts/build-release.sh",
+		"release:minor": "npm version minor --no-git-tag-version && ./scripts/build-release.sh",
+		"release:major": "npm version major --no-git-tag-version && ./scripts/build-release.sh"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.60.0",
