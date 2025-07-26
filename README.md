@@ -124,6 +124,10 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.1.14
+- Correction de la version dans le fichier `package.json`
+- Mise à jour du fichier `README.md` sur le marketplace
+
 ### 0.1.13
 - ✨ Nouvel onglet "Perso" pour vos propres boutons
 - ⚙️ Configuration entièrement personnalisable via les paramètres de l'extension
