@@ -7,8 +7,8 @@ const formatCommandVariants = {
             label: '\\textbf{...}',
             description: 'Commande standard',
             package: null,
-            mathMode: '\\symbf{...}',
-            textMode: '\\textbf{...}',
+            mathMode: '\\symbf{$1}$0',
+            textMode: '\\textbf{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -17,7 +17,7 @@ const formatCommandVariants = {
             label: '\\symbf{...}',
             description: 'Commande mathématiques',
             package: null,
-            mathMode: '\\symbf{...}',
+            mathMode: '\\symbf{$1}$0',
             textMode: null,
             supportsMath: true,
             supportsText: false
@@ -28,17 +28,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '{\\bfseries ...}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'bfseries_env',
-            label: '\\begin{bfseries}...\\end{bfseries}',
-            description: 'Environnement (non standard)',
-            package: null,
-            mathMode: null,
-            textMode: '\\begin{bfseries}...\\end{bfseries}',
+            textMode: '{\\bfseries $1}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -52,8 +42,8 @@ const formatCommandVariants = {
             label: '\\textit{...}',
             description: 'Commande standard',
             package: null,
-            mathMode: '\\mathit{...}',
-            textMode: '\\textit{...}',
+            mathMode: '\\mathit{$1}$0',
+            textMode: '\\textit{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -63,7 +53,22 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '{\\itshape ...}',
+            textMode: '{\\itshape $1}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   emphasis: {
+      default: 'emph',
+      variants: [
+         {
+            id: 'emph',
+            label: '\\emph{...}',
+            description: 'Emphase standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\emph{$1}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -78,7 +83,7 @@ const formatCommandVariants = {
             description: 'Commande standard',
             package: null,
             mathMode: null,
-            textMode: '\\textsl{...}',
+            textMode: '\\textsl{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -88,7 +93,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '{\\slshape ...}',
+            textMode: '{\\slshape $1}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -103,7 +108,7 @@ const formatCommandVariants = {
             description: 'Commande standard',
             package: null,
             mathMode: null,
-            textMode: '\\texttt{...}',
+            textMode: '\\texttt{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -113,7 +118,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '{\\ttshape ...}',
+            textMode: '{\\ttshape $1}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -127,8 +132,8 @@ const formatCommandVariants = {
             label: '\\uline{...}',
             description: 'Souligné simple (≠ \\underline)',
             package: 'ulem',
-            mathMode: '\\uline{...}',
-            textMode: '\\uline{...}',
+            mathMode: '\\uline{$1}$0',
+            textMode: '\\uline{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -138,7 +143,7 @@ const formatCommandVariants = {
             description: 'Double souligné',
             package: 'ulem',
             mathMode: null,
-            textMode: '\\uuline{...}',
+            textMode: '\\uuline{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -148,7 +153,7 @@ const formatCommandVariants = {
             description: 'Souligné en vague',
             package: 'ulem',
             mathMode: null,
-            textMode: '\\uwave{...}',
+            textMode: '\\uwave{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -158,7 +163,7 @@ const formatCommandVariants = {
             description: 'Souligné par des traits',
             package: 'ulem',
             mathMode: null,
-            textMode: '\\dashuline{...}',
+            textMode: '\\dashuline{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -168,7 +173,7 @@ const formatCommandVariants = {
             description: 'Souligné par des points',
             package: 'ulem',
             mathMode: null,
-            textMode: '\\dotuline{...}',
+            textMode: '\\dotuline{$1}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -183,7 +188,7 @@ const formatCommandVariants = {
             description: 'Commande standard',
             package: null,
             mathMode: null,
-            textMode: '\\textsc{...}',
+            textMode: '\\textsc{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -193,12 +198,88 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '{\\scshape ...}',
+            textMode: '{\\scshape $1}$0',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
+   highlight: {
+      default: 'highlight',
+      variants: [
+         {
+            id: 'highlight',
+            label: '\\SurlignerTexte/Formule{...}',
+            description: 'Surlignage automatique',
+            package: 'perso',
+            mathMode: '\\SurlignerFormule{$1}$0',
+            textMode: '\\SurlignerTexte{$1}$0',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   mathbb: {
+      default: 'mathbb', 
+      variants: [
+         {
+            id: 'mathbb',
+            label: '\\mathbb{...}',
+            description: 'Lettres grasses creuses',
+            package: 'amsfonts',
+            mathMode: '\\mathbb{$1}$0',
+            textMode: null,
+            supportsMath: true,
+            supportsText: false
+         }
+      ]
+   },
+   mathcal: {
+      default: 'mathcal',
+      variants: [
+         {
+            id: 'mathcal',
+            label: '\\mathcal{...}',
+            description: 'Lettres calligraphiques',
+            package: null,
+            mathMode: '\\mathcal{$1}$0',
+            textMode: null,
+            supportsMath: true,
+            supportsText: false
+         }
+      ]
+   },
+   superscript: {
+      default: 'superscript',
+      variants: [
+         {
+            id: 'superscript',
+            label: '^{...} / \\textsuperscript{...}',
+            description: 'Exposant',
+            package: null,
+            mathMode: '^{$1}$0',
+            textMode: '\\textsuperscript{$1}$0',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   subscript: {
+      default: 'subscript',
+      variants: [
+         {
+            id: 'subscript',
+            label: '_{...} / \\textsubscript{...}',
+            description: 'Indice',
+            package: null,
+            mathMode: '_{$1}$0',
+            textMode: '\\textsubscript{$1}$0',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   // Tailles de police
    tiny: {
       default: 'command',
       variants: [
@@ -208,7 +289,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\tiny',
+            textMode: '\\tiny ',
             supportsMath: false,
             supportsText: true
          },
@@ -218,7 +299,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{tiny}...\\end{tiny}',
+            textMode: '\\begin{tiny}\n$1\n\\end{tiny}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -233,7 +314,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\scriptsize',
+            textMode: '\\scriptsize ',
             supportsMath: false,
             supportsText: true
          },
@@ -243,7 +324,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{scriptsize}...\\end{scriptsize}',
+            textMode: '\\begin{scriptsize}\n$1\n\\end{scriptsize}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -258,7 +339,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\footnotesize',
+            textMode: '\\footnotesize ',
             supportsMath: false,
             supportsText: true
          },
@@ -268,7 +349,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{footnotesize}...\\end{footnotesize}',
+            textMode: '\\begin{footnotesize}\n$1\n\\end{footnotesize}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -283,7 +364,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\small',
+            textMode: '\\small ',
             supportsMath: false,
             supportsText: true
          },
@@ -293,7 +374,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{small}...\\end{small}',
+            textMode: '\\begin{small}\n$1\n\\end{small}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -308,7 +389,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\normalsize',
+            textMode: '\\normalsize ',
             supportsMath: false,
             supportsText: true
          },
@@ -318,7 +399,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{normalsize}...\\end{normalsize}',
+            textMode: '\\begin{normalsize}\n$1\n\\end{normalsize}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -333,7 +414,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\large',
+            textMode: '\\large ',
             supportsMath: false,
             supportsText: true
          },
@@ -343,7 +424,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{large}...\\end{large}',
+            textMode: '\\begin{large}\n$1\n\\end{large}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -358,7 +439,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\Large',
+            textMode: '\\Large ',
             supportsMath: false,
             supportsText: true
          },
@@ -368,7 +449,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{Large}...\\end{Large}',
+            textMode: '\\begin{Large}\n$1\n\\end{Large}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -383,7 +464,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\LARGE',
+            textMode: '\\LARGE ',
             supportsMath: false,
             supportsText: true
          },
@@ -393,7 +474,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{LARGE}...\\end{LARGE}',
+            textMode: '\\begin{LARGE}\n$1\n\\end{LARGE}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -408,7 +489,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\huge',
+            textMode: '\\huge ',
             supportsMath: false,
             supportsText: true
          },
@@ -418,7 +499,7 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{huge}...\\end{huge}',
+            textMode: '\\begin{huge}\n$1\n\\end{huge}$0',
             supportsMath: false,
             supportsText: true
          }
@@ -433,7 +514,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration',
             package: null,
             mathMode: null,
-            textMode: '\\Huge',
+            textMode: '\\Huge ',
             supportsMath: false,
             supportsText: true
          },
@@ -443,7 +524,89 @@ const formatCommandVariants = {
             description: 'Environnement',
             package: null,
             mathMode: null,
-            textMode: '\\begin{Huge}...\\end{Huge}',
+            textMode: '\\begin{Huge}\n$1\n\\end{Huge}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Transformations de texte
+   uppercase: {
+      default: 'uppercase',
+      variants: [
+         {
+            id: 'uppercase',
+            label: 'MAJUSCULES',
+            description: 'Transformation en majuscules',
+            package: null,
+            mathMode: null,
+            textMode: 'UPPERCASE_TRANSFORM',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   lowercase: {
+      default: 'lowercase',
+      variants: [
+         {
+            id: 'lowercase',
+            label: 'minuscules',
+            description: 'Transformation en minuscules',
+            package: null,
+            mathMode: null,
+            textMode: 'LOWERCASE_TRANSFORM',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   capitalize: {
+      default: 'capitalize',
+      variants: [
+         {
+            id: 'capitalize',
+            label: 'Première majuscule',
+            description: 'Première lettre en majuscule',
+            package: null,
+            mathMode: null,
+            textMode: 'CAPITALIZE_TRANSFORM',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Alignement
+   center: {
+      default: 'centering',
+      variants: [
+         {
+            id: 'centering',
+            label: '\\centering',
+            description: 'Commande de déclaration standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\centering ',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'environment',
+            label: '\\begin{center}...\\end{center}',
+            description: 'Environnement standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{center}\n$1\n\\end{center}$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'custom',
+            label: '\\hfg ... \\hfd',
+            description: 'Version personnalisée',  
+            package: 'perso',
+            mathMode: null,
+            textMode: '\\hfg $1 \\hfd$0',
             supportsMath: false,
             supportsText: true
          }
@@ -458,7 +621,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration standard',
             package: null,
             mathMode: null,
-            textMode: '\\raggedright',
+            textMode: '\\raggedright ',
             supportsMath: false,
             supportsText: true
          },
@@ -468,7 +631,7 @@ const formatCommandVariants = {
             description: 'Environnement standard',
             package: null,
             mathMode: null,
-            textMode: '\\begin{flushleft}...\\end{flushleft}',
+            textMode: '\\begin{flushleft}\n$1\n\\end{flushleft}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -478,42 +641,7 @@ const formatCommandVariants = {
             description: 'Version personnalisée',
             package: 'perso',
             mathMode: null,
-            textMode: '\\hfd',
-            supportsMath: false,
-            supportsText: true
-         }
-      ]
-   },
-   center: {
-      default: 'centering',
-      variants: [
-         {
-            id: 'centering',
-            label: '\\centering',
-            description: 'Commande de déclaration standard',
-            package: null,
-            mathMode: null,
-            textMode: '\\centering',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'environment',
-            label: '\\begin{center}...\\end{center}',
-            description: 'Environnement standard',
-            package: null,
-            mathMode: null,
-            textMode: '\\begin{center}...\\end{center}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'custom',
-            label: '\\hfg ... \\hfd',
-            description: 'Version personnalisée',
-            package: 'perso',
-            mathMode: null,
-            textMode: '\\hfg ... \\hfd',
+            textMode: '\\hfd ',
             supportsMath: false,
             supportsText: true
          }
@@ -528,7 +656,7 @@ const formatCommandVariants = {
             description: 'Commande de déclaration standard',
             package: null,
             mathMode: null,
-            textMode: '\\raggedleft',
+            textMode: '\\raggedleft ',
             supportsMath: false,
             supportsText: true
          },
@@ -538,7 +666,7 @@ const formatCommandVariants = {
             description: 'Environnement standard',
             package: null,
             mathMode: null,
-            textMode: '\\begin{flushright}...\\end{flushright}',
+            textMode: '\\begin{flushright}\n$1\n\\end{flushright}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -548,123 +676,69 @@ const formatCommandVariants = {
             description: 'Version personnalisée',
             package: 'perso',
             mathMode: null,
-            textMode: '\\hfg',
+            textMode: '\\hfg ',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-   enumerate: {
-      default: 'enumerate',
+   // Espacement horizontal
+   quad: {
+      default: 'quad',
       variants: [
          {
-            id: 'enumerate',
-            label: '\\begin{enumerate}..\\end{enumerate}',
-            description: 'Liste numérotée standard',
+            id: 'quad',
+            label: '\\quad',
+            description: 'Espacement de 1em',
+            package: null,
+            mathMode: '\\quad ',
+            textMode: '\\quad ',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   qquad: {
+      default: 'qquad',
+      variants: [
+         {
+            id: 'qquad',
+            label: '\\qquad',
+            description: 'Espacement de 2em',
+            package: null,
+            mathMode: '\\qquad ',
+            textMode: '\\qquad ',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   noindent: {
+      default: 'noindent',
+      variants: [
+         {
+            id: 'noindent',
+            label: '\\noindent',
+            description: 'Supprimer l\'indentation',
             package: null,
             mathMode: null,
-            textMode: '\\begin{enumerate}\n\\item \n\\end{enumerate}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'tasks',
-            label: '\\begin{tasks}[style=enumerate]..\\end{tasks}',
-            description: 'Liste avec package tasks (style enumerate)',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\begin{tasks}[style=enumerate]\n\\task \n\\end{tasks}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'tasks_columns',
-            label: '\\begin{tasks}[style=enumerate](2)..\\end{tasks}',
-            description: 'Liste tasks sur 2 colonnes (style enumerate)',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\begin{tasks}[style=enumerate](2)\n\\task \n\\end{tasks}',
+            textMode: '\\noindent ',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-   itemize: {
-      default: 'itemize',
+   hspace: {
+      default: 'hspace',
       variants: [
          {
-            id: 'itemize',
-            label: '\\begin{itemize}..\\end{itemize}',
-            description: 'Liste à puces standard',
+            id: 'hspace',
+            label: '\\hspace{...}',
+            description: 'Espacement horizontal personnalisé',
             package: null,
-            mathMode: null,
-            textMode: '\\begin{itemize}\n\\item \n\\end{itemize}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'tasks_itemize',
-            label: '\\begin{tasks}[style=itemize]..\\end{tasks}',
-            description: 'Liste tasks (style itemize)',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\begin{tasks}[style=itemize]\n\\task \n\\end{tasks}',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'tasks_bullet',
-            label: '\\begin{tasks}[label=$\\star$](3)..\\end{tasks}',
-            description: 'Liste tasks avec étoiles sur 3 colonnes',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\begin{tasks}[label=$\\star$](3)\n\\task \n\\end{tasks}',
-            supportsMath: false,
-            supportsText: true
-         }
-      ]
-   },
-   item: {
-      default: 'item',
-      variants: [
-         {
-            id: 'item',
-            label: '\\item',
-            description: 'Élément de liste standard',
-            package: null,
-            mathMode: null,
-            textMode: '\\item ',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'task',
-            label: '\\task',
-            description: 'Élément avec package tasks',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\task ',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'task_star',
-            label: '\\task*',
-            description: 'Élément task étoilé : occupe le reste de la ligne',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\task* ',
-            supportsMath: false,
-            supportsText: true
-         },
-         {
-            id: 'task_star_columns',
-            label: '\\task*(2)',
-            description: 'Élément task étoilé sur 2 colonnes',
-            package: 'tasks',
-            mathMode: null,
-            textMode: '\\task*(2) ',
-            supportsMath: false,
+            mathMode: '\\hspace{$1}$0',
+            textMode: '\\hspace{$1}$0',
+            supportsMath: true,
             supportsText: true
          }
       ]
@@ -678,7 +752,7 @@ const formatCommandVariants = {
             description: 'Le texte de droite est poussé au bout de la ligne',
             package: null,
             mathMode: null,
-            textMode: '\\hfill',
+            textMode: '\\hfill ',
             supportsMath: false,
             supportsText: true
          },
@@ -688,7 +762,7 @@ const formatCommandVariants = {
             description: 'Le texte de droite est poussé au bout de la ligne',
             package: 'perso',
             mathMode: null,
-            textMode: '\\hfg',
+            textMode: '\\hfg ',
             supportsMath: false,
             supportsText: true
          },
@@ -698,15 +772,165 @@ const formatCommandVariants = {
             description: 'Le texte de gauche est poussé au début du bloc précédent',
             package: 'perso',
             mathMode: null,
-            textMode: '\\hfd',
+            textMode: '\\hfd ',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-
-   // Variantes pour Chapitres
-   'chapitres': {
+   hbox: {
+      default: 'hbox',
+      variants: [
+         {
+            id: 'hbox',
+            label: '\\hbox{...}',
+            description: 'Boîte horizontale',
+            package: null,
+            mathMode: '\\hbox{$1}$0',
+            textMode: '\\hbox{$1}$0',
+            supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   // Espacement vertical
+   smallskip: {
+      default: 'smallskip',
+      variants: [
+         {
+            id: 'smallskip',
+            label: '\\smallskip',
+            description: 'Petit saut vertical',
+            package: null,
+            mathMode: null,
+            textMode: '\\smallskip ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   medskip: {
+      default: 'medskip',
+      variants: [
+         {
+            id: 'medskip',
+            label: '\\medskip',
+            description: 'Saut vertical moyen',
+            package: null,
+            mathMode: null,
+            textMode: '\\medskip ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   bigskip: {
+      default: 'bigskip',
+      variants: [
+         {
+            id: 'bigskip',
+            label: '\\bigskip',
+            description: 'Grand saut vertical',
+            package: null,
+            mathMode: null,
+            textMode: '\\bigskip ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   itemsep: {
+      default: 'itemsep',
+      variants: [
+         {
+            id: 'itemsep',
+            label: '\\itemsep',
+            description: 'Espacement entre items',
+            package: null,
+            mathMode: null,
+            textMode: '\\itemsep ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   baselineskip: {
+      default: 'baselineskip',
+      variants: [
+         {
+            id: 'baselineskip',
+            label: '\\baselineskip',
+            description: 'Espacement entre les lignes',
+            package: null,
+            mathMode: null,
+            textMode: '\\baselineskip ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   parskip: {
+      default: 'parskip',
+      variants: [
+         {
+            id: 'parskip',
+            label: '\\parskip',
+            description: 'Espacement entre paragraphes',
+            package: null,
+            mathMode: null,
+            textMode: '\\parskip ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   vspace: {
+      default: 'vspace',
+      variants: [
+         {
+            id: 'vspace',
+            label: '\\vspace{...}',
+            description: 'Espacement vertical personnalisé',
+            package: null,
+            mathMode: null,
+            textMode: '\\vspace{$1}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   vfill: {
+      default: 'vfill',
+      variants: [
+         {
+            id: 'vfill',
+            label: '\\vfill',
+            description: 'Remplissage vertical',
+            package: null,
+            mathMode: null,
+            textMode: '\\vfill ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   newpage: {
+      default: 'newpage',
+      variants: [
+         {
+            id: 'newpage',
+            label: '\\newpage',
+            description: 'Nouvelle page',
+            package: null,
+            mathMode: null,
+            textMode: '\\newpage ',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Sectionnement
+   chapitres: {
       default: 'chapter',
       variants: [
          {
@@ -735,7 +959,7 @@ const formatCommandVariants = {
             description: 'Partie',
             package: null,
             mathMode: null,
-            textMode: '\\part{...}',
+            textMode: '\\part{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -745,15 +969,13 @@ const formatCommandVariants = {
             description: 'Chapitre',
             package: null,
             mathMode: null,
-            textMode: '\\chapter{...}',
+            textMode: '\\chapter{$1}$0',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-
-   // Variantes pour Sections
-   'sections': {
+   sections: {
       default: 'section',
       variants: [
          {
@@ -762,7 +984,7 @@ const formatCommandVariants = {
             description: 'Section',
             package: null,
             mathMode: null,
-            textMode: '\\section{...}',
+            textMode: '\\section{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -772,7 +994,7 @@ const formatCommandVariants = {
             description: 'Sous-section',
             package: null,
             mathMode: null,
-            textMode: '\\subsection{...}',
+            textMode: '\\subsection{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -782,7 +1004,7 @@ const formatCommandVariants = {
             description: 'Sous-sous-section',
             package: null,
             mathMode: null,
-            textMode: '\\subsubsection{...}',
+            textMode: '\\subsubsection{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -792,15 +1014,13 @@ const formatCommandVariants = {
             description: 'Sous-sous-sous-section',
             package: null,
             mathMode: null,
-            textMode: '\\subsubsubsection{...}',
+            textMode: '\\subsubsubsection{$1}$0',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-
-   // Variantes pour Paragraphe
-   'paragraphe': {
+   paragraphe: {
       default: 'paragraph',
       variants: [
          {
@@ -809,7 +1029,7 @@ const formatCommandVariants = {
             description: 'Paragraphe',
             package: null,
             mathMode: null,
-            textMode: '\\paragraph{...}',
+            textMode: '\\paragraph{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -819,7 +1039,7 @@ const formatCommandVariants = {
             description: 'Sous-paragraphe',
             package: null,
             mathMode: null,
-            textMode: '\\subparagraph{...}',
+            textMode: '\\subparagraph{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -865,9 +1085,8 @@ const formatCommandVariants = {
          }
       ]
    },
-
-   // Variante pour setlength
-   'setlength': {
+   // Compteurs et étiquettes
+   setlength: {
       default: 'setlength',
       variants: [
          {
@@ -876,15 +1095,13 @@ const formatCommandVariants = {
             description: 'Définir la longueur d\'une commande',
             package: null,
             mathMode: null,
-            textMode: '\\setlength{...}{...}',
+            textMode: '\\setlength{$1}{$0}',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-
-   // Variantes pour setcounter
-   'setcounter': {
+   setcounter: {
       default: 'setcounter',
       variants: [
          {
@@ -893,7 +1110,7 @@ const formatCommandVariants = {
             description: 'Définir la valeur d\'un compteur',
             package: null,
             mathMode: null,
-            textMode: '\\setcounter{...}{}',
+            textMode: '\\setcounter{$1}{$0}',
             supportsMath: false,
             supportsText: true
          },
@@ -903,7 +1120,7 @@ const formatCommandVariants = {
             description: 'Incrémenter un compteur',
             package: null,
             mathMode: null,
-            textMode: '\\stepcounter{...}',
+            textMode: '\\stepcounter{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -913,7 +1130,7 @@ const formatCommandVariants = {
             description: 'Incrémenter un compteur et permettre les références',
             package: null,
             mathMode: null,
-            textMode: '\\refstepcounter{...}',
+            textMode: '\\refstepcounter{$1}$0',
             supportsMath: false,
             supportsText: true
          },
@@ -923,7 +1140,7 @@ const formatCommandVariants = {
             description: 'Ajouter une valeur à un compteur',
             package: null,
             mathMode: null,
-            textMode: '\\addtocounter{...}{}',
+            textMode: '\\addtocounter{$1}{$0}',
             supportsMath: false,
             supportsText: true
          },
@@ -933,15 +1150,13 @@ const formatCommandVariants = {
             description: 'Utiliser la valeur d\'un compteur',
             package: null,
             mathMode: null,
-            textMode: '\\value{...}',
+            textMode: '\\value{$1}$0',
             supportsMath: false,
             supportsText: true
          }
       ]
    },
-
-   // Variantes pour label
-   'label': {
+   label: {
       default: 'label',
       variants: [
          {
@@ -949,8 +1164,8 @@ const formatCommandVariants = {
             label: '\\label{...}',
             description: 'Étiquette pour référence',
             package: null,
-            mathMode: '\\label{...}',
-            textMode: '\\label{...}',
+            mathMode: '\\label{$1}$0',
+            textMode: '\\label{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -959,8 +1174,8 @@ const formatCommandVariants = {
             label: '\\ref{...}',
             description: 'Référence à une étiquette',
             package: null,
-            mathMode: '\\ref{...}',
-            textMode: '\\ref{...}',
+            mathMode: '\\ref{$1}$0',
+            textMode: '\\ref{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -969,8 +1184,8 @@ const formatCommandVariants = {
             label: '\\eqref{...}',
             description: 'Référence à une équation',
             package: 'amsmath',
-            mathMode: '\\eqref{...}',
-            textMode: '\\eqref{...}',
+            mathMode: '\\eqref{$1}$0',
+            textMode: '\\eqref{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -979,8 +1194,8 @@ const formatCommandVariants = {
             label: '\\cref{...}',
             description: 'Référence contextuelle (cleveref)',
             package: 'cleveref',
-            mathMode: '\\cref{...}',
-            textMode: '\\cref{...}',
+            mathMode: '\\cref{$1}$0',
+            textMode: '\\cref{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -989,8 +1204,8 @@ const formatCommandVariants = {
             label: '\\Cref{...}',
             description: 'Référence contextuelle avec majuscule',
             package: 'cleveref',
-            mathMode: '\\Cref{...}',
-            textMode: '\\Cref{...}',
+            mathMode: '\\Cref{$1}$0',
+            textMode: '\\Cref{$1}$0',
             supportsMath: true,
             supportsText: true
          },
@@ -999,16 +1214,314 @@ const formatCommandVariants = {
             label: '\\vref{...}',
             description: 'Référence avec information de page',
             package: 'varioref',
-            mathMode: '\\vref{...}',
-            textMode: '\\vref{...}',
+            mathMode: '\\vref{$1}$0',
+            textMode: '\\vref{$1}$0',
             supportsMath: true,
+            supportsText: true
+         }
+      ]
+   },
+   // Environnements - Listes
+   enumerate: {
+      default: 'enumerate',
+      variants: [
+         {
+            id: 'enumerate',
+            label: '\\begin{enumerate}..\\end{enumerate}',
+            description: 'Liste numérotée standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{enumerate}\n\\item $1\n\\end{enumerate}$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'tasks',
+            label: '\\begin{tasks}[style=enumerate]..\\end{tasks}',
+            description: 'Liste avec package tasks (style enumerate)',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\begin{tasks}[style=enumerate]\n\\task $1\n\\end{tasks}$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'tasks_columns',
+            label: '\\begin{tasks}[style=enumerate](2)..\\end{tasks}',
+            description: 'Liste tasks sur 2 colonnes (style enumerate)',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\begin{tasks}[style=enumerate](2)\n\\task $1\n\\end{tasks}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   itemize: {
+      default: 'itemize',
+      variants: [
+         {
+            id: 'itemize',
+            label: '\\begin{itemize}..\\end{itemize}',
+            description: 'Liste à puces standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{itemize}\n\\item $1\n\\end{itemize}$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'tasks_itemize',
+            label: '\\begin{tasks}[style=itemize]..\\end{tasks}',
+            description: 'Liste tasks (style itemize)',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\begin{tasks}[style=itemize]\n\\task $1\n\\end{tasks}$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'tasks_bullet',
+            label: '\\begin{tasks}[label=$\\star$](3)..\\end{tasks}',
+            description: 'Liste tasks avec étoiles sur 3 colonnes',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\begin{tasks}[label=$\\star$](3)\n\\task $1\n\\end{tasks}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   item: {
+      default: 'item',
+      variants: [
+         {
+            id: 'item',
+            label: '\\item',
+            description: 'Élément de liste standard',
+            package: null,
+            mathMode: null,
+            textMode: '\\item $1$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'task',
+            label: '\\task',
+            description: 'Élément avec package tasks',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\task $1$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'task_star',
+            label: '\\task*',
+            description: 'Élément task étoilé : occupe le reste de la ligne',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\task* $1$0',
+            supportsMath: false,
+            supportsText: true
+         },
+         {
+            id: 'task_star_columns',
+            label: '\\task*(2)',
+            description: 'Élément task étoilé sur 2 colonnes',
+            package: 'tasks',
+            mathMode: null,
+            textMode: '\\task*(2) $1$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Environnements - Mise en page
+   minipage: {
+      default: 'minipage',
+      variants: [
+         {
+            id: 'minipage',
+            label: '\\begin{minipage}..\\end{minipage}',
+            description: 'Mini-page',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{minipage}{0.4\\textwidth}\n$1\n\\end{minipage}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   multicols: {
+      default: 'multicols',
+      variants: [
+         {
+            id: 'multicols',
+            label: '\\begin{multicols}..\\end{multicols}',
+            description: 'Environnement multicolonnes',
+            package: 'multicol',
+            mathMode: null,
+            textMode: '\\begin{multicols}{2}\n$1\n\\end{multicols}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   tabbing: {
+      default: 'tabbing',
+      variants: [
+         {
+            id: 'tabbing',
+            label: '\\begin{tabbing}..\\end{tabbing}',
+            description: 'Environnement de tabulation',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{tabbing}\n$1\n\\end{tabbing}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Environnements - Figures
+   figure: {
+      default: 'figure',
+      variants: [
+         {
+            id: 'figure',
+            label: '\\begin{figure}..\\end{figure}',
+            description: 'Figure flottante',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{figure}[htbp]\n\\centering\n\\includegraphics[width=0.25\\textwidth]{$1}\n\\caption{Ma légende}\n\\end{figure}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   wrapfig: {
+      default: 'wrapfig',
+      variants: [
+         {
+            id: 'wrapfig',
+            label: '\\begin{wrapfigure}..\\end{wrapfigure}',
+            description: 'Figure avec habillage de texte',
+            package: 'wrapfig',
+            mathMode: null,
+            textMode: '\\begin{wrapfigure}{r}{0.25\\textwidth} % {alignement}{largeur}\n\\centering\n\\includegraphics[width=0.25\\textwidth]{$1}\n\\caption{Ma légende}\n\\end{wrapfigure}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   includegraphics: {
+      default: 'includegraphics',
+      variants: [
+         {
+            id: 'includegraphics',
+            label: '\\includegraphics{...}',
+            description: 'Inclusion d\'image',
+            package: 'graphicx',
+            mathMode: null,
+            textMode: '\\includegraphics[width=0.25\\textwidth]{$1}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Environnements - Dessin et code
+   tikzpicture: {
+      default: 'tikzpicture',
+      variants: [
+         {
+            id: 'tikzpicture',
+            label: '\\begin{tikzpicture}..\\end{tikzpicture}',
+            description: 'Dessin TikZ',
+            package: 'tikz',
+            mathMode: null,
+            textMode: '\\begin{tikzpicture}[baseline=(current bounding box.base), yshift=1ex]\n$1\n\\end{tikzpicture}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   tcolorbox: {
+      default: 'tcolorbox',
+      variants: [
+         {
+            id: 'tcolorbox',
+            label: '\\begin{tcolorbox}..\\end{tcolorbox}',
+            description: 'Boîte colorée',
+            package: 'tcolorbox',
+            mathMode: null,
+            textMode: '\\begin{tcolorbox}[enhanced, colframe=red, colback=white,\narc=4mm, boxrule=1pt]\n$1\n\\end{tcolorbox}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   listing: {
+      default: 'listing',
+      variants: [
+         {
+            id: 'listing',
+            label: '\\begin{lstlisting}..\\end{lstlisting}',
+            description: 'Code source',
+            package: 'listings',
+            mathMode: null,
+            textMode: '\\begin{lstlisting}[language=Python]\n$1\n\\end{lstlisting}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   // Environnements - Tableaux
+   table: {
+      default: 'table',
+      variants: [
+         {
+            id: 'table',
+            label: '\\begin{table}..\\end{table}',
+            description: 'Tableau flottant',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{table}[htbp]\n\\centering\n\\begin{tabular}{|c|c|}\n$1\n\\end{tabular}\n\\caption{Ma légende}\n\\end{table}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   tabular: {
+      default: 'tabular',
+      variants: [
+         {
+            id: 'tabular',
+            label: '\\begin{tabular}..\\end{tabular}',
+            description: 'Tableau simple',
+            package: null,
+            mathMode: null,
+            textMode: '\\begin{tabular}{|c|c|}\n$1\n\\end{tabular}$0',
+            supportsMath: false,
+            supportsText: true
+         }
+      ]
+   },
+   tabularray: {
+      default: 'tabularray',
+      variants: [
+         {
+            id: 'tabularray',
+            label: '\\begin{tblr}..\\end{tblr}',
+            description: 'Tableau simple avec template',
+            package: 'tabularray',
+            mathMode: null,
+            textMode: '\\begin{tblr}{%\n          width=\\textwidth,%\n          hlines,%\n          vlines,%\n          rows={1.2\\baselineskip},%\n          colspec={X[1,c,m]X[2,c,m]}%\n        }\n  $1\n\\end{tblr}\n$0',
+            supportsMath: false,
             supportsText: true
          }
       ]
    }
 };
-
-
 
 function getFormatCommandVariants(command) {
    return formatCommandVariants[command] || null;
@@ -1022,11 +1535,7 @@ function getDefaultFormatVariant(command) {
    return variants.variants.find(v => v.id === defaultId);
 }
 
-/**
- * Fonction pour créer un tableau tabularray basé sur des paramètres
- * @param {Object} params - Les paramètres du tableau
- * @returns {string} - Le code LaTeX généré
- */
+// Garder les fonctions existantes pour tabularray et matrix
 function wrapWithTabularray(params) {
   const { 
     tableWidth = '\\textwidth', 
@@ -1089,7 +1598,6 @@ function wrapWithTabularray(params) {
     }
   }
 
-
   // Gestion des couleurs alternées (maintenant indépendante du style)
   if (alternateColors) {
      options += ',\nrow{even} = {bg=gristclair}';
@@ -1148,5 +1656,5 @@ module.exports = {
    formatCommandVariants,
    getFormatCommandVariants,
    getDefaultFormatVariant,
-   wrapWithTabularray  // Ajouter l'export de la fonction
+   wrapWithTabularray
 };

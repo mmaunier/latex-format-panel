@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const { getFormatCommands } = require('../actions/formatActions');
 const { getMathCommands } = require('../actions/mathActions');
-const { getPersoCommands } = require('../actions/persoActions');
+const { getPersoCommands, generatePersoId } = require('../actions/persoActions');
 const { getFormatCommandVariants } = require('../config/commandFormatVariants');
 const { getMathCommandVariants } = require('../config/commandMathVariants');
+const { getPersoCommandVariants } = require('../actions/persoActions');
 
 function getHtmlTemplate(extensionUri) {
   const templatePath = path.join(extensionUri.fsPath, 'src', 'webview', 'template.html');
@@ -40,6 +41,15 @@ function getHtmlTemplate(extensionUri) {
     }
   });
   
+  // AJOUTER : Ajouter les variantes perso
+  const persoCommands = getPersoCommands();
+  persoCommands.forEach(cmd => {
+    const cmdVariants = getPersoCommandVariants(cmd);
+    if (cmdVariants) {
+      variants[cmd] = cmdVariants;
+    }
+  });
+  
   // Remplacer les placeholders
   return templateContent
     .replace('{{CSS_CONTENT}}', cssContent)
@@ -52,9 +62,11 @@ function getHtmlTemplate(extensionUri) {
 class LatexSidebarProvider {
   constructor(extensionUri) {
     this.extensionUri = extensionUri;
+    this.webviewView = null;
   }
 
   resolveWebviewView(webviewView, context, _token) {
+    this.webviewView = webviewView;
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [this.extensionUri]
@@ -65,17 +77,53 @@ class LatexSidebarProvider {
     webviewView.webview.onDidReceiveMessage(message => {
       console.log('Received message:', message);
       
+      // TRAITEMENT PERSO SÉPARÉ - Avant tout le reste
+      if (message.command.startsWith('perso_')) {
+        console.log('Executing perso command:', message.command, 'variant:', message.variant);
+        if (message.variant) {
+          // Si il y a une variante, utiliser wrapWithVariant
+          vscode.commands.executeCommand('latexFormat.wrapWithVariant', message.command, message.variant);
+        } else {
+          // Sinon, utiliser wrapWithPerso
+          vscode.commands.executeCommand('latexFormat.wrapWithPerso', message.command);
+        }
+        return; // Sortir immédiatement
+      }
+      
+      // TRAITEMENT SPÉCIAL pour tabularray - AVANT le reste
+      if (message.command === 'tabularray') {
+        if (message.params) {
+          // Ancienne interface avec params
+          console.log('Executing tabularray with params:', message.params);
+          vscode.commands.executeCommand('latexFormat.wrapWithCustomParams', 'tabularray', message.params);
+        } else if (message.customParams) {
+          // Nouvelle interface avec customParams
+          console.log('Executing tabularray with customParams:', message.customParams);
+          vscode.commands.executeCommand('latexFormat.wrapWithCustomParams', 'tabularray', message.customParams);
+        } else if (message.variant) {
+          // Variante spécifique
+          console.log('Executing tabularray with variant:', message.variant);
+          vscode.commands.executeCommand('latexFormat.wrapWithVariant', 'tabularray', message.variant);
+        } else {
+          // Défaut
+          console.log('Executing default tabularray');
+          vscode.commands.executeCommand('latexFormat.wrapWith', 'tabularray');
+        }
+        return; // Sortir immédiatement
+      }
+      
+      // TRAITEMENT FORMAT ET MATH - Sans les perso
       const allCommands = [
         ...getFormatCommands(),
-        ...getMathCommands(),
-        ...getPersoCommands()
+        ...getMathCommands()
+        // Ne PLUS inclure getPersoCommands() ici
       ];
       
       if (allCommands.includes(message.command)) {
-        if (message.variant === 'custom' && message.params) {
-          // Commande avec paramètres personnalisés (pour modal)
-          console.log('Executing custom command with params:', message.command, message.params);
-          vscode.commands.executeCommand('latexFormat.wrapWithCustomParams', message.command, message.params);
+        if (message.customParams) {
+          // Commande avec paramètres personnalisés (pour matrix modal)
+          console.log('Executing custom command with params:', message.command, message.customParams);
+          vscode.commands.executeCommand('latexFormat.wrapWith', message.command, message.variant, message.customParams);
         } else if (message.variant) {
           // Commande avec variante spécifique
           console.log('Executing command with variant:', message.command, message.variant);
@@ -94,6 +142,12 @@ class LatexSidebarProvider {
       }
     });
   }
+
+  refresh() {
+    if (this.webviewView) {
+      this.webviewView.webview.html = getHtmlTemplate(this.extensionUri);
+    }
+  }
 }
 
 function generatePersoHtml() {
@@ -105,23 +159,45 @@ function generatePersoHtml() {
   let currentGroup = '';
   let buttonCount = 0;
   
-  buttons.forEach(item => {
-    if (item.type === 'title') {
+  buttons.forEach((item, index) => {
+    if (item.type === 'titre') {
       // Fermer le groupe précédent s'il existe
       if (currentGroup) {
         html += '</div>\n\n';
       }
-      // Ajouter le titre et ouvrir un nouveau groupe - CHANGER h4 en h3
-      html += `<h3>${item.label}</h3>\n`;
+      // Ajouter le titre et ouvrir un nouveau groupe
+      html += `<h3>${item.texte}</h3>\n`;
       html += '<div class="button-group">\n';
-      currentGroup = item.label;
+      currentGroup = item.texte;
       buttonCount = 0;
-    } else if (item.type === 'button') {
-      const cmdId = item.label.toLowerCase().replace(/\s+/g, '_');
-      html += `   <button class="format-button" onclick="sendCommand('${cmdId}')">${item.label}</button>\n`;
+    } else if (item.type === 'bouton') {
+      // Bouton simple avec classe perso-button
+      const uniqueId = generatePersoId(item, index);
+      html += `   <button class="perso-button" onclick="sendCommand('${uniqueId}')">${item.texte}</button>\n`;
       buttonCount++;
       
-      // Créer un nouveau groupe tous les 3 boutons
+      if (buttonCount === 3) {
+        html += '</div>\n\n<div class="button-group">\n';
+        buttonCount = 0;
+      }
+    } else if (item.type === 'bouton_variantes') {
+      // Bouton avec variantes avec classe perso-button
+      const uniqueId = generatePersoId(item, index);
+      const defaultIndex = Math.min(item.defaut || 0, (item.variantes || []).length - 1);
+      const defaultLabel = item.variantes && item.variantes[defaultIndex] 
+        ? item.variantes[defaultIndex].texte 
+        : 'Bouton';
+      
+      if (item.variantes && item.variantes.length > 1) {
+        // Bouton avec menu contextuel
+        html += `   <button class="perso-button" onclick="sendCommand('${uniqueId}')" oncontextmenu="showContextMenu(event, '${uniqueId}'); return false;">${defaultLabel}</button>\n`;
+      } else {
+        // Bouton simple si une seule variante
+        html += `   <button class="perso-button" onclick="sendCommand('${uniqueId}')">${defaultLabel}</button>\n`;
+      }
+      
+      buttonCount++;
+      
       if (buttonCount === 3) {
         html += '</div>\n\n<div class="button-group">\n';
         buttonCount = 0;

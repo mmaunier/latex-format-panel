@@ -620,3 +620,67 @@ h3 {
 .radio-group input[type="radio"] {
   margin: 0;
 }
+
+/* Style pour les boutons perso - basé sur format-button mais avec largeur fixe */
+.perso-button {
+   background-color: var(--vscode-button-background);
+   color: var(--vscode-button-foreground);
+   border: none;
+   padding: 6px 8px;
+   border-radius: 3px;
+   cursor: pointer;
+   font-size: 11px;
+   flex: 1;
+   min-width: 0;
+   max-width: calc(33.33% - 2px); /* Toujours 3 boutons par ligne */
+}
+
+.perso-button:hover {
+   background-color: var(--vscode-button-hoverBackground);
+}
+
+/* Style pour les boutons perso secondaires (si besoin) */
+.perso-button.secondary {
+    background-color: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.perso-button.secondary:hover {
+    background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Tooltip pour les boutons perso */
+.perso-button[data-tooltip] {
+    position: relative;
+}
+
+.perso-button[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--vscode-editorHoverWidget-background);
+    color: var(--vscode-editorHoverWidget-foreground);
+    border: 1px solid var(--vscode-editorHoverWidget-border);
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.perso-button[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--vscode-editorHoverWidget-border);
+    margin-bottom: -1px;
+    z-index: 1001;
+}

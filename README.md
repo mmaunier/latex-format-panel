@@ -104,8 +104,12 @@ code --install-extension mmaunier.latex-format-panel-0.1.17.vsix
 
 **Exemples :**
 ```json
-{"type": "button", "label": "Section", "command": "\\section{$1}$0"}
-{"type": "button", "label": "Environnement", "command": "\\begin{$1}\n$0\n\\end{$1}"}
+{"type": "bouton", "texte": "Section", "commande": "\\section{$1}$0"}
+{"type": "bouton", "texte": "Environnement", "commande": "\\begin{$1}\n$0\n\\end{$1}"}
+{"type": "bouton_variantes", "defaut": 0, "variantes": [
+  {"texte": "Numéroté", "commande": "\\begin{align}\n$1\n\\end{align}$0"},
+  {"texte": "Non numéroté", "commande": "\\begin{align*}\n$1\n\\end{align*}$0"}
+]}
 ```
 
 → Configuration complète dans les paramètres VSCode (`Ctrl+,` → "LaTeX Format Panel")

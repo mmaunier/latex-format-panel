@@ -1,8 +1,21 @@
 #!/bin/bash
 set -e
 
+# Récupérer le type de version (défaut: patch)
+VERSION_TYPE=${1:-patch}
+
 echo "🚀 LaTeX Format Panel - Build & Release"
 echo "======================================"
+echo "Usage: $0 [patch|minor|major] (défaut: patch)"
+echo "Type de version : $VERSION_TYPE"
+echo ""
+
+# Valider le type de version
+if [[ ! "$VERSION_TYPE" =~ ^(patch|minor|major)$ ]]; then
+    echo "❌ Type de version invalide : $VERSION_TYPE"
+    echo "   Types valides : patch, minor, major"
+    exit 1
+fi
 
 # 1. Vérifier qu'il n'y a pas de commits en attente
 echo "🔍 Vérification de l'état Git..."
@@ -13,8 +26,8 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
 fi
 
 # 2. Incrémenter la version et récupérer les informations
-echo "📝 Incrémentation de la version..."
-npm version patch --no-git-tag-version
+echo "📝 Incrémentation de la version ($VERSION_TYPE)..."
+npm version $VERSION_TYPE --no-git-tag-version
 
 VERSION=$(node -p "require('./package.json').version")
 PUBLISHER=$(node -p "require('./package.json').publisher")

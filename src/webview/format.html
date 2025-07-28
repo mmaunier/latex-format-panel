@@ -8,7 +8,9 @@
       <button class="format-button italic" 
               onclick="sendCommand('italic')" 
               oncontextmenu="showContextMenu(event, 'italic'); return false;">Italique</button>
-      <button class="format-button emphasis" onclick="sendCommand('emphasis')">Emphase</button>
+      <button class="format-button emphasis" 
+              onclick="sendCommand('emphasis')" 
+              oncontextmenu="showContextMenu(event, 'emphasis'); return false;">Emphase</button>
       <button class="format-button slanted" 
               onclick="sendCommand('slanted')" 
               oncontextmenu="showContextMenu(event, 'slanted'); return false;">Oblique</button>
@@ -24,12 +26,18 @@
       <button class="format-button smallcaps" 
               onclick="sendCommand('smallcaps')" 
               oncontextmenu="showContextMenu(event, 'smallcaps'); return false;">SmallCaps</button>
-      <button class="format-button highlight" onclick="sendCommand('highlight')">Surligné</button>
+      <button class="format-button highlight" 
+              onclick="sendCommand('highlight')" 
+              oncontextmenu="showContextMenu(event, 'highlight'); return false;">Surligné</button>
    </div>
 
    <div class="button-group partial">
-      <button class="format-button mathbb" onclick="sendCommand('mathbb')">𝔸𝔻ℂ</button>
-      <button class="format-button mathcal" onclick="sendCommand('mathcal')">𝒜ℬ𝒞</button>
+      <button class="format-button mathbb" 
+              onclick="sendCommand('mathbb')" 
+              oncontextmenu="showContextMenu(event, 'mathbb'); return false;">𝔸𝔻ℂ</button>
+      <button class="format-button mathcal" 
+              onclick="sendCommand('mathcal')" 
+              oncontextmenu="showContextMenu(event, 'mathcal'); return false;">𝒜ℬ𝒞</button>
    </div>
 
    <div class="separator"></div>
@@ -76,14 +84,24 @@
    <div class="separator"></div>
 
    <div class="button-group partial">
-      <button class="transform-button uppercase" onclick="sendCommand('uppercase')">ABC</button>
-      <button class="transform-button lowercase" onclick="sendCommand('lowercase')">abc</button>
-      <button class="transform-button capitalize" onclick="sendCommand('capitalize')">Abc</button>
+      <button class="transform-button uppercase" 
+              onclick="sendCommand('uppercase')" 
+              oncontextmenu="showContextMenu(event, 'uppercase'); return false;">ABC</button>
+      <button class="transform-button lowercase" 
+              onclick="sendCommand('lowercase')" 
+              oncontextmenu="showContextMenu(event, 'lowercase'); return false;">abc</button>
+      <button class="transform-button capitalize" 
+              onclick="sendCommand('capitalize')" 
+              oncontextmenu="showContextMenu(event, 'capitalize'); return false;">Abc</button>
    </div>
 
    <div class="button-group partial">
-      <button class="transform-button" onclick="sendCommand('superscript')">x²</button>
-      <button class="transform-button" onclick="sendCommand('subscript')">x₂</button>
+      <button class="transform-button" 
+              onclick="sendCommand('superscript')" 
+              oncontextmenu="showContextMenu(event, 'superscript'); return false;">x²</button>
+      <button class="transform-button" 
+              onclick="sendCommand('subscript')" 
+              oncontextmenu="showContextMenu(event, 'subscript'); return false;">x₂</button>
    </div>
 
    <div class="separator"></div>
@@ -145,20 +163,23 @@
                         <rect x="3" y="3.5" width="1" height="5" fill="currentColor" />
                 </svg>
         </button>
-        <button class="format-button" onclick="sendCommand('noindent')">
+        <button class="format-button" onclick="sendCommand('noindent')"
+                oncontextmenu="showContextMenu(event, 'noindent'); return false;">
                 noindent
         </button>
 </div>
 
 <div class="button-group">
-        <button class="format-button" onclick="sendCommand('hspace')">
+        <button class="format-button" onclick="sendCommand('hspace')"
+                oncontextmenu="showContextMenu(event, 'hspace'); return false;">
                 hspace
         </button>
         <button class="format-button" onclick="sendCommand('hfill')"
                 oncontextmenu="showContextMenu(event, 'hfill'); return false;">
                 hfill
         </button>
-        <button class="format-button" onclick="sendCommand('hbox')">
+        <button class="format-button" onclick="sendCommand('hbox')"
+                oncontextmenu="showContextMenu(event, 'hbox'); return false;">
                 hbox
         </button>
 </div>

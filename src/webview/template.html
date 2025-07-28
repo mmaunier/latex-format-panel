@@ -159,10 +159,12 @@
     const vscode = acquireVsCodeApi();
     const commandVariants = {{COMMAND_VARIANTS}};
 
-    function sendCommand(command, variantId = null) {
+    // Modifier sendCommand pour supporter les paramètres personnalisés
+    function sendCommand(command, variantId = null, customParams = null) {
       vscode.postMessage({
         command: command,
-        variant: variantId
+        variant: variantId,
+        customParams: customParams
       });
     }
 
@@ -320,10 +322,9 @@
       const alternateColors = document.getElementById('alternateColors').checked;
       const colspec = document.getElementById('colspec').value || '';
 
-      // Envoyer les données au backend
+      // Envoyer les données au backend avec l'interface params (pour compatibilité)
       vscode.postMessage({
         command: 'tabularray',
-        variant: 'custom',
         params: {
           tableWidth,
           rowHeight,
@@ -372,37 +373,35 @@
       showModal('matrixModal');
     }
 
+    // Modifier submitMatrixForm
     function submitMatrixForm() {
-      // Récupérer les valeurs du formulaire
-      const sizeOption = document.querySelector('input[name="matrixSize"]:checked').value;
-      let rows = 2;
-      let cols = 2;
-
-      if (sizeOption === '2x2') {
-        rows = 2;
-        cols = 2;
-      } else if (sizeOption === '3x3') {
-        rows = 3;
-        cols = 3;
-      } else if (sizeOption === 'custom') {
-        rows = parseInt(document.getElementById('matrixRows').value, 10) || 2;
-        cols = parseInt(document.getElementById('matrixCols').value, 10) || 2;
+      // Récupérer les dimensions selon le type sélectionné
+      const matrixSizeRadio = document.querySelector('input[name="matrixSize"]:checked');
+      let rows, cols;
+      
+      if (matrixSizeRadio.value === 'custom') {
+        rows = parseInt(document.getElementById('matrixRows').value) || 2;
+        cols = parseInt(document.getElementById('matrixCols').value) || 2;
+      } else {
+        // Extraire les dimensions depuis la valeur radio (2x2, 3x3, etc.)
+        const [r, c] = matrixSizeRadio.value.split('x');
+        rows = parseInt(r) || 2;
+        cols = parseInt(c) || 2;
       }
-
+      
       const matrixType = document.getElementById('matrixType').value;
-
-      // Envoyer les données au backend
+      
+      // Envoyer les paramètres personnalisés avec la nouvelle interface
       vscode.postMessage({
         command: 'matrix',
-        variant: 'custom',
-        params: {
-          rows,
-          cols,
-          matrixType
+        variant: null,
+        customParams: {
+          rows: rows,
+          cols: cols,
+          matrixType: matrixType
         }
       });
-
-      // Fermer la modale
+      
       hideModal('matrixModal');
     }
 

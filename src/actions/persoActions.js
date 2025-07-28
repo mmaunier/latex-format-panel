@@ -1,77 +1,127 @@
 const vscode = require('vscode');
+const crypto = require('crypto');
+const { processTemplate } = require('../../utils/utils');
+
+// Fonction utilitaire pour générer un ID unique
+function generatePersoId(item, index) {
+  let contentToHash;
+  
+  if (item.type === 'bouton_variantes') {
+    // Pour les bouton_variantes, inclure toutes les variantes dans le hash
+    contentToHash = JSON.stringify({
+      type: item.type,
+      defaut: item.defaut,
+      variantes: item.variantes
+    });
+  } else {
+    // Pour les boutons normaux
+    contentToHash = JSON.stringify({
+      texte: item.texte, 
+      commande: item.commande
+    });
+  }
+  
+  const contentHash = crypto.createHash('md5')
+    .update(contentToHash)
+    .digest('hex')
+    .substring(0, 8);
+  return `perso_${index}_${contentHash}`;
+}
 
 function getPersoCommands() {
   const config = vscode.workspace.getConfiguration('latexFormatPanel');
   const buttons = config.get('persoButtons', []);
   
-  return buttons
-    .filter(item => item.type === 'button')
-    .map(item => item.label.toLowerCase().replace(/\s+/g, '_'));
+  const commands = [];
+  buttons.forEach((item, index) => {
+    if (item.type === 'bouton' || item.type === 'bouton_variantes') {
+      commands.push(generatePersoId(item, index));
+    }
+  });
+  
+  return commands;
 }
 
-function handlePersoCommand(cmd, editor, selection, text, isMathMode) {
+function getPersoCommandVariants(cmd) {
   const config = vscode.workspace.getConfiguration('latexFormatPanel');
   const buttons = config.get('persoButtons', []);
   
-  const button = buttons.find(item => 
-    item.type === 'button' && 
-    item.label.toLowerCase().replace(/\s+/g, '_') === cmd
-  );
+  // Trouver le bouton correspondant
+  let targetButton = null;
+  buttons.forEach((item, index) => {
+    if (item.type === 'bouton_variantes') {
+      const uniqueId = generatePersoId(item, index);
+      if (uniqueId === cmd) {
+        targetButton = item;
+      }
+    }
+  });
   
-  if (!button) {
+  if (!targetButton || !targetButton.variantes || targetButton.variantes.length <= 1) {
+    return null; // Pas de variantes disponibles
+  }
+  
+  // Construire l'objet variants
+  const variants = targetButton.variantes.map((variante, index) => ({
+    id: `variant_${index}`,
+    label: variante.texte,
+    description: variante.commande.replace(/\\/g, '\\').substring(0, 50) + '...'
+  }));
+  
+  return {
+    command: cmd,
+    variants: variants
+  };
+}
+
+function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId = null) {
+  const config = vscode.workspace.getConfiguration('latexFormatPanel');
+  const buttons = config.get('persoButtons', []);
+  
+  // Retrouver le bouton correspondant à l'ID
+  let targetButton = null;
+  
+  buttons.forEach((item, index) => {
+    if (item.type === 'bouton' || item.type === 'bouton_variantes') {
+      const uniqueId = generatePersoId(item, index);
+      if (uniqueId === cmd) {
+        targetButton = item;
+      }
+    }
+  });
+  
+  if (!targetButton) {
     return { replaced: '', newSelection: null };
   }
   
-  let replaced = '';
-  let newSelection = null;
-  const command = button.command;
+  let command;
   
-  // Système avec $1 et $0
-  if (command.includes('$1') || command.includes('$0')) {
-    if (text) {
-      // Avec sélection : remplacer tous les $1 par le texte sélectionné
-      replaced = command.replace(/\$1/g, text);
-      
-      // Placer le curseur à la position $0
-      if (replaced.includes('$0')) {
-        const cursorOffset = replaced.indexOf('$0');
-        replaced = replaced.replace('$0', '');
-        const cursorPos = selection.start.translate(0, cursorOffset);
-        newSelection = new vscode.Selection(cursorPos, cursorPos);
+  if (targetButton.type === 'bouton_variantes') {
+    if (variantId) {
+      // Utiliser la variante spécifiée
+      const variantIndex = parseInt(variantId.replace('variant_', ''), 10);
+      if (variantIndex >= 0 && variantIndex < targetButton.variantes.length) {
+        command = targetButton.variantes[variantIndex].commande;
       } else {
-        // Pas de $0, curseur à la fin
-        const cursorPos = selection.start.translate(0, replaced.length);
-        newSelection = new vscode.Selection(cursorPos, cursorPos);
+        command = targetButton.variantes[0].commande; // Fallback
       }
     } else {
-      // Sans sélection : placer le curseur à la position du premier $1
-      if (command.includes('$1')) {
-        const cursorOffset = command.indexOf('$1');
-        replaced = command.replace(/\$1/g, '').replace('$0', '');
-        const cursorPos = selection.start.translate(0, cursorOffset);
-        newSelection = new vscode.Selection(cursorPos, cursorPos);
-      } else if (command.includes('$0')) {
-        // Seulement $0, placer le curseur là
-        const cursorOffset = command.indexOf('$0');
-        replaced = command.replace('$0', '');
-        const cursorPos = selection.start.translate(0, cursorOffset);
-        newSelection = new vscode.Selection(cursorPos, cursorPos);
-      }
+      // Utiliser la variante par défaut
+      const defaultIndex = Math.min(targetButton.defaut || 0, targetButton.variantes.length - 1);
+      command = targetButton.variantes[defaultIndex].commande;
     }
-    
-    // Traiter les retours à la ligne
-    replaced = replaced.replace(/\\n/g, '\n');
   } else {
-    // Commande simple sans marqueurs
-    replaced = text ? `${command} ${text}` : `${command} `;
-    const cursorPos = selection.start.translate(0, replaced.length);
-    newSelection = new vscode.Selection(cursorPos, cursorPos);
+    // Bouton simple
+    command = targetButton.commande;
   }
   
-  return { replaced, newSelection };
+  // Utiliser la fonction centralisée
+  return processTemplate(command, text, selection);
 }
 
 module.exports = {
   getPersoCommands,
-  handlePersoCommand
+  handlePersoCommand,
+  generatePersoId,
+  getPersoCommandVariants
 };

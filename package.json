@@ -32,7 +32,10 @@
 		"vscode:prepublish": "echo 'No compilation needed'",
 		"package": "vsce package --out build/",
 		"build": "vsce package --out build/",
-		"release": "./scripts/build-release.sh"
+		"release": "./scripts/build-release.sh",
+		"release:patch": "./scripts/build-release.sh patch",
+		"release:minor": "./scripts/build-release.sh minor",
+		"release:major": "./scripts/build-release.sh major"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.60.0",
@@ -47,45 +50,80 @@
 					"type": "array",
 					"default": [
 						{
-							"type": "title",
-							"label": "Mes commandes"
+							"type": "titre",
+							"texte": "Mes commandes"
 						},
 						{
-							"type": "button",
-							"label": "Section",
-							"command": "\\section{$1}$0"
+							"type": "bouton",
+							"texte": "Section",
+							"commande": "\\section{$1}$0"
 						},
 						{
-							"type": "button",
-							"label": "Environnement",
-							"command": "\\begin{$1}\n$0\n\\end{$1}"
+							"type": "bouton_variantes",
+							"defaut": 0,
+							"variantes": [
+								{
+									"texte": "Align numéroté",
+									"commande": "\\begin{align}\n$1\n\\end{align}$0"
+								},
+								{
+									"texte": "Align non numéroté",
+									"commande": "\\begin{align*}\n$1\n\\end{align*}$0"
+								}
+							]
 						}
 					],
-					"description": "Configuration des boutons personnalisés pour l'onglet Perso. Format JSON :\n- Type 'title' : Crée un titre de section (h3)\n  {\"type\": \"title\", \"label\": \"Mon titre\"}\n- Type 'button' : Crée un bouton LaTeX\n  {\"type\": \"button\", \"label\": \"Nom affiché\", \"command\": \"\\\\section{$1}$0\"}\n\nLes boutons sont regroupés par 3 par ligne.\nUtilisez $1 pour le texte sélectionné et $0 pour la position du curseur.\nUtilisez \\\\n pour les retours à la ligne.",
-					"markdownDescription": "Configuration des boutons personnalisés pour l'onglet Perso.\n\n**Format JSON :**\n- **Type 'title'** : Crée un titre de section\n  ```json\n  {\"type\": \"title\", \"label\": \"Mon titre\"}\n  ```\n- **Type 'button'** : Crée un bouton LaTeX\n  ```json\n  {\"type\": \"button\", \"label\": \"Section\", \"command\": \"\\\\section{$1}$0\"}\n  ```\n\n**Marqueurs de position :**\n- `$1` : Position du texte sélectionné (peut apparaître plusieurs fois)\n- `$0` : Position finale du curseur\n- `\\\\n` : Retour à la ligne\n\n**Exemples :**\n```json\n{\"type\": \"button\", \"label\": \"Gras\", \"command\": \"\\\\textbf{$1}$0\"}\n{\"type\": \"button\", \"label\": \"Environnement\", \"command\": \"\\\\begin{$1}\\n$0\\n\\\\end{$1}\"}\n{\"type\": \"button\", \"label\": \"Newpage\", \"command\": \"\\\\newpage $0\"}\n```\n\n**Notes :**\n- Les boutons sont regroupés par 3 par ligne\n- Échappez les backslashes avec `\\\\`\n- Si pas de sélection, le curseur se place au premier `$1`",
+					"description": "Configuration des boutons personnalisés pour l'onglet Perso.",
+					"markdownDescription": "Configuration des boutons personnalisés pour l'onglet Perso.\n\n**Types disponibles :**\n\n1. **Type 'titre'** : Crée un titre de section\n   ```json\n   {\"type\": \"titre\", \"texte\": \"Mon titre\"}\n   ```\n\n2. **Type 'bouton'** : Crée un bouton LaTeX simple\n   ```json\n   {\"type\": \"bouton\", \"texte\": \"Section\", \"commande\": \"\\\\section{$1}$0\"}\n   ```\n\n3. **Type 'bouton_variantes'** : Crée un bouton avec menu contextuel\n   ```json\n   {\n     \"type\": \"bouton_variantes\",\n     \"defaut\": 0,\n     \"variantes\": [\n       {\"texte\": \"Numéroté\", \"commande\": \"\\\\begin{align}\\n$1\\n\\\\end{align}$0\"},\n       {\"texte\": \"Non numéroté\", \"commande\": \"\\\\begin{align*}\\n$1\\n\\\\end{align*}$0\"}\n     ]\n   }\n   ```\n\n**Marqueurs de position :**\n- `$1` : Position du texte sélectionné\n- `$0` : Position finale du curseur\n- `\\\\n` : Retour à la ligne\n\n**Notes :**\n- Les boutons sont regroupés par 3 par ligne\n- `defaut` : Index de la variante par défaut (0-indexé)\n- Si une seule variante, comportement de bouton simple\n- Échappez les backslashes avec `\\\\`",
 					"items": {
 						"type": "object",
 						"properties": {
 							"type": {
 								"type": "string",
 								"enum": [
-									"title",
-									"button"
+									"titre",
+									"bouton",
+									"bouton_variantes"
 								],
-								"description": "Type d'élément : 'title' pour un titre de section, 'button' pour un bouton"
+								"description": "Type d'élément"
 							},
-							"label": {
+							"texte": {
 								"type": "string",
-								"description": "Texte affiché (titre ou nom du bouton)"
+								"description": "Texte affiché (pour titre et bouton uniquement)"
 							},
-							"command": {
+							"commande": {
 								"type": "string",
-								"description": "Commande LaTeX (uniquement pour type 'button'). Utilisez $1 pour le texte sélectionné, $0 pour le curseur final, \\n pour les retours à la ligne."
+								"description": "Commande LaTeX (pour type 'bouton' uniquement)"
+							},
+							"defaut": {
+								"type": "integer",
+								"minimum": 0,
+								"description": "Index de la variante par défaut (pour bouton_variantes)"
+							},
+							"variantes": {
+								"type": "array",
+								"description": "Liste des variantes (pour bouton_variantes)",
+								"items": {
+									"type": "object",
+									"properties": {
+										"texte": {
+											"type": "string",
+											"description": "Nom de la variante"
+										},
+										"commande": {
+											"type": "string",
+											"description": "Commande LaTeX pour cette variante"
+										}
+									},
+									"required": [
+										"texte",
+										"commande"
+									]
+								}
 							}
 						},
 						"required": [
-							"type",
-							"label"
+							"type"
 						]
 					}
 				}

@@ -42,8 +42,8 @@ function updateLatexContext() {
 /**
  * Fonction principale pour entourer le texte sélectionné
  */
-function wrapWith(cmd, variantId = null) {
-  console.log('🚀 wrapWith called with cmd:', cmd, 'variantId:', variantId);
+function wrapWith(cmd, variantId = null, customParams = null) {
+  console.log('🚀 wrapWith called with cmd:', cmd, 'variantId:', variantId, 'customParams:', customParams);
 
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;
@@ -54,24 +54,30 @@ function wrapWith(cmd, variantId = null) {
   editor.edit(editBuilder => {
     selections.forEach(selection => {
       const text = document.getText(selection);
-      const isMath = isInMathMode(document, selection.start);
+      const position = selection.active;
+      const isMathMode = isInMathMode(document, position);
       
-      // Utiliser le système de format/math selon la commande
       let result;
-      const formatCommands = getFormatCommands();
-      const mathCommands = getMathCommands();
-      const persoCommands = getPersoCommands();
-
-      if (formatCommands.includes(cmd)) {
-        result = handleFormatCommand(cmd, editor, selection, text, isMath, variantId);
-      } else if (mathCommands.includes(cmd)) {
-        result = handleMathCommand(cmd, editor, selection, text, isMath, variantId);
-      } else if (persoCommands.includes(cmd)) {
-        result = handlePersoCommand(cmd, editor, selection, text, isMath, variantId);
-      }
       
-      if (result && result.replaced) {
+      // Gestion spéciale pour matrix avec paramètres personnalisés
+      if (cmd === 'matrix' && customParams) {
+        console.log('🎯 Matrix with custom params:', customParams);
+        const { wrapWithMatrix } = require('./config/commandMathVariants');
+        result = wrapWithMatrix(customParams, text, selection);
+      } else if (getFormatCommands().includes(cmd)) {
+        result = handleFormatCommand(cmd, editor, selection, text, isMathMode, variantId);
+      } else if (getMathCommands().includes(cmd)) {
+        result = handleMathCommand(cmd, editor, selection, text, isMathMode, variantId);
+      } else if (getPersoCommands().includes(cmd)) {
+        result = handlePersoCommand(cmd, editor, selection, text);
+      } else {
+        console.log('❌ Unknown command:', cmd);
+        return;
+      }
+
+      if (result && result.replaced !== undefined) {
         editBuilder.replace(selection, result.replaced);
+        
         if (result.newSelection) {
           newSelections.push(result.newSelection);
         }
@@ -86,29 +92,8 @@ function wrapWith(cmd, variantId = null) {
   });
 }
 
-/**
- * Traite un template avec $1 et $0
- */
-function processTemplate(template, text, selection) {
-  // Remplacer $1 par le texte sélectionné
-  let result = template.replace('$1', text);
-  
-  // Calculer la nouvelle position du curseur ($0)
-  const cursorIndex = result.indexOf('$0');
-  if (cursorIndex !== -1) {
-    result = result.replace('$0', '');
-    const newCursorPos = selection.start.translate(0, cursorIndex);
-    return {
-      text: result,
-      newSelection: new vscode.Selection(newCursorPos, newCursorPos)
-    };
-  }
-  
-  return {
-    text: result,
-    newSelection: new vscode.Selection(selection.start, selection.start.translate(0, result.length))
-  };
-}
+// Supprimer l'ancienne fonction processTemplate si elle existe
+// Elle est maintenant dans utils/utils.js
 
 /**
  * Fonction d'activation de l'extension
@@ -173,13 +158,13 @@ function activate(context) {
     );
   });
   
-  // 9. Enregistrer toutes les commandes personnalisées
-  const persoCommands = getPersoCommands();
-  persoCommands.forEach(cmd => {
-    context.subscriptions.push(
-      vscode.commands.registerCommand(`latexPerso.${cmd}`, () => wrapWith(cmd))
-    );
-  });
+  // 9. UNE SEULE commande pour tous les perso (au lieu d'une par bouton)
+  context.subscriptions.push(
+    vscode.commands.registerCommand('latexFormat.wrapWithPerso', (cmd) => {
+      console.log('🚀 wrapWithPerso called with cmd:', cmd);
+      wrapWith(cmd);
+    })
+  );
   
   context.subscriptions.push(
     vscode.commands.registerCommand('latexFormat.wrapWithCustomParams', (cmd, params) => {
@@ -259,8 +244,11 @@ function activate(context) {
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration(event => {
       if (event.affectsConfiguration('latexFormatPanel.persoButtons')) {
-        // Recharger le webview si la configuration change
-        vscode.commands.executeCommand('workbench.action.reloadWindow');
+        // Au lieu de recharger toute la fenêtre :
+        // vscode.commands.executeCommand('workbench.action.reloadWindow');
+        
+        // Demander au provider de mettre à jour le webview
+        provider.refresh();
       }
     })
   );
