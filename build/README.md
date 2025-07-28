@@ -34,7 +34,7 @@ Extension VSCode pour le formatage LaTeX avec panneau interactif.
 
 ### Depuis le fichier .vsix
 
-1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.1.17.vsix`
+1. Téléchargez le fichier `build/mmaunier.latex-format-panel-0.2.0.vsix`
 2. Ouvrez VSCode
 3. Utilisez `Ctrl+Shift+P` → "Extensions: Install from VSIX"
 4. Sélectionnez le fichier téléchargé
@@ -46,7 +46,7 @@ git clone https://github.com/mmaunier/latex-format-panel.git
 cd latex-format-panel
 npm install
 npx vsce package
-code --install-extension mmaunier.latex-format-panel-0.1.17.vsix
+code --install-extension mmaunier.latex-format-panel-0.2.0.vsix
 ```
 
 ## 🚀 Utilisation
@@ -104,8 +104,12 @@ code --install-extension mmaunier.latex-format-panel-0.1.17.vsix
 
 **Exemples :**
 ```json
-{"type": "button", "label": "Section", "command": "\\section{$1}$0"}
-{"type": "button", "label": "Environnement", "command": "\\begin{$1}\n$0\n\\end{$1}"}
+{"type": "bouton", "texte": "Section", "commande": "\\section{$1}$0"}
+{"type": "bouton", "texte": "Environnement", "commande": "\\begin{$1}\n$0\n\\end{$1}"}
+{"type": "bouton_variantes", "defaut": 0, "variantes": [
+  {"texte": "Numéroté", "commande": "\\begin{align}\n$1\n\\end{align}$0"},
+  {"texte": "Non numéroté", "commande": "\\begin{align*}\n$1\n\\end{align*}$0"}
+]}
 ```
 
 → Configuration complète dans les paramètres VSCode (`Ctrl+,` → "LaTeX Format Panel")
@@ -137,111 +141,22 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.0
+- 🆕 Ajout de menus contextuels dans l'onglet Perso avec possibilité d'ajouter des variantes (voir la documentation)
+- 🎨 Uniformisation de la taille des boutons dans l'onglet Perso
+- 🛠️ Refonte complète de la logique de traitement des commandes dans tous les onglets (Formats/Math/Perso) pour une meilleure gestion
+- 🎯 Amélioration du positionnement de la sélection et des curseurs
+- 📚 Mise à jour de la documentation
+
+### 0.1.18
+- 🚀 Amélioration du rafraichissement lors de la création d'une nouvelle commande dans l'onglet Perso
+- 🐛 Correction de bugs dans l'onglet Perso
+- 🆕 Nouvelle gestion des identifiants dans Perso (générateur unique)
+
 ### 0.1.17
 - 🎯 **Nouveau système de marqueurs** pour l'onglet Perso :
   - Support de `$1` pour le texte sélectionné (peut apparaître plusieurs fois)
   - Support de `$0` pour la position finale du curseur
   - Support de `\n` pour les retours à la ligne
 
-### 0.1.15 à 0.1.16
-- Correction d'un bug sur l'affichage du menu contextuel.
-
-### 0.1.14
-- Correction de la version dans le fichier `package.json`
-- Mise à jour du fichier `README.md` sur le marketplace
-
-### 0.1.13
-- ✨ Nouvel onglet "Perso" pour vos propres boutons
-- ⚙️ Configuration entièrement personnalisable via les paramètres de l'extension
-- 🐛 Correction de bugs
-
-### 0.1.12
-- 🚀 Publication de l'extension sur le MarketPlace
-
-### 0.1.11
-- 🛠️ Ajout de la section "Spécial" dans l'onglet Format avec deux boutons : "Commenter" et "Décommenter"
-- 🔄 Les boutons permettent d'enchaîner plusieurs `%` ou de les retirer, ligne par ligne
-- 🚀 Export des fonctions pour utilisation via la palette de commandes et les raccourcis clavier
-
-### 0.1.10
-- 🔧 Downgrade de l'extension
-- 🗑️ Plus de lien avec les paramètres
-- 🧹 Commandes consoles supprimées
-
-### 0.1.8 à 0.1.9
-- ⚒️ Refonte de l'onglet Format avec nouveaux blocs thématiques :
-  - Ajout d'une section "Sectionnement et espacement" pour une meilleure organisation
-  - Nouveaux blocs d'espacement horizontal et vertical (12 commandes)
-  - Bloc de commandes pour chapitres, sections et paragraphes avec variantes
-  - Bloc de compteurs et références (setlength, setcounter, label)
-- 🔍 Extension des menus contextuels :
-  - Variantes pour chapitres et sections (part, chapter, section, subsection...)
-  - Multiples options pour references (label, ref, eqref, cref, vref...)
-  - Variantes pour commandes de compteurs (setcounter, stepcounter, addtocounter...)
-- 🎯 Positionnement intelligent du curseur :
-  - Amélioration du placement du curseur dans les commandes à plusieurs arguments
-  - Support étendu pour les marqueurs de position dans tous les types de commandes
-- 🎨 Refonte visuelle de l'interface :
-  - Regroupement thématique des boutons
-  - Distinction visuelle entre commandes primaires et secondaires
-  - Icônes SVG pour certaines commandes d'espacement
-- 🐛 Corrections et optimisations diverses
-
-### 0.1.7
-- 🎛️ Ajout d'une interface modale pour la création de matrices :
-  - Sélection des dimensions (2×2, 3×3, personnalisé)
-  - Choix du type de délimiteurs (parenthèses, crochets, barres, accolades)
-  - Génération automatique de la structure selon les dimensions
-- 📊 Enrichissement des environnements mathématiques :
-  - Environnements d'équation : equation, equation*, subequations, \displaystyle
-  - Environnements d'alignement : align, alignat, gather avec leurs variantes
-  - Environnements spéciaux : cases, systeme, multline, split
-- 🎯 Amélioration des variantes par défaut :
-  - Versions sans numérotation (*) comme options par défaut
-  - Menus contextuels étendus pour accéder aux variantes
-- 🔄 Positionnement intelligent du curseur :
-  - Placement optimal dans les tableaux et matrices
-  - Support des marqueurs de position pour une meilleure expérience utilisateur
-- 🐛 Corrections et optimisations diverses
-
-### 0.1.6
-- 🛠️ Amélioration de l'interface modale tabularray :
-  - Option de coloration d'une ligne sur deux (lignes paires)
-  - Meilleure gestion des paramètres colspec (génération automatique selon le nombre de colonnes)
-  - Réorganisation des options pour une utilisation plus intuitive
-  - Grille complète comme option par défaut
-- 🔄 Centralisation du code de génération des tableaux pour une maintenance facilitée
-- 📦 Amélioration du script de build :
-  - Synchronisation automatique du README dans le dossier build
-  - Meilleure gestion des erreurs
-  - Intégration Git améliorée
-- 🐛 Corrections mineures et optimisations de performances
-
-### 0.1.5
-- 🎛️ Ajout d'une interface modale pour la création de tableaux tabularray
-- 📊 Options avancées pour les tableaux :
-  - Largeur et hauteur des lignes configurables
-  - Gestion des en-têtes (première ligne/colonne)
-  - Styles de bordures personnalisables (grille, lignes horizontales/verticales)
-  - Coloration alternée des lignes
-  - Personnalisation avancée des spécifications de colonnes
-- 📋 Support de l'insertion du texte sélectionné dans les tableaux
-- 🔧 Amélioration du script de build et de déploiement
-- 🧹 Refactoring du code pour une meilleure maintenance
-
-### 0.1.3 à 0.1.4
-- ✅ Correction du support du souligné en mode mathématique (`\underline` vs `\uline`)
-- 🆕 Ajout de nouveaux environnements : tikzpicture, tcolorbox, listing, tabularray
-- 🔧 Amélioration de la détection du mode mathématique
-- 📊 Ajout de variantes pour les matrices (pmatrix, bmatrix, vmatrix, Vmatrix, Bmatrix)
-- 🎯 Menus contextuels étendus pour plus de commandes
-- 🔢 Ajout de l'ensemble 𝔻 (nombres décimaux)
-
-### 0.1.2
-- 🔢 Support mathématique complet (9 blocs)
-- 🎯 Menus contextuels pour variantes
-- 🎨 Amélioration de l'interface
-
-### 0.1.0
-- 🎉 Version initiale
-- 📝 Support de base du formatage
+ Retrouvez l’historique complet des versions dans [CHANGELOG.md](./CHANGELOG.md). 
