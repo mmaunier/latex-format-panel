@@ -61,10 +61,10 @@ function getPersoCommandVariants(cmd) {
     return null; // Pas de variantes disponibles
   }
   
-  // Construire l'objet variants
+  // Construire l'objet variants - NUMÉROTATION À PARTIR DE 1 pour l'affichage
   const variants = targetButton.variantes.map((variante, index) => ({
-    id: `variant_${index}`,
-    label: variante.texte,
+    id: `variant_${index}`, // Garde l'indexation interne à partir de 0
+    label: `${index + 1}. ${variante.texte}`, // Affichage numéroté à partir de 1
     description: variante.commande.replace(/\\/g, '\\').substring(0, 50) + '...'
   }));
   
@@ -106,9 +106,20 @@ function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId 
         command = targetButton.variantes[0].commande; // Fallback
       }
     } else {
-      // Utiliser la variante par défaut
-      const defaultIndex = Math.min(targetButton.defaut || 0, targetButton.variantes.length - 1);
-      command = targetButton.variantes[defaultIndex].commande;
+      // Utiliser la variante par défaut - CORRECTION DE LA NUMÉROTATION
+      let defaultIndex = targetButton.defaut || 1; // Défaut à 1 si non défini
+      
+      // Convertir la numérotation utilisateur (à partir de 1) en indexation interne (à partir de 0)
+      if (defaultIndex <= 0) {
+        defaultIndex = 1; // Si négatif ou 0, utiliser 1
+      }
+      if (defaultIndex > targetButton.variantes.length) {
+        defaultIndex = 1; // Si supérieur au nombre de variantes, utiliser 1
+      }
+      
+      // Convertir en index interne (0-based)
+      const internalIndex = defaultIndex - 1;
+      command = targetButton.variantes[internalIndex].commande;
     }
   } else {
     // Bouton simple

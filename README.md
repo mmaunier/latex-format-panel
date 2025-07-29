@@ -134,6 +134,11 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.1
+- 🐛 Correction du bug des variantes dans l'onglet Perso (les menus contextuels fonctionnent maintenant correctement)
+- 📊 Amélioration de la numérotation des variantes : numérotation à partir de 1 pour une meilleure expérience utilisateur
+- 🔧 Validation automatique des valeurs par défaut (si ≤ 0 ou > nombre de variantes, la valeur est automatiquement fixée à 1)
+
 ### 0.2.0
 - 🆕 Ajout de menus contextuels dans l'onglet Perso avec possibilité d'ajouter des variantes (voir la documentation)
 - 🎨 Uniformisation de la taille des boutons dans l'onglet Perso

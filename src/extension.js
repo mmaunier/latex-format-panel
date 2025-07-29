@@ -69,7 +69,7 @@ function wrapWith(cmd, variantId = null, customParams = null) {
       } else if (getMathCommands().includes(cmd)) {
         result = handleMathCommand(cmd, editor, selection, text, isMathMode, variantId);
       } else if (getPersoCommands().includes(cmd)) {
-        result = handlePersoCommand(cmd, editor, selection, text);
+        result = handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId);
       } else {
         console.log('❌ Unknown command:', cmd);
         return;
@@ -160,9 +160,9 @@ function activate(context) {
   
   // 9. UNE SEULE commande pour tous les perso (au lieu d'une par bouton)
   context.subscriptions.push(
-    vscode.commands.registerCommand('latexFormat.wrapWithPerso', (cmd) => {
-      console.log('🚀 wrapWithPerso called with cmd:', cmd);
-      wrapWith(cmd);
+    vscode.commands.registerCommand('latexFormat.wrapWithPerso', (cmd, variantId = null) => {
+      console.log('🚀 wrapWithPerso called with cmd:', cmd, 'variantId:', variantId);
+      wrapWith(cmd, variantId);
     })
   );
   

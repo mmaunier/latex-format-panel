@@ -80,13 +80,8 @@ class LatexSidebarProvider {
       // TRAITEMENT PERSO SÉPARÉ - Avant tout le reste
       if (message.command.startsWith('perso_')) {
         console.log('Executing perso command:', message.command, 'variant:', message.variant);
-        if (message.variant) {
-          // Si il y a une variante, utiliser wrapWithVariant
-          vscode.commands.executeCommand('latexFormat.wrapWithVariant', message.command, message.variant);
-        } else {
-          // Sinon, utiliser wrapWithPerso
-          vscode.commands.executeCommand('latexFormat.wrapWithPerso', message.command);
-        }
+        // Toujours utiliser wrapWithPerso, mais passer la variante en paramètre
+        vscode.commands.executeCommand('latexFormat.wrapWithPerso', message.command, message.variant);
         return; // Sortir immédiatement
       }
       
@@ -183,9 +178,23 @@ function generatePersoHtml() {
     } else if (item.type === 'bouton_variantes') {
       // Bouton avec variantes avec classe perso-button
       const uniqueId = generatePersoId(item, index);
-      const defaultIndex = Math.min(item.defaut || 0, (item.variantes || []).length - 1);
-      const defaultLabel = item.variantes && item.variantes[defaultIndex] 
-        ? item.variantes[defaultIndex].texte 
+      
+      // CORRECTION DE LA NUMÉROTATION - Conversion de la numérotation utilisateur vers l'indexation interne
+      let defaultIndex = item.defaut || 1; // Défaut à 1 si non défini
+      
+      // Validation de la valeur par défaut
+      if (defaultIndex <= 0) {
+        defaultIndex = 1; // Si négatif ou 0, utiliser 1
+      }
+      if (defaultIndex > (item.variantes || []).length) {
+        defaultIndex = 1; // Si supérieur au nombre de variantes, utiliser 1
+      }
+      
+      // Convertir en index interne (0-based)
+      const internalIndex = defaultIndex - 1;
+      
+      const defaultLabel = item.variantes && item.variantes[internalIndex] 
+        ? item.variantes[internalIndex].texte 
         : 'Bouton';
       
       if (item.variantes && item.variantes.length > 1) {
