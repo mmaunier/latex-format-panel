@@ -34,7 +34,7 @@
    <div class="button-group partial">
       <button class="format-button mathbb" 
               onclick="sendCommand('mathbb')" 
-              oncontextmenu="showContextMenu(event, 'mathbb'); return false;">𝔸𝔻ℂ</button>
+              oncontextmenu="showContextMenu(event, 'mathbb'); return false;">𝔸𝔹ℂ</button>
       <button class="format-button mathcal" 
               onclick="sendCommand('mathcal')" 
               oncontextmenu="showContextMenu(event, 'mathcal'); return false;">𝒜ℬ𝒞</button>
@@ -51,7 +51,7 @@
               oncontextmenu="showContextMenu(event, 'scriptsize'); return false;">scriptsize</button>
       <button class="size-button" 
               onclick="sendCommand('footnotesize')" 
-              oncontextmenu="showContextMenu(event, 'footnotesize'); return false;">footnotesize</button>
+              oncontextmenu="showContextMenu(event, 'footnotesize'); return false;">footnote</button>
       <button class="size-button" 
               onclick="sendCommand('small')" 
               oncontextmenu="showContextMenu(event, 'small'); return false;">small</button>
@@ -60,7 +60,7 @@
    <div class="button-group">
       <button class="size-button" 
               onclick="sendCommand('normalsize')" 
-              oncontextmenu="showContextMenu(event, 'normalsize'); return false;">normalsize</button>
+              oncontextmenu="showContextMenu(event, 'normalsize'); return false;">normal</button>
       <button class="size-button" 
               onclick="sendCommand('large')" 
               oncontextmenu="showContextMenu(event, 'large'); return false;">large</button>
@@ -275,9 +275,12 @@
 
 <!-- Bloc 1 : Mise en page -->
 <div class="button-group">
-        <button class="format-button environment" onclick="sendCommand('minipage')">minipage</button>
-        <button class="format-button environment" onclick="sendCommand('multicols')">multicols</button>
-        <button class="format-button environment" onclick="sendCommand('tabbing')">tabbing</button>
+        <button class="format-button environment" onclick="sendCommand('minipage')"
+                oncontextmenu="showContextMenu(event, 'minipage'); return false;">minipage</button>
+        <button class="format-button environment" onclick="sendCommand('multicols')"
+                oncontextmenu="showContextMenu(event, 'multicols'); return false;">multicols</button>
+        <button class="format-button environment" onclick="sendCommand('tabbing')"
+                oncontextmenu="showContextMenu(event, 'tabbing'); return false;">tabbing</button>
 </div>
 
 <!-- Bloc 2 : Figures -->

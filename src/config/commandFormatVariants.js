@@ -1354,11 +1354,31 @@ const formatCommandVariants = {
          {
             id: 'minipage',
             label: '\\begin{minipage}..\\end{minipage}',
-            description: 'Mini-page',
+            description: 'Mini-page standard',
             package: null,
-            mathMode: null,
+            mathMode: '\\begin{minipage}{0.4\\textwidth}\n$1\n\\end{minipage}$0',
             textMode: '\\begin{minipage}{0.4\\textwidth}\n$1\n\\end{minipage}$0',
-            supportsMath: false,
+            supportsMath: true,
+            supportsText: true
+         },
+         {
+            id: 'mini_k',
+            label: '\\begin{mini}[k=.45]..\\end{mini}',
+            description: 'Mini-page avec coefficient k',
+            package: 'perso',
+            mathMode: '\\begin{mini}[k=.45]\n$1\n\\end{mini}$0',
+            textMode: '\\begin{mini}[k=.45]\n$1\n\\end{mini}$0',
+            supportsMath: true,
+            supportsText: true
+         },
+         {
+            id: 'mini_dim',
+            label: '\\begin{mini}[dim=6cm]..\\end{mini}',
+            description: 'Mini-page avec dimension fixe',
+            package: 'perso',
+            mathMode: '\\begin{mini}[dim=6cm]\n$1\n\\end{mini}$0',
+            textMode: '\\begin{mini}[dim=6cm]\n$1\n\\end{mini}$0',
+            supportsMath: true,
             supportsText: true
          }
       ]
@@ -1369,11 +1389,31 @@ const formatCommandVariants = {
          {
             id: 'multicols',
             label: '\\begin{multicols}..\\end{multicols}',
-            description: 'Environnement multicolonnes',
+            description: 'Environnement multicolonnes standard',
             package: 'multicol',
-            mathMode: null,
+            mathMode: '\\begin{multicols}{2}\n$1\n\\end{multicols}$0',
             textMode: '\\begin{multicols}{2}\n$1\n\\end{multicols}$0',
-            supportsMath: false,
+            supportsMath: true,
+            supportsText: true
+         },
+         {
+            id: 'MultiCols',
+            label: '\\begin{MultiCols}[EpTrait=1pt](2)..\\end{MultiCols}',
+            description: 'MultiCols personnalisé avec trait',
+            package: 'customenvs',
+            mathMode: '\\begin{MultiCols}[EpTrait=1pt](2)\n$1\n\\end{MultiCols}$0',
+            textMode: '\\begin{MultiCols}[EpTrait=1pt](2)\n$1\n\\end{MultiCols}$0',
+            supportsMath: true,
+            supportsText: true
+         },
+         {
+            id: 'MultiCols_item',
+            label: '\\begin{MultiCols}[type=enum, EpTrait=1pt](4)..\\end{MultiCols}',
+            description: 'MultiCols avec énumération sur 4 colonnes',
+            package: 'customenvs',
+            mathMode: '\\begin{MultiCols}[type=enum, EpTrait=1pt](4)\n$1\n\\end{MultiCols}$0',
+            textMode: '\\begin{MultiCols}[type=enum, EpTrait=1pt](4)\n$1\n\\end{MultiCols}$0',
+            supportsMath: true,
             supportsText: true
          }
       ]
@@ -1384,11 +1424,21 @@ const formatCommandVariants = {
          {
             id: 'tabbing',
             label: '\\begin{tabbing}..\\end{tabbing}',
-            description: 'Environnement de tabulation',
+            description: 'Environnement de tabulation simple',
             package: null,
-            mathMode: null,
+            mathMode: '\\begin{tabbing}\n$1\n\\end{tabbing}$0',
             textMode: '\\begin{tabbing}\n$1\n\\end{tabbing}$0',
-            supportsMath: false,
+            supportsMath: true,
+            supportsText: true
+         },
+         {
+            id: 'tabbing_ex',
+            label: '\\begin{tabbing} avec exemple',
+            description: 'Tabbing avec structure d\'exemple',
+            package: null,
+            mathMode: '\\begin{tabbing}\n\t\\hspace{2cm}\\=\\hspace{2cm}\\=\\kill\n\t$1 \\> \t \\> \t \\\\ \n\t \\> \t \\> \t \n\\end{tabbing}$0',
+            textMode: '\\begin{tabbing}\n\t\\hspace{2cm}\\=\\hspace{2cm}\\=\\kill\n\t$1 \\> \t \\> \t \\\\ \n\t \\> \t \\> \t \n\\end{tabbing}$0',
+            supportsMath: true,
             supportsText: true
          }
       ]

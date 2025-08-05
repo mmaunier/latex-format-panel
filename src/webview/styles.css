@@ -77,13 +77,20 @@ h3 {
    background-color: var(--vscode-button-background);
    color: var(--vscode-button-foreground);
    border: none;
-   padding: 6px 8px;
+   padding: 5px 2px;
    border-radius: 3px;
    cursor: pointer;
    font-size: 11px;
    flex: 1;
    min-width: 0;
    max-width: calc(25% - 2.25px);
+    text-align: center;    /* Centrage du contenu */
+    display: flex;    /* Pour un meilleur contrôle du centrage */
+    align-items: center;    /* Centrage vertical */
+    justify-content: center;    /* Centrage horizontal */
+    overflow: hidden;    /* Empêche le débordement */
+    white-space: nowrap;    /* Évite le retour à la ligne */
+    line-height: 1;    /* Réduit l'espacement vertical */
 }
 
 .format-button:hover {
@@ -96,6 +103,14 @@ h3 {
     color: var(--vscode-button-secondaryForeground);
     font-weight: 500;
     font-size: 11px;
+    padding: 5px 2px;    /* Assure le même padding */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 1;
 }
 
 .format-button.secondary:hover {
@@ -279,6 +294,7 @@ h3 {
 
 .format-button.smallcaps {
    font-variant: small-caps;
+   font-size: 8px;
 }
 
 .format-button.highlight {
