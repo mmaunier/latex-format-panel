@@ -205,15 +205,25 @@ const formatCommandVariants = {
       ]
    },
    highlight: {
-      default: 'highlight',
+      default: 'hl',
       variants: [
+         {
+            id: 'hl',
+            label: '\\hl{...}',
+            description: 'Surlignage avec package soul',
+            package: 'soul',
+            mathMode: '\\hl{$1} $0',
+            textMode: '\\hl{$1} $0',
+            supportsMath: true,
+            supportsText: true
+         },
          {
             id: 'highlight',
             label: '\\SurlignerTexte/Formule{...}',
             description: 'Surlignage automatique',
-            package: 'perso',
-            mathMode: '\\SurlignerFormule{$1}$0',
-            textMode: '\\SurlignerTexte{$1}$0',
+            package: 'ProfLycee',
+            mathMode: '\\SurlignerFormule{$1} $0',
+            textMode: '\\SurlignerTexte{$1} $0',
             supportsMath: true,
             supportsText: true
          }
