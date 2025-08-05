@@ -134,6 +134,17 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.2
+- 🎨 Optimisation de l'affichage des boutons dans l'onglet Format :
+  - Réduction du padding intérieur à 2px avec contenu parfaitement centré
+  - Adaptation automatique de la taille de police selon la longueur du texte des boutons
+  - Amélioration du centrage avec flexbox et gestion du débordement
+- 🔧 Ajout de menus contextuels pour les environnements de mise en page :
+  - **minipage** : variantes standard, mini (k), mini (dim) avec package perso
+  - **multicols** : variantes standard, MultiCols avec trait, MultiCols avec énumération
+  - **tabbing** : variantes simple et avec exemple de structure
+- 🆕 Correction du caractère Unicode pour \mathbb{B} : 𝔸𝔹ℂ (au lieu de 𝔸𝔻ℂ)
+
 ### 0.2.1
 - 🐛 Correction du bug des variantes dans l'onglet Perso (les menus contextuels fonctionnent maintenant correctement)
 - 📊 Amélioration de la numérotation des variantes : numérotation à partir de 1 pour une meilleure expérience utilisateur
@@ -145,16 +156,5 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 - 🛠️ Refonte complète de la logique de traitement des commandes dans tous les onglets (Formats/Math/Perso) pour une meilleure gestion
 - 🎯 Amélioration du positionnement de la sélection et des curseurs
 - 📚 Mise à jour de la documentation
-
-### 0.1.18
-- 🚀 Amélioration du rafraichissement lors de la création d'une nouvelle commande dans l'onglet Perso
-- 🐛 Correction de bugs dans l'onglet Perso
-- 🆕 Nouvelle gestion des identifiants dans Perso (générateur unique)
-
-### 0.1.17
-- 🎯 **Nouveau système de marqueurs** pour l'onglet Perso :
-  - Support de `$1` pour le texte sélectionné (peut apparaître plusieurs fois)
-  - Support de `$0` pour la position finale du curseur
-  - Support de `\n` pour les retours à la ligne
 
  Retrouvez l’historique complet des versions dans [CHANGELOG.md](./CHANGELOG.md). 

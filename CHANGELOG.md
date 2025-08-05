@@ -7,6 +7,22 @@ Le format de version utilisé est [SemVer](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.2.2] - 2025-08-05
+### Added
+- Ajout de menus contextuels pour les environnements de mise en page :
+  - **minipage** : variantes standard, mini (k), mini (dim) avec package perso
+  - **multicols** : variantes standard, MultiCols avec trait, MultiCols avec énumération  
+  - **tabbing** : variantes simple et avec exemple de structure
+
+### Changed
+- Optimisation de l'affichage des boutons dans l'onglet Format :
+  - Réduction du padding intérieur à 2px avec contenu parfaitement centré
+  - Adaptation automatique de la taille de police selon la longueur du texte des boutons
+  - Amélioration du centrage avec flexbox et gestion du débordement
+
+### Fixed
+- Correction du caractère Unicode pour \mathbb{B} : 𝔸𝔹ℂ (au lieu de 𝔸𝔻ℂ)
+
 ## [0.2.1] - 2025-07-29
 ### Fixed
 - Correction du bug des variantes dans l'onglet Perso (les menus contextuels fonctionnent maintenant correctement)
