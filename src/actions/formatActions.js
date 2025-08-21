@@ -8,15 +8,10 @@ function getFormatCommands() {
     'mathbb', 'mathcal', 'uppercase', 'lowercase', 'capitalize', 'superscript', 'subscript',
     'footnotesize', 'normalsize', 'tiny', 'scriptsize', 'small', 'large', 'Large', 'LARGE', 'huge', 'Huge', 
     'center', 'flushleft', 'flushright',
-    // Commandes d'espacement horizontal
     'quad', 'qquad', 'noindent', 'hspace', 'hfill', 'hbox',
-    // Commandes d'espacement vertical
     'smallskip', 'medskip', 'bigskip', 'itemsep', 'baselineskip', 'parskip', 'vspace', 'vfill', 'newpage',
-    // Commandes de sections et chapitres
     'chapitres', 'sections', 'paragraphe',
-    // Compteurs et étiquettes
     'setlength', 'setcounter', 'label',
-    // Environnements
     'enumerate', 'itemize', 'item',
     'minipage', 'multicols', 'tabbing',
     'figure', 'wrapfig', 'includegraphics',
@@ -26,66 +21,80 @@ function getFormatCommands() {
 }
 
 function handleFormatCommand(cmd, editor, selection, text, isMathMode, variantId = null) {
+  console.log('🎯 handleFormatCommand called:', cmd, 'variantId:', variantId, 'isMathMode:', isMathMode, 'hasSelection:', !selection.isEmpty);
+
   // Cas spéciaux qui ont leur propre gestion
   if (cmd === 'tabularray' && variantId === 'custom') {
-    // Géré par wrapWithCustomParams dans extension.js
+    console.log('🎯 Custom tabularray - will be handled by modal');
     return { replaced: '', newSelection: null };
   }
-  
-  // Si une variante spécifique est demandée
-  if (variantId) {
-    const variants = getFormatCommandVariants(cmd);
-    if (variants) {
-      const variant = variants.variants.find(v => v.id === variantId);
-      if (variant) {
-        return handleFormatVariant(cmd, variant, editor, selection, text, isMathMode);
-      }
-    }
-  }
 
-  // Sinon, utiliser la variante par défaut
+  // Chercher les variantes de la commande
   const variants = getFormatCommandVariants(cmd);
-  if (variants) {
+  if (!variants) {
+    console.log('❌ No variants found for format command:', cmd);
+    return null;
+  }
+
+  let variant;
+  if (variantId) {
+    // Utiliser la variante spécifiée
+    variant = variants.variants.find(v => v.id === variantId);
+    if (!variant) {
+      console.log('❌ Variant not found:', variantId);
+      return null;
+    }
+  } else {
+    // Utiliser la variante par défaut
     const defaultVariant = getDefaultFormatVariant(cmd);
-    if (defaultVariant) {
-      return handleFormatVariant(cmd, defaultVariant, editor, selection, text, isMathMode);
+    variant = variants.variants.find(v => v.id === defaultVariant);
+    if (!variant) {
+      variant = variants.variants[0]; // Fallback sur la première variante
     }
   }
 
-  // Fallback - ne devrait pas arriver avec la nouvelle structure
-  console.log('⚠️ No variant found for command:', cmd);
-  return { replaced: '', newSelection: null };
+  return handleFormatVariant(cmd, variant, editor, selection, text, isMathMode);
 }
 
 function handleFormatVariant(command, variant, editor, selection, text, isMathMode) {
-  // Vérifier si la variante est supportée dans le mode actuel
-  if (isMathMode && !variant.supportsMath) {
-    return { replaced: '', newSelection: null };
-  }
+  console.log('🎯 handleFormatVariant called:', command, 'variant:', variant.id, 'isMathMode:', isMathMode, 'hasSelection:', !selection.isEmpty);
+
+  // NOUVELLE LOGIQUE : Si pas en mode math ET bouton non supporté en mode texte
   if (!isMathMode && !variant.supportsText) {
-    return { replaced: '', newSelection: null };
+    console.log('❌ Format variant not supported in text mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
+  }
+  
+  // NOUVELLE LOGIQUE : Si en mode math ET bouton non supporté en mode math
+  if (isMathMode && !variant.supportsMath) {
+    console.log('❌ Format variant not supported in math mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   // Récupérer le template approprié
   let template = isMathMode ? variant.mathMode : variant.textMode;
   if (!template) {
-    return { replaced: '', newSelection: null };
+    console.log('❌ No template for current mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   // Cas spéciaux pour les transformations de texte
   if (template === 'UPPERCASE_TRANSFORM') {
+    console.log('✅ Using uppercase transform');
     return { 
       replaced: text.toUpperCase(), 
       newSelection: text ? new vscode.Selection(selection.start, selection.start.translate(0, text.length)) : null 
     };
   }
   if (template === 'LOWERCASE_TRANSFORM') {
+    console.log('✅ Using lowercase transform');
     return { 
       replaced: text.toLowerCase(), 
       newSelection: text ? new vscode.Selection(selection.start, selection.start.translate(0, text.length)) : null 
     };
   }
   if (template === 'CAPITALIZE_TRANSFORM') {
+    console.log('✅ Using capitalize transform');
     const capitalized = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     return { 
       replaced: capitalized, 
@@ -95,11 +104,13 @@ function handleFormatVariant(command, variant, editor, selection, text, isMathMo
 
   // Cas spécial pour tabularray avec interface modale
   if (template === 'MODAL_INTERFACE') {
+    console.log('✅ Using modal interface');
     // Sera géré par le système de modal dans extension.js
     return { replaced: '', newSelection: null };
   }
 
   // Utiliser processTemplate pour tous les autres cas
+  console.log('✅ Using template:', template);
   return processTemplate(template, text, selection);
 }
 

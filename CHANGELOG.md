@@ -7,6 +7,12 @@ Le format de version utilisé est [SemVer](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.2.3] - 2025-08-21
+### Fixed
+- Correction de bug critique : préservation du texte sélectionné lors de l'utilisation de boutons non compatibles avec le mode actuel (texte/math)
+- Amélioration de la sécurité : annulation automatique des actions inappropriées au lieu de supprimer le contenu sélectionné
+- Harmonisation du comportement de sécurité sur tous les onglets (Math, Format, Perso)
+
 ## [0.2.2] - 2025-08-05
 ### Added
 - Ajout de menus contextuels pour les environnements de mise en page :

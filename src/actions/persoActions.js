@@ -7,18 +7,12 @@ function generatePersoId(item, index) {
   let contentToHash;
   
   if (item.type === 'bouton_variantes') {
-    // Pour les bouton_variantes, inclure toutes les variantes dans le hash
-    contentToHash = JSON.stringify({
-      type: item.type,
-      defaut: item.defaut,
-      variantes: item.variantes
-    });
+    // Pour les boutons à variantes, inclure toutes les commandes
+    const variantCommands = item.variantes.map(v => v.commande).join('|');
+    contentToHash = `${item.type}_${variantCommands}_${item.defaut || 1}`;
   } else {
-    // Pour les boutons normaux
-    contentToHash = JSON.stringify({
-      texte: item.texte, 
-      commande: item.commande
-    });
+    // Pour les boutons simples ou les titres
+    contentToHash = `${item.type}_${item.commande || item.texte}`;
   }
   
   const contentHash = crypto.createHash('md5')
@@ -58,23 +52,26 @@ function getPersoCommandVariants(cmd) {
   });
   
   if (!targetButton || !targetButton.variantes || targetButton.variantes.length <= 1) {
-    return null; // Pas de variantes disponibles
+    return null;
   }
   
   // Construire l'objet variants - NUMÉROTATION À PARTIR DE 1 pour l'affichage
-  const variants = targetButton.variantes.map((variante, index) => ({
-    id: `variant_${index}`, // Garde l'indexation interne à partir de 0
-    label: `${index + 1}. ${variante.texte}`, // Affichage numéroté à partir de 1
-    description: variante.commande.replace(/\\/g, '\\').substring(0, 50) + '...'
-  }));
-  
-  return {
+  const variants = {
     command: cmd,
-    variants: variants
+    defaultVariant: `variant_${(targetButton.defaut || 1) - 1}`, // Convertir en 0-based pour l'ID
+    variants: targetButton.variantes.map((variant, index) => ({
+      id: `variant_${index}`, // ID 0-based
+      name: variant.texte,
+      displayNumber: index + 1 // Numérotation pour l'affichage (1-based)
+    }))
   };
+  
+  return variants;
 }
 
 function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId = null) {
+  console.log('🎯 handlePersoCommand called:', cmd, 'variantId:', variantId, 'isMathMode:', isMathMode, 'hasSelection:', !selection.isEmpty);
+
   const config = vscode.workspace.getConfiguration('latexFormatPanel');
   const buttons = config.get('persoButtons', []);
   
@@ -91,7 +88,8 @@ function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId 
   });
   
   if (!targetButton) {
-    return { replaced: '', newSelection: null };
+    console.log('❌ Target button not found for perso command:', cmd);
+    return null; // Annule l'action
   }
   
   let command;
@@ -103,6 +101,7 @@ function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId 
       if (variantIndex >= 0 && variantIndex < targetButton.variantes.length) {
         command = targetButton.variantes[variantIndex].commande;
       } else {
+        console.log('❌ Invalid variant index for perso command');
         command = targetButton.variantes[0].commande; // Fallback
       }
     } else {
@@ -126,7 +125,29 @@ function handlePersoCommand(cmd, editor, selection, text, isMathMode, variantId 
     command = targetButton.commande;
   }
   
-  // Utiliser la fonction centralisée
+  // Validation de sécurité supplémentaire
+  if (!command || typeof command !== 'string') {
+    console.log('❌ Invalid command for perso button - CANCELLING ACTION');
+    return null; // Annule complètement l'action
+  }
+  
+  // NOUVELLE LOGIQUE : Pour les commandes perso, on considère qu'elles supportent tout par défaut
+  // MAIS on peut vérifier si c'est une commande purement mathématique
+  const isMathCommand = command.includes('\\begin{align') || 
+                       command.includes('\\begin{equation') || 
+                       command.includes('\\begin{gather') ||
+                       command.includes('\\begin{cases') ||
+                       command.includes('$') ||
+                       (command.match(/\\[a-zA-Z]+/) && !command.includes('\\section') && !command.includes('\\chapter'));
+  
+  // Si c'est une commande mathématique et qu'on n'est pas en mode math avec du texte sélectionné
+  if (isMathCommand && !isMathMode && !selection.isEmpty) {
+    console.log('❌ Math command used in text mode with selection - CANCELLING ACTION');
+    return null; // Annule complètement l'action
+  }
+  
+  // Utiliser la fonction centralisée processTemplate
+  console.log('✅ Using perso command:', command);
   return processTemplate(command, text, selection);
 }
 

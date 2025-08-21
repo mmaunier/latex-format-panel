@@ -134,6 +134,10 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.3
+- 🐛 Correction de bug critique : préservation du texte sélectionné lors de l'utilisation de boutons non compatibles avec le mode actuel (texte/math)
+- 🔒 Amélioration de la sécurité : annulation automatique des actions inappropriées au lieu de supprimer le contenu sélectionné
+
 ### 0.2.2
 - 🎨 Optimisation de l'affichage des boutons dans l'onglet Format :
   - Réduction du padding intérieur à 2px avec contenu parfaitement centré
@@ -150,11 +154,4 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 - 📊 Amélioration de la numérotation des variantes : numérotation à partir de 1 pour une meilleure expérience utilisateur
 - 🔧 Validation automatique des valeurs par défaut (si ≤ 0 ou > nombre de variantes, la valeur est automatiquement fixée à 1)
 
-### 0.2.0
-- 🆕 Ajout de menus contextuels dans l'onglet Perso avec possibilité d'ajouter des variantes (voir la documentation)
-- 🎨 Uniformisation de la taille des boutons dans l'onglet Perso
-- 🛠️ Refonte complète de la logique de traitement des commandes dans tous les onglets (Formats/Math/Perso) pour une meilleure gestion
-- 🎯 Amélioration du positionnement de la sélection et des curseurs
-- 📚 Mise à jour de la documentation
-
- Retrouvez l’historique complet des versions dans [CHANGELOG.md](./CHANGELOG.md). 
+ Retrouvez l'historique complet des versions dans [CHANGELOG.md](./CHANGELOG.md).

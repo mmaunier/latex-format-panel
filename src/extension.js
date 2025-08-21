@@ -50,12 +50,15 @@ function wrapWith(cmd, variantId = null, customParams = null) {
 
   const { document, selections } = editor;
   let newSelections = [];
+  let hasValidActions = false;
 
   editor.edit(editBuilder => {
     selections.forEach(selection => {
       const text = document.getText(selection);
       const position = selection.active;
       const isMathMode = isInMathMode(document, position);
+      
+      console.log('📍 Processing selection - isMathMode:', isMathMode, 'text:', text.substring(0, 20) + '...');
       
       let result;
       
@@ -75,8 +78,16 @@ function wrapWith(cmd, variantId = null, customParams = null) {
         return;
       }
 
+      // 🔑 POINT CLÉ : Si result est null, l'action est annulée
+      if (result === null) {
+        console.log('⚠️ Action CANCELLED for selection:', text.substring(0, 20));
+        return; // Ne pas effectuer de remplacement, garder la sélection intacte
+      }
+
       if (result && result.replaced !== undefined) {
+        console.log('✅ Action EXECUTED - replacing with:', result.replaced.substring(0, 30) + '...');
         editBuilder.replace(selection, result.replaced);
+        hasValidActions = true;
         
         if (result.newSelection) {
           newSelections.push(result.newSelection);
@@ -84,7 +95,9 @@ function wrapWith(cmd, variantId = null, customParams = null) {
       }
     });
   }).then(() => {
-    if (newSelections.length > 0) {
+    console.log('📝 Edit completed - hasValidActions:', hasValidActions);
+    
+    if (hasValidActions && newSelections.length > 0) {
       editor.selections = newSelections;
     }
     // Redonner le focus à l'éditeur après la modification

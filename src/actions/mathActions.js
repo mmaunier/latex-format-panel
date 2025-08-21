@@ -49,7 +49,7 @@ function handleMathCommand(cmd, editor, selection, text, isMathMode, variantId =
 }
 
 function handleMathVariant(command, variantId, editor, selection, text, isMathMode) {
-  console.log('🎯 handleMathVariant called:', command, variantId);
+  console.log('🎯 handleMathVariant called:', command, variantId, 'isMathMode:', isMathMode, 'hasSelection:', !selection.isEmpty);
   
   const variants = getMathCommandVariants(command);
   if (!variants) return null;
@@ -57,20 +57,22 @@ function handleMathVariant(command, variantId, editor, selection, text, isMathMo
   const variant = variants.variants.find(v => v.id === variantId);
   if (!variant) return null;
 
-  // Vérifier si la variante est supportée dans le mode actuel
-  if (isMathMode && !variant.supportsMath) {
-    console.log('❌ Variant not supported in math mode');
-    return { replaced: '', newSelection: null };
-  }
+  // NOUVELLE LOGIQUE : Si pas en mode math ET bouton non supporté en mode texte
   if (!isMathMode && !variant.supportsText) {
-    console.log('❌ Variant not supported in text mode');
-    return { replaced: '', newSelection: null };
+    console.log('❌ Variant not supported in text mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
+  }
+  
+  // NOUVELLE LOGIQUE : Si en mode math ET bouton non supporté en mode math
+  if (isMathMode && !variant.supportsMath) {
+    console.log('❌ Variant not supported in math mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   const template = isMathMode ? variant.mathMode : variant.textMode;
   if (!template) {
-    console.log('❌ No template for current mode');
-    return { replaced: '', newSelection: null };
+    console.log('❌ No template for current mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   console.log('✅ Using template:', template);
@@ -78,22 +80,24 @@ function handleMathVariant(command, variantId, editor, selection, text, isMathMo
 }
 
 function handleMathSimpleCommand(command, simpleCommand, editor, selection, text, isMathMode) {
-  console.log('🎯 handleMathSimpleCommand called:', command);
+  console.log('🎯 handleMathSimpleCommand called:', command, 'isMathMode:', isMathMode, 'hasSelection:', !selection.isEmpty);
 
-  // Vérifier si la commande est supportée dans le mode actuel
-  if (isMathMode && !simpleCommand.supportsMath) {
-    console.log('❌ Simple command not supported in math mode');
-    return { replaced: '', newSelection: null };
-  }
+  // NOUVELLE LOGIQUE : Si pas en mode math ET bouton non supporté en mode texte
   if (!isMathMode && !simpleCommand.supportsText) {
-    console.log('❌ Simple command not supported in text mode');
-    return { replaced: '', newSelection: null };
+    console.log('❌ Simple command not supported in text mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
+  }
+  
+  // NOUVELLE LOGIQUE : Si en mode math ET bouton non supporté en mode math
+  if (isMathMode && !simpleCommand.supportsMath) {
+    console.log('❌ Simple command not supported in math mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   const template = isMathMode ? simpleCommand.mathMode : simpleCommand.textMode;
   if (!template) {
-    console.log('❌ No template for current mode');
-    return { replaced: '', newSelection: null };
+    console.log('❌ No template for current mode - CANCELLING ACTION');
+    return null; // Annule complètement l'action
   }
 
   console.log('✅ Using simple template:', template);
