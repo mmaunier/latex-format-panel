@@ -7,6 +7,11 @@ Le format de version utilisé est [SemVer](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.2.4] - 2025-08-22
+### Fixed
+- Correction de bug dans l'affichage des variantes de l'onglet Perso : les menus contextuels affichent maintenant correctement les labels au lieu de "undefined"
+- Harmonisation de la structure de données des variantes entre tous les onglets (Format, Math, Perso)
+
 ## [0.2.3] - 2025-08-21
 ### Fixed
 - Correction de bug critique : préservation du texte sélectionné lors de l'utilisation de boutons non compatibles avec le mode actuel (texte/math)

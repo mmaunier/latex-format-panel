@@ -10,7 +10,7 @@ const { getMathCommandVariants, getDefaultMathVariant, wrapWithMatrix } = requir
 const { isInMathMode } = require('../utils/utils');
 const { getFormatCommands, handleFormatCommand, commentLatex, uncommentLatex } = require('./actions/formatActions');
 const { getMathCommands, handleMathCommand } = require('./actions/mathActions');
-const { getPersoCommands, handlePersoCommand } = require('./actions/persoActions');
+const { getPersoCommands, handlePersoCommand, getPersoCommandVariants } = require('./actions/persoActions');
 const { LatexSidebarProvider } = require('./webview/webviewProvider');
 
 // Extensions LaTeX supportées

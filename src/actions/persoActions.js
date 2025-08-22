@@ -61,7 +61,7 @@ function getPersoCommandVariants(cmd) {
     defaultVariant: `variant_${(targetButton.defaut || 1) - 1}`, // Convertir en 0-based pour l'ID
     variants: targetButton.variantes.map((variant, index) => ({
       id: `variant_${index}`, // ID 0-based
-      name: variant.texte,
+      label: variant.texte, // ✅ Changé de 'name' à 'label'
       displayNumber: index + 1 // Numérotation pour l'affichage (1-based)
     }))
   };

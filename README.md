@@ -134,6 +134,10 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.4
+- 🐛 Correction de bug dans l'affichage des variantes de l'onglet Perso : les menus contextuels affichent maintenant correctement les labels au lieu de "undefined"
+- 🔧 Harmonisation de la structure de données des variantes entre tous les onglets (Format, Math, Perso)
+
 ### 0.2.3
 - 🐛 Correction de bug critique : préservation du texte sélectionné lors de l'utilisation de boutons non compatibles avec le mode actuel (texte/math)
 - 🔒 Amélioration de la sécurité : annulation automatique des actions inappropriées au lieu de supprimer le contenu sélectionné
