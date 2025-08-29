@@ -365,7 +365,42 @@ const mathCommandVariants = {
          }
       ]
    },
-   
+   // Variantes pour array
+   'array': {
+      default: 'array_1col',
+      variants: [
+         {
+            id: 'array_1col',
+            label: '\\begin{array}{c}',
+            description: 'Tableau mathématique 1 colonne centré',
+            package: 'array',
+            mathMode: '\\begin{array}{c}\\n$1\\n\\end{array}$0',
+            textMode: null,
+            supportsMath: true,
+            supportsText: false
+         },
+         {
+            id: 'array_2col',
+            label: '\\begin{array}{cc}',
+            description: 'Tableau mathématique 2 colonnes centré',
+            package: 'array',
+            mathMode: '\\begin{array}{cc}\\n$1\\n\\end{array}$0',
+            textMode: null,
+            supportsMath: true,
+            supportsText: false
+         },
+         {
+            id: 'array_3col',
+            label: '\\begin{array}{cc}',
+            description: 'Tableau mathématique 3 colonnes centré',
+            package: 'array',
+            mathMode: '\\begin{array}{ccc}\\n$1\\n\\end{array}$0',
+            textMode: null,
+            supportsMath: true,
+            supportsText: false
+         }
+      ]
+   },
    // Variantes pour align
    'align': {
       default: 'align_star',
@@ -661,8 +696,11 @@ const mathSimpleCommands = {
    overset: { mathMode: '\\overset{$1}{$0}', textMode: null, supportsMath: true, supportsText: false },
 
    // Environnements mathématiques
-   inline: { mathMode: null, textMode: '$$1$$0', supportsMath: false, supportsText: true },
+   inline_dollar: { mathMode: null, textMode: '$$1$$0', supportsMath: false, supportsText: true },
+   display_dollar: { mathMode: null, textMode: '$$\\n$1\\n$$$0', supportsMath: false, supportsText: true },
+   inline: { mathMode: null, textMode: '\\($1\\)$0', supportsMath: false, supportsText: true },
    display: { mathMode: null, textMode: '\\[\\n$1\\n\\]$0', supportsMath: false, supportsText: true },
+
    subequations: { mathMode: '\\begin{subequations}\\n$1\\n\\end{subequations}$0', textMode: '\\begin{subequations}\\n$1\\n\\end{subequations}$0', supportsMath: true, supportsText: true },
    displaystyle: { mathMode: '\\displaystyle $0', textMode: null, supportsMath: true, supportsText: false }
 };

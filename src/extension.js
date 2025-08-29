@@ -3,14 +3,14 @@ const path = require('path');
 const fs = require('fs');
 
 // Imports des modules de configuration
-const { getFormatCommandVariants, getDefaultFormatVariant, wrapWithTabularray } = require('./config/commandFormatVariants');
-const { getMathCommandVariants, getDefaultMathVariant, wrapWithMatrix } = require('./config/commandMathVariants');
+const { wrapWithTabularray } = require('./config/commandFormatVariants');
+const { wrapWithMatrix } = require('./config/commandMathVariants');
 
 // Imports existants
 const { isInMathMode } = require('../utils/utils');
 const { getFormatCommands, handleFormatCommand, commentLatex, uncommentLatex } = require('./actions/formatActions');
 const { getMathCommands, handleMathCommand } = require('./actions/mathActions');
-const { getPersoCommands, handlePersoCommand, getPersoCommandVariants } = require('./actions/persoActions');
+const { getPersoCommands, handlePersoCommand } = require('./actions/persoActions');
 const { LatexSidebarProvider } = require('./webview/webviewProvider');
 
 // Extensions LaTeX supportées

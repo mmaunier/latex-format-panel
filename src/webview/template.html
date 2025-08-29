@@ -221,7 +221,7 @@
 
         item.innerHTML = `
                <div class="context-menu-item-label">${variant.label}</div>
-               <div class="context-menu-item-description">${variant.description}</div>
+               ${variant.description ? `<div class="context-menu-item-description">${variant.description}</div>` : ''}
                ${variant.package ? `<div class="context-menu-item-package">Package: ${variant.package}</div>` : ''}
             `;
 

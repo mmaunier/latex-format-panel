@@ -79,9 +79,9 @@ Dans VSCode, utilisez `Ctrl+Shift+P` → "Extensions: Install from VSIX" et sél
 - **🔢 Ensembles** : ℕ, ℤ, 𝔻, ℚ, ℝ, ℂ
 - **🎯 Logique** : ∈, ⊂, ∪, ∩, ∀, ∃, ×, ÷, ±, ⋯
 - **📍 Vecteurs** : Flèches (vec, overrightarrow), angles, texte positionné (underset, overset)
-- **📐 Environnements de base** : `$...$`, `\[...\]`
+- **📐 Environnements de base** : `$...$`, `$$...$$`, `\(...\)`, `\[...\]`
 - **📝 Environnements équation** : equation, equation*, subequations, \displaystyle
-- **📊 Environnements d'alignement** : align, alignat, gather avec leurs variantes
+- **📊 Environnements d'alignement** : array, align, alignat, gather avec leurs variantes
 - **🧮 Environnements spéciaux** : cases, systeme, multline, split
 
 ### ✨ Personnalisé
@@ -134,6 +134,12 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
 
 ## 📈 Changelog
 
+### 0.2.5
+- 🔧 Ajout des environnements mathématiques manquants : `$$...$$` et `\(...\)` pour une syntaxe LaTeX complète
+- 🔧 Ajout de la commande "array" avec 3 variantes
+- 🐛 Correction du problème d'affichage des boutons dollars : utilisation de codes HTML (&#36;) pour un rendu correct
+- 🎯 Amélioration de la reconnaissance des commandes : ajout des nouvelles commandes dans la liste des actions mathématiques
+
 ### 0.2.4
 - 🐛 Correction de bug dans l'affichage des variantes de l'onglet Perso : les menus contextuels affichent maintenant correctement les labels au lieu de "undefined"
 - 🔧 Harmonisation de la structure de données des variantes entre tous les onglets (Format, Math, Perso)
@@ -152,10 +158,5 @@ Les contributions sont les bienvenues ! Ouvrez une issue ou soumettez une pull r
   - **multicols** : variantes standard, MultiCols avec trait, MultiCols avec énumération
   - **tabbing** : variantes simple et avec exemple de structure
 - 🆕 Correction du caractère Unicode pour \mathbb{B} : 𝔸𝔹ℂ (au lieu de 𝔸𝔻ℂ)
-
-### 0.2.1
-- 🐛 Correction du bug des variantes dans l'onglet Perso (les menus contextuels fonctionnent maintenant correctement)
-- 📊 Amélioration de la numérotation des variantes : numérotation à partir de 1 pour une meilleure expérience utilisateur
-- 🔧 Validation automatique des valeurs par défaut (si ≤ 0 ou > nombre de variantes, la valeur est automatiquement fixée à 1)
 
  Retrouvez l'historique complet des versions dans [CHANGELOG.md](./CHANGELOG.md).

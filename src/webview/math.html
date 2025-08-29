@@ -189,7 +189,9 @@
 
    <!-- Bloc 9 : Environnements math (bleu) -->
    <div class="button-group">
-      <button class="math-button" onclick="sendCommand('inline')">$...$</button>
+      <button class="math-button" onclick="sendCommand('inline_dollar')">&#36;...&#36;</button>
+      <button class="math-button" onclick="sendCommand('display_dollar')">&#36;&#36;...&#36;&#36;</button>
+      <button class="math-button" onclick="sendCommand('inline')">\(...\)</button>
       <button class="math-button" onclick="sendCommand('display')">\[...\]</button>
    </div>
 
@@ -214,6 +216,10 @@
    
    <!-- Bloc 11 : Environnements d'alignement (bleu) -->
    <div class="button-group">
+      <button class="math-button" onclick="sendCommand('array')"
+         oncontextmenu="showContextMenu(event, 'array'); return false;">
+         array
+      </button>
       <button class="math-button" onclick="sendCommand('align')"
          oncontextmenu="showContextMenu(event, 'align'); return false;">
          align

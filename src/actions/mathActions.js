@@ -1,10 +1,10 @@
 const vscode = require('vscode');
-const { isInMathMode, processTemplate } = require('../../utils/utils');
+const { processTemplate } = require('../../utils/utils');
 const { getMathCommandVariants, getDefaultMathVariant, getMathSimpleCommand } = require('../config/commandMathVariants');
 
 function getMathCommands() {
   return [
-    'frac', 'sqrt', 'sum', 'prod', 'int', 'lim', 'sup', 'inf', 'max', 'min', 'matrix', 'inline', 'display', 'superscript', 'subscript',
+    'frac', 'sqrt', 'sum', 'prod', 'int', 'lim', 'sup', 'inf', 'max', 'min', 'matrix', 'superscript', 'subscript',
     'sin', 'cos', 'tan', 'ln', 'exp',
     'leq', 'geq', 'neq', 'approx', 'sim', 'equiv', 'rightarrow', 'leftarrow', 'Rightarrow', 'Leftarrow', 'Leftrightarrow', 'mapsto',
     'left_paren', 'left_bracket', 'left_brace', 'left_abs', 'left_norm',
@@ -12,9 +12,10 @@ function getMathCommands() {
     'in', 'subset', 'cup', 'cap', 'forall', 'exists', 'cdot', 'dots', 'cdots', 'times', 'div', 'pm',
     'vec', 'widehat', 'underset', 'overset',
     // Environnements mathématiques
+    'inline_dollar', 'display_dollar', 'inline', 'display',
     'equation', 'subequations', 'displaystyle',
     // Environnements d'alignement
-    'align', 'alignat', 'gather',
+    'array', 'align', 'alignat', 'gather',
     // Nouveaux environnements d'équations spécifiques
     'cases', 'systeme', 'multline', 'split'
   ];

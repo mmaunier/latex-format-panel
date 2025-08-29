@@ -7,6 +7,15 @@ Le format de version utilisé est [SemVer](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [0.2.5] - 2025-08-29
+### Added
+- Ajout des environnements mathématiques manquants : `$...$` et `$$...$$` pour une syntaxe LaTeX complète
+- Ajout de la commande "array" avec 3 variantes
+- Amélioration de la reconnaissance des commandes : ajout des nouvelles commandes dans la liste des actions mathématiques
+
+### Fixed
+- Correction du problème d'affichage des boutons dollars : utilisation de codes HTML (&#36;) pour un rendu correct dans l'interface
+
 ## [0.2.4] - 2025-08-22
 ### Fixed
 - Correction de bug dans l'affichage des variantes de l'onglet Perso : les menus contextuels affichent maintenant correctement les labels au lieu de "undefined"
